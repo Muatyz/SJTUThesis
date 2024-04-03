@@ -1,0 +1,64 @@
+% !TEX root = ../main.tex
+
+\chapter{相干首波}
+
+\section{声速的测量}
+
+任何合格的物理本科生都熟悉如何在空气或水中测量声速，如共振波节法、相位法、时差法。前两者的原理都是寻找信号某个相位下的空间位置，从而通过逐差法确定声波的波长；后者则是考虑到了声学探头中压电陶瓷进行声-电转换所需要的固有时间，因此通过求空间位置与到达时间的斜率以确定声速。事实上，在颗粒固体中测量声速时，这些方法都有不同程度的应用，如 Paul A.Johnson 和 Xiaoping Jia 同时使用共振法与行波法（即飞行时间法，Time of Flight,T.O.F.）测定颗粒介质中的声速\cite{Johnson_2005};而在地震学中，基于连续小波变换（Continuous Wavelet Transform， CWT）和频散能量图求解地震波相速度的方法也被广泛应用。本节将介绍如何使用飞行时间法与频散能量图测量颗粒介质中的声速。
+
+\subsection{装置搭建}
+
+
+
+\subsection{飞行时间法}
+
+飞行时间法测定声速的原理即测量试探声波从声源探头到接收探头的时间差 $\Delta t$，但如何定义声波的到达时间（Arrival Time）是值得商榷的问题。Ellák Somfai 等人尝试定义颗粒介质中声波的三个不同的到达时间：波前到达时间 $t_{0}$（由于噪声的存在，波前通常被定义为上升沿峰值 $A_{1}$ 的 $\num{10}\%$ 处，部分更激进的研究者会选取为 $3\%$），波峰到达时间 $t_{1}$，首次过零时间 $t_{2}$\cite{PhysRevE.72.021301}。良好定义的波速应当满足在不同厚度下测得的结果相近。
+
+\subsubsection{信号最佳参考点选取}
+
+\subsection{频散能量图法}
+
+\subsubsection{测量相速度的原理推导}
+
+如果我们将颗粒介质中的声学传播简单考虑为单频球面波，即
+
+\begin{equation}
+  s(x,t) = A_{0}e^{-\alpha x}e^{i(\omega x/V_{\varphi}-\omega t)},
+\end{equation}
+
+考虑在距离声源 $x_{1}$ 与 $x_{2}$ 处的两个接收探头，分别接收到声波信号 $S_{1}(t)$ 与 $S_{2}(t)$。则能求解相速度为
+
+\begin{equation}
+  V_{\varphi} = \frac{x_{2}-x_{1}}{\Delta \varphi}\omega.
+\end{equation}
+
+我们很容易想到通过 FFT 算法求解两次信号的相位频谱 $\varphi_{i}(\omega)$, 但是显然
+
+\begin{equation}
+  \Delta \varphi = \varphi_{2}(\omega) - \varphi_{1}(\omega) + 2N(\omega)\pi
+\end{equation}
+
+对于 $N(\omega)$ 的确定则较为困难，因此地震学提出使用频散能量图观察相速度可能的分布情况。
+
+引入互关联函数 $C_{i,j}(\tau)$：
+
+\begin{equation}
+  C_{i,j}(\tau) = \int_{-\infty}^{+\infty}S_{i}(t)S_{j}(t+\tau)\mathrm{d}t.
+\end{equation}
+
+其中 $\tau$ 是描述信号延迟时间的参数。该函数是一个时域函数，对其进行傅里叶变换：
+
+\begin{equation}
+  \mathcal{F}[C_{i,j}(\tau)]
+\end{equation}
+
+\subsubsection{颗粒介质中相速度分布}
+
+\section{超声脉冲在颗粒介质中的展宽}
+
+\subsection{归一化宽度的定义}
+
+\subsection{归一化宽度与颗粒介质厚度的关系}
+
+\subsection{归一化宽度与单轴应力的关系}
+

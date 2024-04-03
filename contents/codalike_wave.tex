@@ -1,0 +1,34 @@
+% !TEX root = ../main.tex
+
+\chapter{散射尾波}
+
+\section{超声波在颗粒介质中的扩散近似}
+
+\begin{equation}
+  \frac{\partial I}{\partial t} - D\nabla^{2}I + \frac{I}{\tau_{\alpha}} = \delta(z)\delta(t)
+\end{equation}
+
+
+\section{超声波在颗粒介质中的非线性}
+
+\subsection{非线性波方程与谐波推导}
+
+已知含黏度 $\eta$ 的小振幅声波方程为
+
+\begin{equation}
+  \rho_{0}\frac{\partial^{2}\xi}{\partial t^{2}} - \rho_{0}c_{0}\frac{\partial^{2}\xi}{\partial x^{2}} - \eta\frac{\partial^{3}}{\partial x^{2}\partial t} = 0.
+\end{equation}
+
+
+
+\subsection{相似性参数}
+
+引入相似性参数 $\Psi_{i,j}(\tau)$, 以描述信号 $S_{i}$ 与 $S_{j}$ 的相似程度：
+
+\begin{equation}
+  \Psi_{i,j}(\tau) = \frac{\int_{-\infty}^{+\infty}S_{i}(t)S_{j}(t+\tau)\mathrm{d}t}{\sqrt{\int_{-\infty}^{+\infty}S_{i}^{2}(t)\mathrm{d}t\int_{-\infty}^{+\infty}S_{j}^{2}(t)\mathrm{d}t}}.
+\end{equation}
+
+这得到的将是 $[-1,1]$ 之间的数值。相似性参数越接近 $1$，则两个信号越相似，即颗粒介质对 $S_{i}$ 与 $S_{j}$ 的散射效果越接近，从而证明颗粒介质的力链结构变化越小。
+
+\subsection{声源振幅对颗粒介质可逆性的影响}
