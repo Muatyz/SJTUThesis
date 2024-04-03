@@ -23,7 +23,7 @@
 如果我们将颗粒介质中的声学传播简单考虑为单频球面波，即
 
 \begin{equation}
-  s(x,t) = A_{0}e^{-\alpha x}e^{i(\omega x/V_{\varphi}-\omega t)},
+  s(x,t) = A_{0}{\ee}^{-\alpha x}{\ee}^{\ii(\omega x/V_{\varphi}-\omega t)},
 \end{equation}
 
 考虑在距离声源 $x_{1}$ 与 $x_{2}$ 处的两个接收探头，分别接收到声波信号 $S_{1}(t)$ 与 $S_{2}(t)$。则能求解相速度为
@@ -35,7 +35,7 @@
 我们很容易想到通过 FFT 算法求解两次信号的相位频谱 $\varphi_{i}(\omega)$, 但是显然
 
 \begin{equation}
-  \Delta \varphi = \varphi_{2}(\omega) - \varphi_{1}(\omega) + 2N(\omega)\pi
+  \Delta \varphi = \varphi_{2}(\omega) - \varphi_{1}(\omega) + 2N(\omega)\uppi
 \end{equation}
 
 对于 $N(\omega)$ 的确定则较为困难，因此地震学提出使用频散能量图观察相速度可能的分布情况。
@@ -48,9 +48,21 @@
 
 其中 $\tau$ 是描述信号延迟时间的参数。该函数是一个时域函数，对其进行傅里叶变换：
 
-\begin{equation}
-  \mathcal{F}[C_{i,j}(\tau)]
-\end{equation}
+\begin{align}
+  \mathcal{F}[C_{1,2}(\tau)] &= \frac{1}{2\uppi}\int_{-\infty}^{+\infty}{\ee}^{-\ii\omega\tau}\int_{-\infty}^{+\infty}S_{1}(t)S_{2}(t+\tau)\mathrm{d}t\mathrm{d}\tau \nonumber \\
+  &= \frac{1}{2\uppi}\int_{-\infty}^{+\infty}S_{1}(t)\int_{-\infty}^{+\infty}{\ee}^{-\ii\omega\tau}S_{2}(t+\tau)\mathrm{d}\tau\mathrm{d}t \nonumber \\
+  &= \int_{-\infty}^{+\infty}S_{1}(t)S_{2}(\omega){\ee}^{\ii\omega t}\mathrm{d}t \nonumber \\
+  &= 2\uppi S_{1}^{*}(\omega)S_{2}(\omega).
+\end{align}
+
+通过狄拉克函数 $\delta(\omega-\omega_{n})$ 提取信号分量 $\omega_{n}$ 的延迟时间的信息，再对其进行逆傅里叶变换：
+
+\begin{align}
+  \mathcal{F}^{-1}\left\{\delta(\omega-\omega_{n})\mathcal{F}[C_{1,2}(\tau)]\right\} &= \int_{-\infty}^{+\infty}2\uppi S_{1}^{*}(\omega)S_{2}(\omega)\delta(\omega_{n}){\ee}^{\ii\omega\tau}\mathrm{d}\omega \nonumber \\
+  &= 2\uppi S_{1}^{*}(\omega_{n})S_{2}(\omega_{n}){\ee}^{\ii\omega_{n}\tau}.
+\end{align}
+
+具体绘制时我们只需通过 $2\uppi S_{1}^{*}(\omega_{n})S_{2}(\omega_{n}){\ee}^{\ii\omega_{n}\tau}$ 最大值归一化后的实部即可。其物理含义是，延迟时间为 $\tau$ 时，即该频率分量 $\omega_{n}$ 对应的相速度为 $V_{\varphi} = \Delta x/\tau$ 的可能性大小，所以得到的将是 $[-1,1]$ 之间的数值。通过设置离散频率分布 $\{\omega_{n}\}$, 即可查看在颗粒介质中可能的相速度分布。需要说明的是，频散能量图没有从根本上解决 $N(\omega)$ 的确定问题，但是为辅助飞行时间法测定声速提供了更直观的参考工具。
 
 \subsubsection{颗粒介质中相速度分布}
 

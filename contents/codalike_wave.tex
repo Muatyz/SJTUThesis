@@ -4,6 +4,8 @@
 
 \section{超声波在颗粒介质中的扩散近似}
 
+Weaver R. L. 推导出了超声波在多晶体中的扩散行为方程\cite{diffusivity}:
+
 \begin{equation}
   \frac{\partial I}{\partial t} - D\nabla^{2}I + \frac{I}{\tau_{\alpha}} = \delta(z)\delta(t)
 \end{equation}
@@ -16,19 +18,34 @@
 已知含黏度 $\eta$ 的小振幅声波方程为
 
 \begin{equation}
-  \rho_{0}\frac{\partial^{2}\xi}{\partial t^{2}} - \rho_{0}c_{0}\frac{\partial^{2}\xi}{\partial x^{2}} - \eta\frac{\partial^{3}}{\partial x^{2}\partial t} = 0.
+  \rho_{0}\frac{\partial^{2}\xi}{\partial t^{2}} - \rho_{0}c_{0}\frac{\partial^{2}\xi}{\partial x^{2}} - \eta\frac{\partial^{3}\xi}{\partial x^{2}\partial t} = 0.
+\end{equation}
+
+其中 $\xi$ 是声位移，$\rho_{0}$ 与 $c_{0}$ 分别是介质在平衡态下的密度与声速。引入声速的非线性 $c = c_{0} + \beta\frac{\partial\xi}{\partial t}$，同时注意到信号速度
+
+\begin{equation}
+  c_{0} = \left(\frac{\partial \xi}{\partial t}\right)/\left(\frac{\partial\xi}{\partial x}\right)
+\end{equation}
+
+于是得到非线性 Burgers 波方程：
+
+%% 这里需要找到 Hamiton Blackstock 1999 的参考文献
+%% 以确认推导的过程基本正确
+
+\begin{equation}
+  \rho_{0}\frac{\partial^{2}\xi}{\partial t^{2}} - \eta\frac{\partial^{3}\xi}{\partial x^{2}\partial t} - \rho_{0}c_{0}^{2}\frac{\partial^{2}\xi}{\partial x^{2}} - 2\rho_{0}c_{0}^{2}\beta\left(\frac{\partial \xi}{\partial x}\right)\left(\frac{\partial^{2} \xi}{\partial x^{2}}\right) = 0
 \end{equation}
 
 
 
 \subsection{相似性参数}
 
-引入相似性参数 $\Psi_{i,j}(\tau)$, 以描述信号 $S_{i}$ 与 $S_{j}$ 的相似程度：
+引入相似性参数 $\Psi_{i,j}(\tau)$, 以描述信号 $S_{i}$ 与 $S_{j}$ 的相似程度\cite{PhysRevLett.90.174302}：
 
 \begin{equation}
   \Psi_{i,j}(\tau) = \frac{\int_{-\infty}^{+\infty}S_{i}(t)S_{j}(t+\tau)\mathrm{d}t}{\sqrt{\int_{-\infty}^{+\infty}S_{i}^{2}(t)\mathrm{d}t\int_{-\infty}^{+\infty}S_{j}^{2}(t)\mathrm{d}t}}.
 \end{equation}
 
-这得到的将是 $[-1,1]$ 之间的数值。相似性参数越接近 $1$，则两个信号越相似，即颗粒介质对 $S_{i}$ 与 $S_{j}$ 的散射效果越接近，从而证明颗粒介质的力链结构变化越小。
+由于信号已被归一化，所以得到的将是 $[-1,1]$ 之间的数值。相似性参数越接近 $1$，则两个信号越相似，即颗粒介质对 $S_{i}$ 与 $S_{j}$ 的散射效果越接近，从而证明颗粒介质的力链结构变化越小。事实上，这种相似性参数对于颗粒介质内部的应力结构变化极为敏感，这也是低振幅超声波被认定为颗粒介质探针的证据之一。
 
 \subsection{声源振幅对颗粒介质可逆性的影响}
