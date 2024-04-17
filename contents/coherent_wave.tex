@@ -4,19 +4,50 @@
 
 \section{声速的测量}
 
-任何合格的物理本科生都熟悉如何在空气或水中测量声速，如共振波节法、相位法、时差法。前两者的原理都是寻找信号某个相位下的空间位置，从而通过逐差法确定声波的波长；后者则是考虑到了声学探头中压电陶瓷进行声-电转换所需要的固有时间，因此通过求空间位置与到达时间的斜率以确定声速。事实上，在颗粒固体中测量声速时，这些方法都有不同程度的应用，如 Paul A.Johnson 和 Xiaoping Jia 同时使用共振法与行波法（即飞行时间法，Time of Flight,T.O.F.）测定颗粒介质中的声速\cite{Johnson_2005};而在地震学中，基于连续小波变换（Continuous Wavelet Transform， CWT）和频散能量图求解地震波相速度的方法也被广泛应用。本节将介绍如何使用飞行时间法与频散能量图测量颗粒介质中的声速。
+任何合格的物理本科生都熟悉如何在空气或水中测量声速，如共振波节法、相位法、时差法。前两者的原理都是寻找信号某个相位下的空间位置，从而通过逐差法确定声波的波长；后者则是考虑到了声学探头中压电陶瓷进行声-电转换所需要的固有时间，因此通过拟合空间位置与到达时间的斜率以确定声速。事实上，在颗粒固体中测量声速时，上述方法都有不同程度的应用，如 Paul A.Johnson 和 Xiaoping Jia 同时使用共振法与行波法（即飞行时间法，Time of Flight, T.O.F.）测定颗粒介质中的声速\cite{Johnson_2005}；而在地震学中，基于连续小波变换（Continuous Wavelet Transform， CWT）和频散能量图求解地震波相速度的方法也被广泛应用。本节将介绍如何使用飞行时间法与频散能量图测量颗粒介质中的声速。
 
 \subsection{装置搭建}
 
-
+在实验中所使用的是单轴应力圆柱容器，其内径为 $D = 90\unit{\milli\meter}$，上方通过活塞对容器内的颗粒介质进行加压。活塞和容器底部安装了半径为 $\varphi = 19\unit{\milli\meter}$ 的声学探头，分别被激励产生试探信号与接收被颗粒介质传播后的响应信号。
 
 \subsection{飞行时间法}
 
-飞行时间法测定声速的原理即测量试探声波从声源探头到接收探头的时间差 $\Delta t$，但如何定义声波的到达时间（Arrival Time）是值得商榷的问题。Ellák Somfai 等人尝试定义颗粒介质中声波的三个不同的到达时间：波前到达时间 $t_{0}$（由于噪声的存在，波前通常被定义为上升沿峰值 $A_{1}$ 的 $\num{10}\%$ 处，部分更激进的研究者会选取为 $3\%$），波峰到达时间 $t_{1}$，首次过零时间 $t_{2}$\cite{PhysRevE.72.021301}。良好定义的波速应当满足在不同厚度下测得的结果相近。
+飞行时间法测定声速的原理即测量试探声波从声源探头到接收探头的时间差 $\Delta t$，从而计算得到
+
+\begin{equation}
+  V_{\text{T.O.F.}} = \frac{\Delta x}{\Delta t}.
+\end{equation}
+
+但如何定义声波的到达时间（Arrival Time）是值得商榷的问题。Ellák Somfai 等人尝试定义颗粒介质中声波的三种不同的到达时间：波前到达时间 $t_{0}$（由于噪声的存在，波前通常被定义为上升沿峰值 $A_{1}$ 的 $\num{10}\%$ 处，部分更激进的研究者会选取为 $3\%$），波峰到达时间 $t_{1}$，首次过零时间 $t_{2}$\cite{PhysRevE.72.021301}。良好定义的波速应当满足在不同厚度下测得的结果相近，因此我们可以按照其确定在使用飞行时间法测定声速时的最佳信号参考点。
 
 \subsubsection{信号最佳参考点选取}
 
-由于使用的 Tektronix 示波器对源信号与响应信号进行了同步采集，因此容易确定具体的到达时间。基于调整噪声阈值、最小半高宽等参数的寻峰算法，我们可以准确确定源信号的峰值，从而根据因果关系筛去可能错误识别的噪声。下图是对典型的响应信号进行三种不同到达时间的识别结果。
+我们在实验中使用 Tektronix 示波器对源信号与响应信号进行了同步采集，因此容易确定具体的时间起点。基于调整噪声阈值、最小半高宽等参数的寻峰算法，我们可以准确定位源信号的峰值，从而根据因果关系筛去可能错误识别的噪声。图~\ref{fig:reference_point}是对典型的响应信号进行三种不同到达时间识别的实例。
+
+
+\begin{figure}[!htp]
+  \centering
+  \includegraphics[height=8cm]{2_reference_point.png}
+  \bicaption{同步采集源信号与响应信号，以及波前到达时刻，波峰到达时刻与首次过零时刻}{Synchronized acquisition of source and response signals, as well as wavefront arrival, peak arrival and first zero crossing moments}
+  \label{fig:reference_point}
+\end{figure}
+
+我们按照上述三种到达时间的识别方法，测定了在不同厚度下的声速。特别地，我们额外使用时差法拟合得到了声速 $V_{L}$，并将其与飞行时间法测定的声速 $V_{\text{T.O.F.}}$ 进行比较。结果如图~\ref{fig:sound_velocity_measurement} 所示。实验中所使用的颗粒为 $d=2\unit{\milli\meter}$ 的钢珠，应力为 $P=9\unit{\kilo\Pa}$，试探信号设定为 $5$ 循环 $30\unit{\kilo\Hz}$ 正弦波列。
+
+\begin{figure}[!hbtp]
+  \centering
+  \bisubcaptionbox{以三种参考点通过时差法求得的声速 $V_{L}$}%
+                  {Sound velocity $V_{L}$ measured by time difference method with three reference points}%
+                  [6cm]{\includegraphics[height=6cm]{2_fitted_velocity.png}}
+  \hspace{1cm}
+  \bisubcaptionbox{以三种参考点通过飞行时间法求得的声速 $V_{\text{T.O.F.}}$}%
+                  {Sound velocity $V_{\text{T.O.F.}}$ measured by Time of Flight method with three reference points}%
+                  [6cm]{\includegraphics[height=6cm]{2_tof_velocity_and_fitted_velocity.png}}
+  \bicaption{$5$ 循环 $30$ 千赫兹正弦波列作为试探信号，颗粒介质为直径 $2$ 毫米钢珠的随机密堆积，单轴应力 $9$ 千帕下的声速测量}
+            {Velocity of sound measurements at $9\unit{\kilo\Pa}$ uniaxial stress with $5$-cycle of a $30\unit{\kilo\Hz}$ sine wave train as a test signal and a randomized stack of $2\unit{\milli\meter}$ diameter steel beads as the granular medium}
+  \label{fig:sound_velocity_measurement}
+\end{figure}
+
 
 % \begin{figure}[!hbtp]
 %   \centering
@@ -52,9 +83,7 @@
   \Delta \varphi = \varphi_{2}(\omega) - \varphi_{1}(\omega) + 2N(\omega)\uppi
 \end{equation}
 
-对于 $N(\omega)$ 的确定则较为困难，因此地震学提出使用频散能量图观察相速度可能的分布情况。
-
-引入互关联函数 $C_{i,j}(\tau)$：
+对于 $N(\omega)$ 的确定则较为困难，因此地震学提出使用频散能量图观察相速度可能的分布情况。引入互关联函数 $C_{i,j}(\tau)$：
 
 \begin{equation}
   C_{i,j}(\tau) = \int_{-\infty}^{+\infty}S_{i}(t)S_{j}(t+\tau)\mathrm{d}t.
@@ -112,7 +141,7 @@
   W \equiv \frac{t_{1}-t_{0}}{t_{1}},
 \end{equation}
 
-其中 $t_{0}$ 与 $t_{1}$ 分别为波前与峰值的到达时间。我们在测定最佳信号参考点的时候已经意识到，脉冲的展宽实际上已经在一定程度上反映了在颗粒介质中存在的色散关系；而峰值到达时间定义的飞行时间速度，即在试探信号中心频率附近，在距离上更具有稳定性。因此，通过与中心频率关联的 $t_{1}$ 来对信号进行缩放是合理的。我们还将在后文的讨论中通过数据处理进一步证明这一点。
+其中 $t_{0}$ 与 $t_{1}$ 分别为波前与峰值的到达时间。我们在测定最佳信号参考点的时候已经意识到，脉冲的展宽实际上已经在一定程度上反映了在颗粒介质中存在的色散关系；而峰值到达时间定义的飞行时间速度，即在试探信号中心频率附近，在距离上更具有稳定性。因此，通过与中心频率（这里指所发射的试探信号的频率 $f_{c}$）关联的 $t_{1}$ 来对信号进行缩放是合理的。我们还将在后文通过数据处理后的讨论中进一步证明这一点。
 
 \subsection{归一化宽度与颗粒介质厚度的关系}
 
@@ -145,7 +174,7 @@
 将其代入至波数项中，我们将看到
 
 \begin{equation}
-  \text{exp}\left[{\ii \left(\frac{\omega}{V} + \frac{2a^{2}\omega^{3}}{3V^{3}}\right)x}\right] = \text{exp}[{\ii\omega t_{1}}]\text{exp}\left[{\ii\left(\frac{\omega}{\omega_{1}}\right)^{3}}\right],\quad t_{1} = \frac{x}{V},\quad \omega_{1} = \sqrt[3]{\frac{3V^{3}}{2a^{2}x}}.
+  \text{exp}\left[{\ii \left(\frac{\omega}{V} + \frac{2a^{2}\omega^{3}}{3V^{3}}\right)x}\right] = \text{exp}[{\ii\omega t_{1}}]\text{exp}\left[{\ii\left(\frac{\omega}{\omega_{1}}\right)^{3}}\right],\quad t_{1} = \frac{x}{V},\quad \omega_{1} = \sqrt[3]{\frac{3V^{3}}{2a^{2}x}}.\label{eq:rescale_method}
 \end{equation}
 
 而我们已经知道，在傅里叶变换中，存在关系
@@ -174,8 +203,50 @@
   W \approx \frac{\pi}{2\omega_{1}}\frac{1}{t_{1}}\propto L^{-2/3}.
 \end{equation}
 
-考虑一维球链时，使用 $a=2R$ 替换即可得到对应的公式\cite{PhysRevE.91.022205}。接下来我们进一步考虑颗粒介质中衰减项 $\alpha$ 的影响。
+考虑一维球链时，使用 $a=2R$ 替换即可得到对应的公式\cite{PhysRevE.91.022205}。接下来我们进一步考虑颗粒介质中衰减项 $\alpha$ 的影响。引入弹性模量的涨落 $\nu_{K} = \Delta K^{-1}/\bar{K}^{-1}$ 与对应的关联长度 $L_{c}$，我们可以得到一维随机层理论对于衰减项的描述：
+
+\begin{equation}
+  \alpha(\omega) = k^{\prime\prime}(\omega) = [\sigma_{K}^{2}L_{c}^{n-1}]\left(\frac{\omega}{V}\right)^{n}.
+\end{equation}
+
+其中满足
+
+\begin{align}
+  V &= \bar{V} = \sqrt{\frac{\bar{K}}{\bar{\rho}}}\\
+  \gamma &= \int_{0}^{+\infty}\langle\nu_{K}(0)\nu_{K}(x)\rangle\mathrm{d}x = \sigma_{K}^{2}L_{c}
+\end{align}
+
+通过引入虚波矢写出频域内的信号分布，并仿照上面一维弹簧链中的式~\eqref{eq:rescale_method}进行缩放操作：
+
+\begin{equation}
+  \widetilde{a}(\omega) = {\ee}^{ik^{\prime}x}e^{-k^{\prime\prime}x} = e^{i\omega t_{1}}e^{-\left(\frac{\omega}{\omega_{1}}\right)^{n}},\quad t_{1} = \frac{x}{V},\quad \omega_{1} = \sqrt[n]{\frac{V^{n}}{\sigma_{K}^{2}L_{c}^{n-1}x}}.
+\end{equation}
+
+因此得到归一化宽度：
+
+\begin{equation}
+W\sim \frac{1}{\omega_{1}t_{1}} = (\sigma_{K})^{\frac{2}{n}}\left(\frac{n-1}{n}\right)^{\frac{n-1}{n}}
+\end{equation}
+
+在一维随机分层介质中有 $n=2$, 因此在 $x = L$ 处归一化宽度为
+
+\begin{equation}
+  W\propto L^{-\frac{1}{2}}.
+\end{equation}
 
 \subsubsection{实验验证}
 
+我们控制试探信号为 $5$ 循环 $30\unit{\kilo\Hz}$ 连续正弦波列作为试探信号，使用颗粒为直径 $2\unit{\milli\meter}$ 的钢珠生成随机密堆积，施加的单轴应力为 $9\unit{\kilo\Pa}$；分别测定了颗粒介质厚度为 $\numlist{6;11;16;20;24;30}\unit{\milli\metre}$ 时的响应信号。图~\ref{fig:reference_point} 展示了响应信号通过相干波峰 $A_{1}$ 归一化，且时间轴以波峰到达时间 $t_{1}$ 进行缩放后的图像：
+
+\begin{figure}[!htp]
+  \centering
+  \includegraphics[height=6cm]{2_Rescaled_Magnitude_differing_in_Distance.png}
+  \bicaption{通过相干波峰 $A_{1}$ 归一化，且时间轴以波峰到达时间 $t_{1}$ 进行缩放后的不同颗粒样品厚度下测得的响应信号}{Response signal captured at different granular sample thicknesses, normalized with coherent wave peak $A_{1}$ and time axis rescaled with peak arrival time $t_{1}$}
+  \label{fig:reference_point}
+\end{figure}
+
+可以发现，虽然采集信号时的颗粒介质厚度各异，但是通过幅值归一化与时间轴的缩放，仍能够观察到“响应信号可以提取出相干首波”的本质特征。在经过 $t/t_{1} = 1$ 之后，响应信号的宽度开始出现显著变化；而在前面的信号参考点选取的实验中，我们已经知道，$t_{1}$ 是一个性质较为良好的参考点，因此我们可以通过借助 $t_{1}$ 定义的归一化宽度 $W$ 来探究其与颗粒介质厚度，即信号传播距离 $L$ 之间的关系。
+
 \subsection{归一化宽度与单轴应力的关系}
+
+
