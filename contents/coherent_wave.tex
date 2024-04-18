@@ -4,21 +4,72 @@
 
 \section{声速的测量}
 
-任何合格的物理本科生都熟悉如何在空气或水中测量声速，如共振波节法、相位法、时差法。前两者的原理都是寻找信号某个相位下的空间位置，从而通过逐差法确定声波的波长；后者则是考虑到了声学探头中压电陶瓷进行声-电转换所需要的固有时间，因此通过拟合空间位置与到达时间的斜率以确定声速。事实上，在颗粒固体中测量声速时，上述方法都有不同程度的应用，如 Paul A.Johnson 和 Xiaoping Jia 同时使用共振法与行波法（即飞行时间法，Time of Flight, T.O.F.）测定颗粒介质中的声速\cite{Johnson_2005}；而在地震学中，基于连续小波变换（Continuous Wavelet Transform， CWT）和频散能量图求解地震波相速度的方法也被广泛应用。本节将介绍如何使用飞行时间法与频散能量图测量颗粒介质中的声速。
+任何合格的物理本科生都熟悉如何在空气或水中测量声速，如共振波节法、相位法、时差法。前两者的原理都是寻找固定频率信号的某个特殊相位（如峰值所对应的 $\uppi/2 + 2n\uppi$，$n\in\mathbb{Z}$）下的空间位置，从而通过逐差法确定声波的波长；后者则是考虑到了声学探头中压电陶瓷进行声-电转换所需要的固有时间，因此通过拟合空间位置与到达时间的斜率以确定声速。事实上，在颗粒固体中测量声速时，上述方法都有不同程度的应用，如 Paul A.Johnson 和 Xiaoping Jia 同时使用共振法与行波法（即飞行时间法，Time of Flight, T.O.F.）测定颗粒介质中的声速\cite{Johnson_2005}；而在地震学中，基于连续小波变换（Continuous Wavelet Transform， CWT）和频散能量图求解地震波相速度的方法也被广泛应用。本节将介绍如何使用飞行时间法与频散能量图测量颗粒介质中的声速。
 
 \subsection{装置搭建}
 
-在实验中所使用的是单轴应力圆柱容器，其内径为 $D = 90\unit{\milli\meter}$，上方通过活塞对容器内的颗粒介质进行加压。活塞和容器底部安装了半径为 $\varphi = 19\unit{\milli\meter}$ 的声学探头，分别被激励产生试探信号与接收被颗粒介质传播后的响应信号。
+目前部署的声学探测与激励系统部件如下：
 
-\subsection{飞行时间法}
+\begin{itemize}
+  \item Tektronix Arbitrary Function Generator AFG31021。该仪器可以按照实验需求产生如连续正弦波、某循环数正弦波列、单频脉冲等电压信号，用于激励声学探头产生对应机械振动。其支持写入自定义函数来对信号波形进行控制；
+  \item Tektronix TBS2204B 示波器。该示波器通过 BNC 接口对多达 $4$ 个独立模拟电压信号进行同步采集，可用于记录试探信号与在颗粒介质中传播后的响应信号。示波器的采样率最高可达 $1\unit{\giga\hertz}$，单次采样长度最高可达 $5\times 10^{6}$。通过 IPv4 网口可使用 TekScope 软件对 TBS2204B 进行数据读取和记录，并且进行简单程度的操控（开始/停止记录）等；
+  \item ATA-101B Power Amplifier。可以设置输入与输出的线缆阻抗（目前声学常用线缆都是 $50\unit{\ohm}$），其主要功能是以最小步长 $2\unit{\decibel}$ 放大 AFG31021 产生的电压信号，从而使声学探头产生更高需求的声压振幅，通常适用于有限振幅波传播的非线性等实验中。可设定的最大放大效果为 $20\unit{\decibel}$，但是由于其固有的频域放大极限，如果初始输入的电压信号幅值已经较大，未必能完全做到这一点；
+  \item 清诚声发射 G150 与 W800 （成对）声学探头。声学探头在相关领域中又被称为换能器（Transducer），即压电陶瓷既能够将射频线缆传输的模拟电压信号通过电-压效应转换为机械振动（声信号），又能够通过监测机械振动、通过压-电效应转换为模拟电压信号，从而进行进一步的信号处理与分析。G150 和 W800 分别是适用于 $60-400\unit{\kilo\Hz}$ 和 $50-800\unit{\kilo\hertz}$ 频域范围内工作的探头型号，应当根据实验需求选取合适的一对探头。两个型号的声学探头主体都是 $\varphi 19\unit{\milli\meter}\times 15\unit{\milli\meter}$ 的圆柱体，因此便于安装于同一颗粒容器中；
+  \item 单轴应力圆柱容器。通过 SOLIDWORKS 软件设计并采用亚克力板制作的容器（为了兼容未来可能的 X 射线扫描建模需求）。容器内径为 $D = 90\unit{\milli\meter}$, 最高支持厚度为 $13\unit{\centi\meter}$ 的颗粒介质进行实验。设置四轴活塞对容器内的颗粒介质施加单轴应力，活塞与容器底部中心均留有 $\varphi 19\unit{\milli\meter}$ 的孔洞用于安装声学探头。容器壁通过 $10\unit{\milli\meter}$ 的亚克力板弯曲为圆筒制作，因此可以承担实验需求范围的应力。探头和容器均未考虑防水/密封处理。
+\end{itemize}
+
+%%% 这里放实验装置部件的示意图
+
+%%% 找到一个用 tikz 画工作流示意图的方法
+
+需要说明的是，一般情况下作用于接收器表面的声压 $p(t)$ 都并不等于入射波的声压 $p_{i}(t)$，这是由探头的声阻抗 $\widetilde{Z}_{S}(\omega)$ 导致的:
+
+\begin{equation}
+  p(t) = \left(1 + \frac{\widetilde{Z}_{S}(\omega)}{\rho_{0}c_{0}S}\right) =\widetilde{K}(\omega)p_{i}(t).
+\end{equation}
+
+其中 $\rho_{0}$ 与 $c_{0}$ 是介质中平衡态下的密度和声速，$S$ 是圆面探测器的面积。接收声压 $p(t)$ 通过非幺正角频率傅里叶变换得到的频谱为
+
+\begin{equation}
+  F(\omega) = \int_{-\infty}^{+\infty}\widetilde{K}(\omega)p_{i}(t){\ee}^{-\ii\omega t}\mathrm{d}t = \widetilde{K}(\omega)F_{i}(\omega).
+\end{equation}
+
+其中 $F_{i}(\omega)$ 为入射波声压的非幺正角频率傅里叶变换。因此入射波声压 $p_{i}(t)$ 为
+
+\begin{equation}
+  p_{i}(t) = \frac{1}{2\uppi}\int_{-\infty}^{+\infty}\frac{F(\omega)}{\widetilde{K}(\omega)}{\ee}^{\ii\omega t}\mathrm{d}\omega\label{eq:response_correct}
+\end{equation}
+
+在实验中，由于我们使用的是一对同工作频域的探头，面对面接触时可以简单视为声波经历了两次同样的声阻抗过程，且假定压电效应呈现线性（$p\propto U$）。那么，我们可以设定信号发生器产生的电压信号为 $U_{0}(\omega)$，则接收到的电压信号为
+
+\begin{equation}
+  U(\omega) = \widetilde{K}(\omega)^{2}U_{0}(\omega).
+\end{equation}
+
+图~\ref{fig:response_factor} 展示了设定源信号为一系列相同振幅、不同频率 $\omega_{n}$ 的连续正弦波列 $\{U(\omega_{n})\}$ 时测定的探头响应系数 $\widetilde{K}(\omega)$。
+
+\begin{figure}[!htp]
+  \centering
+  \includegraphics[height=8cm]{2_response_factor.eps}
+  \bicaption{G150 与 W800 两种声学探头响应系数 $\widetilde{K}(\omega)$}{Response factor $\widetilde{K}(\omega)$ of G150 and W800 acoustic sensors}
+  \label{fig:response_factor}
+\end{figure}
+
+观察可知，G150 在 \numrange{60}{400}\unit{\kilo\hertz} 频域内的响应系数非常接近 $1$, 而超出其工作频域的响应系数迅速跌落；而 W800 在我们关心的频域 \numrange{0}{1000}\unit{\kilo\hertz} 内虽然响应系数均不高，但是胜在响应曲线相对平稳。因此在实验时，如果信号集中于超声频域内的较低成分，那么选择 G150 将是更合理的；在关心较广的频域下的声学参数（比如衰减、相速度等）时，W800 的性能相对优异。为了弥补 W800 本身响应系数较低的缺陷，未来可以考虑使用 Physics of Acoustic Company 的 2/4/6 Type 等前置放大器来对有效信号进行增强。
+
+我们后续实验便可以借助式~\eqref{eq:response_correct} 来对实验中采集的响应信号进行修正，这对幅值相关的声学测量实验意义重大。
+
+\subsection{飞行时间法测定颗粒介质中的声速}
 
 飞行时间法测定声速的原理即测量试探声波从声源探头到接收探头的时间差 $\Delta t$，从而计算得到
 
 \begin{equation}
-  V_{\text{T.O.F.}} = \frac{\Delta x}{\Delta t}.
+  V_{\text{T.O.F.}} = \frac{L}{\Delta t}.
 \end{equation}
 
-但如何定义声波的到达时间（Arrival Time）是值得商榷的问题。Ellák Somfai 等人尝试定义颗粒介质中声波的三种不同的到达时间：波前到达时间 $t_{0}$（由于噪声的存在，波前通常被定义为上升沿峰值 $A_{1}$ 的 $\num{10}\%$ 处，部分更激进的研究者会选取为 $3\%$），波峰到达时间 $t_{1}$，首次过零时间 $t_{2}$\cite{PhysRevE.72.021301}。良好定义的波速应当满足在不同厚度下测得的结果相近，因此我们可以按照其确定在使用飞行时间法测定声速时的最佳信号参考点。
+其中 $L$ 是颗粒介质的厚度。但是如何准确定义声波的到达时间（Arrival Time）是值得商榷的问题。Ellák Somfai 等人定义颗粒介质中声波的三种不同的到达时间：波前到达时间 $t_{0}$（由于噪声的存在，波前通常被定义为上升沿峰值 $A_{1}$ 的 $\num{10}\%$ 处，部分更激进的研究者会选取为 $3\%$），波峰到达时间 $t_{1}$，首次过零时间 $t_{2}$\cite{PhysRevE.72.021301}。良好定义的波速应当满足在不同厚度下测得的结果相近，因此我们可以按照其确定在使用飞行时间法测定声速时的最佳信号参考点。
+
+%%% 这里放参考文献的三个不同到达时间的示意图
 
 \subsubsection{信号最佳参考点选取}
 
@@ -32,7 +83,7 @@
   \label{fig:reference_point}
 \end{figure}
 
-我们按照上述三种到达时间的识别方法，测定了在不同厚度下的声速。特别地，我们额外使用时差法拟合得到了声速 $V_{L}$，并将其与飞行时间法测定的声速 $V_{\text{T.O.F.}}$ 进行比较。结果如图~\ref{fig:sound_velocity_measurement} 所示。实验中所使用的颗粒为 $d=2\unit{\milli\meter}$ 的钢珠，应力为 $P=9\unit{\kilo\Pa}$，试探信号设定为 $5$ 循环 $30\unit{\kilo\Hz}$ 正弦波列。
+我们按照上述三种到达时间的识别方法，测定了在不同厚度下的声速。特别地，我们额外使用时差法拟合得到了声速 $V_{L}$，并将其与飞行时间法测定的声速 $V_{\text{T.O.F.}}$ 进行比较。结果如图~\ref{fig:sound_velocity_measurement} 所示。实验中所使用的颗粒为 $d=2\unit{\milli\meter}$ 的钢珠，施加的单轴应力为 $P=9\unit{\kilo\Pa}$，试探信号设定为 $5$ 循环 $30\unit{\kilo\Hz}$ 正弦波列。每一个厚度都重新制备 $7$ 个不同的随机密堆积以进行系综平均，从而尽可能消除颗粒介质本身随机性的误差。
 
 \begin{figure}[!hbtp]
   \centering
@@ -48,6 +99,9 @@
   \label{fig:sound_velocity_measurement}
 \end{figure}
 
+由此可见，各参考点的飞行时间法定义下的声速随着传播距离 $L$ 的增大向其时差法定义下的声速 $V_{L}$ 逼近，其中以波峰到达时间 $t_{1}$ 定义的声速在距离上的变化最为稳定，因此在传播距离足够大时，我们可以使用飞行时间法替代时差法进行工程上的声速测量，而其中以波峰到达时间定义的又是最好的。
+
+需要额外说明的是，不同的参考点对于时差法都可以适用，但是其大小顺序和参考点的时间顺序明显相关，我们将其概括为相干首波在颗粒介质中随着传播距离增大而出现的展宽，即颗粒介质中出现了色散现象；我们将在后文通过归一化宽度更详细地探讨这一点。
 
 % \begin{figure}[!hbtp]
 %   \centering
@@ -64,7 +118,7 @@
 
 \subsubsection{测量相速度的原理推导}
 
-如果我们将颗粒介质中的声学传播简单考虑为单频球面波，即
+如果我们将颗粒介质中的声学传播简单考虑为单频平面波，即
 
 \begin{equation}
   s(x,t) = A_{0}{\ee}^{-\alpha x}{\ee}^{\ii(\omega x/V_{\varphi}-\omega t)},
@@ -89,23 +143,23 @@
   C_{i,j}(\tau) = \int_{-\infty}^{+\infty}S_{i}(t)S_{j}(t+\tau)\mathrm{d}t.
 \end{equation}
 
-其中 $\tau$ 是描述信号延迟时间的参数。该函数是一个时域函数，对其进行傅里叶变换：
+其中 $\tau$ 是描述信号延迟/传播时间的参数。该函数是一个时域函数，对其进行非幺正角频率傅里叶变换：
 
 \begin{align}
-  \mathcal{F}[C_{1,2}(\tau)] &= \frac{1}{2\uppi}\int_{-\infty}^{+\infty}{\ee}^{-\ii\omega\tau}\int_{-\infty}^{+\infty}S_{1}(t)S_{2}(t+\tau)\mathrm{d}t\mathrm{d}\tau \nonumber \\
-  &= \frac{1}{2\uppi}\int_{-\infty}^{+\infty}S_{1}(t)\int_{-\infty}^{+\infty}{\ee}^{-\ii\omega\tau}S_{2}(t+\tau)\mathrm{d}\tau\mathrm{d}t \nonumber \\
+  \mathcal{F}[C_{1,2}(\tau)] &= \int_{-\infty}^{+\infty}{\ee}^{-\ii\omega\tau}\int_{-\infty}^{+\infty}S_{1}(t)S_{2}(t+\tau)\mathrm{d}t\mathrm{d}\tau \nonumber \\
+  &= \int_{-\infty}^{+\infty}S_{1}(t)\int_{-\infty}^{+\infty}{\ee}^{-\ii\omega\tau}S_{2}(t+\tau)\mathrm{d}\tau\mathrm{d}t \nonumber \\
   &= \int_{-\infty}^{+\infty}S_{1}(t)S_{2}(\omega){\ee}^{\ii\omega t}\mathrm{d}t \nonumber \\
-  &= 2\uppi S_{1}^{*}(\omega)S_{2}(\omega).
+  &= S_{1}^{*}(\omega)S_{2}(\omega).
 \end{align}
 
-通过狄拉克函数 $\delta(\omega-\omega_{n})$ 提取信号分量 $\omega_{n}$ 的延迟时间的信息，再对其进行逆傅里叶变换：
+通过狄拉克函数 $\delta(\omega-\omega_{n})$ 提取角频率为 $\omega_{n}$ 信号分量的延迟时间的信息，再对其进行逆非幺正角频率傅里叶变换：
 
 \begin{align}
-  \mathcal{F}^{-1}\left\{\delta(\omega-\omega_{n})\mathcal{F}[C_{1,2}(\tau)]\right\} &= \int_{-\infty}^{+\infty}2\uppi S_{1}^{*}(\omega)S_{2}(\omega)\delta(\omega_{n}){\ee}^{\ii\omega\tau}\mathrm{d}\omega \nonumber \\
-  &= 2\uppi S_{1}^{*}(\omega_{n})S_{2}(\omega_{n}){\ee}^{\ii\omega_{n}\tau}.
+  \mathcal{F}^{-1}\left\{\delta(\omega-\omega_{n})\mathcal{F}[C_{1,2}(\tau)]\right\} &= \int_{-\infty}^{+\infty}S_{1}^{*}(\omega)S_{2}(\omega)\delta(\omega_{n}){\ee}^{\ii\omega\tau}\mathrm{d}\omega \nonumber \\
+  &= S_{1}^{*}(\omega_{n})S_{2}(\omega_{n}){\ee}^{\ii\omega_{n}\tau}.
 \end{align}
 
-具体绘制时我们只需通过 $2\uppi S_{1}^{*}(\omega_{n})S_{2}(\omega_{n}){\ee}^{\ii\omega_{n}\tau}$ 最大值归一化后的实部即可。其物理含义是，延迟时间为 $\tau$ 时，即该频率分量 $\omega_{n}$ 对应的相速度为 $V_{\varphi} = \Delta x/\tau$ 的可能性大小，所以得到的将是 $[-1,1]$ 之间的数值。通过设置离散频率分布 $\{\omega_{n}\}$, 即可查看在颗粒介质中可能的相速度分布。需要说明的是，频散能量图没有从根本上解决 $N(\omega)$ 的确定问题，但是为辅助飞行时间法测定声速提供了更直观的参考工具。
+具体绘制时我们只需通过 $S_{1}^{*}(\omega_{n})S_{2}(\omega_{n}){\ee}^{\ii\omega_{n}\tau}$ 最大值归一化后的实部即可。其物理含义是，延迟时间为 $\tau$ 时，即该频率分量 $\omega_{n}$ 对应的相速度为 $V_{\varphi} = \Delta x/\tau$ 的可能性大小，所以得到的将是 $[-1,1]$ 之间的数值。通过设置离散频率分布 $\{\omega_{n}\}$, 即可查看在颗粒介质中可能的相速度分布。需要说明的是，频散能量图没有从根本上解决 $N(\omega)$ 的确定问题，但是为辅助飞行时间法测定声速提供了更直观的参考工具。
 
 \subsubsection{颗粒介质中相速度分布}
 
@@ -121,13 +175,18 @@
   \label{fig:dispersion_energy}
 \end{figure}
 
-图 \ref{fig:dispersion_energy} 展示了在单轴应力容器中，根据不同采集距离下的两道压缩波信号绘制的频散能量图。可以看到两道信号在发射信号的中心频率 $f_{c} = 30\text{ kHz}$ 处的相速度约为 $V_{\varphi} = 350\pm 10\unit{m/s}$
+图 \ref{fig:dispersion_energy} 展示了在单轴应力容器中，根据不同采集距离下的两道压缩波信号绘制的频散能量图。可以看到两道信号在发射信号的中心频率 $f_{c} = 30\text{ kHz}$ 处的相速度约为 $V_{\varphi} = 350\pm 10\unit{m/s}$。
 
 \section{声速与单轴应力的指数关系}
 
 \subsection{等效介质理论（EMT）}
 
+%%% 等效介质理论的推导
+
 \subsection{实验验证}
+
+%%% 展示声速与单轴应力的指数关系。
+%%% 可能是因为容器几何因素导致的 Yassen Effect，导致应力并不充分地施加到颗粒介质上。
 
 \section{超声脉冲在颗粒介质中的展宽}
 
@@ -159,7 +218,7 @@
   k(\omega) = \frac{2}{a}\arcsin{\left(\sqrt{\frac{M}{4C}}\omega\right)}.\label{eq:1D_dispersion_relation}
 \end{equation}
 
-在这里，我们对其应用长波极限 $ka\ll 1$, 从而求得波速度：
+在这里，我们对式~\eqref{eq:1D_dispersion_relation} 应用长波极限 $ka\ll 1$, 从而求得波速度：
 
 \begin{equation}
   V = \lim_{ka\ll 1}\frac{\omega}{k} = \sqrt{\frac{C}{M}}a.
@@ -216,7 +275,7 @@
   \gamma &= \int_{0}^{+\infty}\langle\nu_{K}(0)\nu_{K}(x)\rangle\mathrm{d}x = \sigma_{K}^{2}L_{c}
 \end{align}
 
-通过引入虚波矢写出频域内的信号分布，并仿照上面一维弹簧链中的式~\eqref{eq:rescale_method}进行缩放操作：
+通过引入虚波矢 $k^{\prime\prime}$ 写出频域内的信号分布，并仿照上面一维弹簧链中的式~\eqref{eq:rescale_method} 进行缩放操作：
 
 \begin{equation}
   \widetilde{a}(\omega) = {\ee}^{ik^{\prime}x}e^{-k^{\prime\prime}x} = e^{i\omega t_{1}}e^{-\left(\frac{\omega}{\omega_{1}}\right)^{n}},\quad t_{1} = \frac{x}{V},\quad \omega_{1} = \sqrt[n]{\frac{V^{n}}{\sigma_{K}^{2}L_{c}^{n-1}x}}.
@@ -245,7 +304,7 @@ W\sim \frac{1}{\omega_{1}t_{1}} = (\sigma_{K})^{\frac{2}{n}}\left(\frac{n-1}{n}\
   \label{fig:reference_point}
 \end{figure}
 
-可以发现，虽然采集信号时的颗粒介质厚度各异，但是通过幅值归一化与时间轴的缩放，仍能够观察到“响应信号可以提取出相干首波”的本质特征。在经过 $t/t_{1} = 1$ 之后，响应信号的宽度开始出现显著变化；而在前面的信号参考点选取的实验中，我们已经知道，$t_{1}$ 是一个性质较为良好的参考点，因此我们可以通过借助 $t_{1}$ 定义的归一化宽度 $W$ 来探究其与颗粒介质厚度，即信号传播距离 $L$ 之间的关系。
+可以发现，虽然采集信号时的颗粒介质厚度各异，但是通过幅值归一化与时间轴的缩放，仍能够观察到“响应信号可以提取出相干首波”的本质特征。当 $t/t_{1} > 1$，响应信号的宽度开始出现显著变化；而在前面的信号参考点选取的实验中，我们已经知道，$t_{1}$ 是一个性质较为良好的参考点，因此我们可以通过借助 $t_{1}$ 定义的归一化宽度 $W$ 来探究其与颗粒介质厚度，即信号传播距离 $L$ 之间的关系。
 
 \subsection{归一化宽度与单轴应力的关系}
 
