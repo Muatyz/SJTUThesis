@@ -32,7 +32,7 @@ Weaver R. L. 推导出了超声波脉冲在多晶体中的扩散行为方程\cit
 
 \section{超声波在颗粒介质中的非线性}
 
-\subsection{非线性波方程与谐波推导}
+\subsection{非线性波方程与各级谐波}
 
 已知含黏度 $\eta$ 的小振幅声波方程为
 
@@ -55,6 +55,19 @@ Weaver R. L. 推导出了超声波脉冲在多晶体中的扩散行为方程\cit
   \rho_{0}\frac{\partial^{2}\xi}{\partial t^{2}} - \eta\frac{\partial^{3}\xi}{\partial x^{2}\partial t} - \rho_{0}c_{0}^{2}\frac{\partial^{2}\xi}{\partial x^{2}} - 2\rho_{0}c_{0}^{2}\beta\left(\frac{\partial \xi}{\partial x}\right)\left(\frac{\partial^{2} \xi}{\partial x^{2}}\right) = 0
 \end{equation}
 
+通过级数展开求解，依次得到基波、各级谐波的表达式：
+
+\begin{equation}
+  \begin{cases}
+    u_{1\omega}(a,t) \approx u_{\text{in}}e^{-a\alpha}\cos{(ka-\omega t)}\\
+    \\
+    u_{2\omega}(a,t) \approx \frac{u_{\text{in}}^{2}}{8}\left(\frac{\beta\omega^{2}}{\alpha c_{0}^{2}}\right)e^{-2\alpha a}\cos{[2(ka-\omega t)]}\\
+    \\
+    u_{3\omega}(a,t) \approx \frac{u_{\text{in}}^{3}}{48}\left(\frac{\beta\omega^{2}}{\alpha c_{0}^{2}}\right)^{2}e^{-3\alpha a}\cos{[3(ka-\omega t)]}
+    \end{cases}
+\end{equation}
+
+其中 $u_{\text{in}}$ 是声源振幅，$a$ 是声波传播距离，$\alpha$ 是声波的衰减系数，$k$ 是声波的波数，$\omega$ 是声波的频率。$u_{n\omega}$ 代表 $n$ 倍频的谐波。
 
 
 \subsection{相似性参数}

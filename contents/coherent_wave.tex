@@ -159,7 +159,7 @@
   &= \frac{1}{2\uppi}S_{1}^{*}(\omega_{n})S_{2}(\omega_{n}){\ee}^{\ii\omega_{n}\tau}.
 \end{align}
 
-具体绘制时我们只需通过 $S_{1}^{*}(\omega_{n})S_{2}(\omega_{n}){\ee}^{\ii\omega_{n}\tau}$ 最大值归一化后的实部即可。其物理含义是，延迟时间为 $\tau$ 时，即该频率分量 $\omega_{n}$ 对应的相速度为 $V_{\varphi} = \Delta x/\tau$ 的可能性大小，所以得到的将是 $[-1,1]$ 之间的数值。通过设置离散频率分布 $\{\omega_{n}\}$, 即可查看在颗粒介质中可能的相速度分布。需要说明的是，频散能量图没有从根本上解决 $N(\omega)$ 的确定问题，但是为辅助飞行时间法测定声速提供了更直观的参考工具。
+具体绘制时我们只需通过 $S_{1}^{*}(\omega_{n})S_{2}(\omega_{n}){\ee}^{\ii\omega_{n}\tau}/2\uppi$ 最大值归一化后的实部即可。其物理含义是，延迟时间为 $\tau$ 时，即该频率分量 $\omega_{n}$ 对应的相速度为 $V_{\varphi} = \Delta x/\tau$ 的可能性大小，所以得到的将是 $[-1,1]$ 之间的数值。通过设置离散频率分布 $\{\omega_{n}\}$, 即可查看在颗粒介质中可能的相速度分布。需要说明的是，频散能量图没有从根本上解决 $N(\omega)$ 的确定问题，但是为辅助飞行时间法测定声速提供了更直观的参考工具。
 
 \subsubsection{颗粒介质中相速度分布}
 
@@ -213,22 +213,38 @@
 
 同样在单轴应力容器装置中，使用直径 $d=2\unit{\milli\meter}$ 的钢珠制备随机密堆积，并施加单轴应力 $P=$ \numlist{0.40;3.34;6.30;8.43;9.63;11.31;14.46}\unit{\kilo\pascal}。使用飞行时间法测定各应力下的声速 $V_{\text{T.O.F.}}(P)$，并观察声速与单轴应力的指数关系是否符合 EMT 的预期。
 
-%%% 展示声速与单轴应力的指数关系。
+\begin{figure}[!hbtp]
+  \centering
+  \bisubcaptionbox{双线性轴下的应力 $P$ 与声速 $V_{\text{T.O.F.}}$ 的关系}%
+                  {Stress $P$ versus sound velocity $V_{\text{T.O.F.}}$ in bilinear axis}%
+                  [6.4cm]{\includegraphics[height=7cm]{figures/2_strain_vs_velocity_20mm_1.png}}
+  \hspace{1cm}
+  \bisubcaptionbox{双对数处理后的应力 $P$ 与声速 $V_{\text{T.O.F.}}$ 的关系及其线性拟合}%
+                  {Relationship between stress $P$ and sound velocity $V_{\text{T.O.F.}}$ after double logarithmic  and its linear fit}%
+                  [6.4cm]{\includegraphics[height=7cm]{figures/2_strain_vs_velocity_20mm_2.png}}
+  \bicaption{声速 $V_{\text{T.O.F.}}$ 与单轴应力 $P$ 的幂律关系。$P =$ \numlist{0.40;3.34;6.30;8.43;9.63;11.31;14.46}\unit{\kilo\pascal}，颗粒介质为厚度 $L =19$\unit{\milli\meter} 的直径 $2$\unit{\milli\meter} 钢珠随机密堆积}
+                  {Power-law relationship between the sound velocity $V_{\text{T.O.F.}}$ and the uniaxial stress $P$. $P =$ \numlist[
+                    list-final-separator = { and }
+                  ]{0.40;3.34;6.30;8.43;9.63;11.31;14.46}\unit{\kilo\pascal}, where the granular medium is a random close packing with steel beads of diameter $2\unit{\milli\meter}$ and thickness $L = 19$\unit{\milli\meter}}
+  \label{fig:normalized_width_versus_L}
+\end{figure}
+
+
 %%% 可能是因为容器几何因素导致的 Yassen Effect，导致应力并不充分地施加到颗粒介质上。
 
 \section{超声脉冲在颗粒介质中的展宽}
 
-颗粒介质通过异质性的力链网络传递应力，因此声波在颗粒介质中传播时会出现剧烈的畸变现象，其中脉冲波的展宽是较为明显的现象之一。本节讨论了颗粒介质厚度以及单轴应力大小对于脉冲波展宽的影响。
+颗粒介质通过异质性的力链网络传递应力，因此声波在颗粒介质中传播时会因为其非线性出现剧烈的畸变现象，其中脉冲超声波的展宽是较为明显的现象之一。本节讨论了颗粒介质厚度 $L$ 以及单轴应力 $P$ 对于脉冲波展宽的影响。
 
 \subsection{归一化宽度的定义}
 
-在信号处理中，常见的对于峰宽度的定义通常是半高宽；事实上，我们在处理响应信号的到达时间时，使用的寻峰算法中的参数就包含了半高宽阈值。但是在这里，我们引入的归一化宽度参数同时考虑了峰值与波前的位置：
+在信号处理中，常见的对于峰宽度的定义通常是半高宽；事实上，我们在处理响应信号的到达时间时，使用的寻峰算法中的参数也的确包含了半高宽阈值用于排除噪音的干扰。但是这里我们引入的归一化宽度参数 $W$ 同时考虑了峰值与波前在时域中位置：
 
 \begin{equation}
   W \equiv \frac{t_{1}-t_{0}}{t_{1}},
 \end{equation}
 
-其中 $t_{0}$ 与 $t_{1}$ 分别为波前与峰值的到达时间。我们在测定最佳信号参考点的时候已经意识到，脉冲的展宽实际上已经在一定程度上反映了在颗粒介质中存在的色散关系；而峰值到达时间定义的飞行时间速度，即在试探信号中心频率附近，在距离上更具有稳定性。因此，通过与中心频率（这里指所发射的试探信号的频率 $f_{c}$）关联的 $t_{1}$ 来对信号进行缩放是合理的。我们还将在后文通过数据处理后的讨论中进一步证明这一点。
+其中 $t_{0}$ 与 $t_{1}$ 分别为波前与峰值的到达时间。我们在测定最佳信号参考点的时候应当意识到，脉冲的展宽实际上已经在一定程度上反映了“在颗粒介质中存在着较明显的色散关系”；而峰值到达时间定义的飞行时间速度，即在试探信号中心频率附近，在距离上更具有稳定性。因此，通过与中心频率（这里指所发射的试探信号的频率 $f_{c}$）关联的 $t_{1}$ 来对信号进行缩放操作是合理的。后文通过数据处理后得到的图~\ref{fig:reference_point} 以及对应讨论中进一步证明这一点。
 
 \subsection{归一化宽度与颗粒介质厚度的关系}
 
@@ -275,7 +291,7 @@
 将波数项代入至 $a(x,-t)$ 中，并对其进行傅里叶变换：
 
 \begin{equation}
-  \mathcal{F}[a(x,-t)] = \frac{1}{2\uppi}\int_{-\infty}^{+\infty}A_{0}{\ee}^{\ii\omega t_{1}}{\ee}^{\ii(\omega/\omega_{1})^{3}}e^{\ii\omega t}e^{-\ii\omega t}\mathrm{d}t = \frac{A_{0}}{2\uppi}{\ee}^{\ii\omega t_{1}}{\ee}^{\ii(\omega/\omega_{1})^{3}}.
+  \mathcal{F}[a(x,-t)] = \int_{-\infty}^{+\infty}A_{0}{\ee}^{\ii\omega t_{1}}{\ee}^{\ii(\omega/\omega_{1})^{3}}e^{\ii\omega t}e^{-\ii\omega t}\mathrm{d}t = A_{0}{\ee}^{\ii\omega t_{1}}{\ee}^{\ii(\omega/\omega_{1})^{3}}.
 \end{equation}
 
 所以，根据傅里叶变换的平移性质~\eqref{eq:translation_property}与尺度性质~\eqref{eq:scale_property}，我们得到源信号形式可近似为通过 $\omega_{1}$ 控制宽度的 Airy 函数：
@@ -323,7 +339,7 @@ W\sim \frac{1}{\omega_{1}t_{1}} = (\sigma_{K})^{\frac{2}{n}}\left(\frac{n-1}{n}\
 
 \subsubsection{实验验证}
 
-我们控制试探信号为 $5$ 循环 $30\unit{\kilo\Hz}$ 连续正弦波列作为试探信号，使用颗粒为直径 $2\unit{\milli\meter}$ 的钢珠生成随机密堆积，施加的单轴应力为 $9\unit{\kilo\Pa}$；分别测定了颗粒介质厚度为 $\numlist{6;11;16;20;24;30}\unit{\milli\metre}$ 时的响应信号。图~\ref{fig:reference_point} 展示了响应信号通过相干波峰 $A_{1}$ 归一化，且时间轴以波峰到达时间 $t_{1}$ 进行缩放后的图像：
+我们控制试探信号为 $5$ 循环 $30\unit{\kilo\Hz}$ 连续正弦波列作为试探信号，使用颗粒为直径 $2\unit{\milli\meter}$ 的钢珠生成随机密堆积，施加的单轴应力为 $9\unit{\kilo\Pa}$；分别测定了颗粒介质厚度为 $\numlist{6;11;16;20;24;30}\unit{\milli\metre}$ 时的响应信号，并且每一厚度都各自单独重新制备 7 次随机密堆积以尽可能消除实验误差，并且数据进行系综平均，标准差作为误差棒。图~\ref{fig:reference_point} 展示了其中一组响应信号通过相干波峰 $A_{1}$ 归一化，且时间轴以波峰到达时间 $t_{1}$ 进行缩放后的图像：
 
 \begin{figure}[!htp]
   \centering
@@ -334,6 +350,40 @@ W\sim \frac{1}{\omega_{1}t_{1}} = (\sigma_{K})^{\frac{2}{n}}\left(\frac{n-1}{n}\
 
 可以发现，虽然采集信号时的颗粒介质厚度各异，但是通过幅值归一化与时间轴的缩放，仍能够观察到“响应信号可以提取出相干首波”的本质特征。当 $t/t_{1} > 1$，响应信号的宽度开始出现显著变化；而在前面的信号参考点选取的实验中，我们已经知道，$t_{1}$ 是一个性质较为良好的参考点，因此我们可以通过借助 $t_{1}$ 定义的归一化宽度 $W$ 来探究其与颗粒介质厚度，即信号传播距离 $L$ 之间的关系。
 
+图~\ref{fig:normalized_width_versus_L} 展示了上述实验中测得的归一化宽度 $W$ 与颗粒介质厚度 $L$ 之间的关系，其中为了观察幂律关系使用了双对数处理并对其数据点进行了线性拟合。不难看出，我们得出的结果约为 $W\propto L^{-0.448}$，与理论推导的 $W\propto L^{-1/2}$ 已经相当接近。
+
+需要说明的是，这种偏差存在两种来源：
+
+\begin{enumerate}
+  \item 波前到达时间的选取并不是绝对的。既然我们是通过 $S(t_{0}) = A_{1}\cdot k$（$k\in(0,0.1]$）确定的 $t_{0}$，那么 $k$ 的具体数值会影响到 $t_{0}$ 的选取，从而影响到归一化宽度 $W$ 的测定；而在传播距离较大时，响应信号的信噪比会因为信号衰减而急剧降低，此时对全体传播距离上的响应信号划定一条通用可行的 $k$ 实际上是存在困难的，因此其具体数值需要通过经验来调整；
+  \item 理论推导中的 $n=2$ 是一维随机分层介质的情况。虽然我们已经将色散关系和衰减同时纳入考虑，并且实验模式中超声波的传播偏向于柱坐标中单个 $z$ 轴方向上，但是着一切仍不能改变“实际的颗粒介质仍然是三维体系”的事实，因此出现 $-0.448\sim-1/2$ 的偏差是在理解范围内的。
+\end{enumerate}
+
+\begin{figure}[!hbtp]
+  \centering
+  \bisubcaptionbox{相干首波峰宽度 $t_{1} - t_{0}$}%
+                  {Coherent wave peak width $t_{1} - t_{0}$}%
+                  [6.4cm]{\includegraphics[height=7cm]{figures/2_t1-t0_L.png}}
+  \hspace{1cm}
+  \bisubcaptionbox{相干首波归一化宽度 $W$}%
+                  {Coherent first wave normalized width $W$}%
+                  [6.4cm]{\includegraphics[height=7cm]{figures/2_W_L.png}}
+  \bicaption{颗粒介质厚度为 \numlist{6;11;16;20;24;30} \unit{\milli\metre} 时的响应信号首峰宽度 $t_{1} - t_{0}$ 与归一化宽度 $W$}
+                  {First peak width $t_{1} - t_{0}$ and normalized width $W$ of response signal at granular medium thickness of \numlist[
+                    list-final-separator = { and }
+                  ]{6;11;16;20;24;30} \unit{\milli\metre}}
+  \label{fig:normalized_width_versus_L}
+\end{figure}
+
 \subsection{归一化宽度与单轴应力的关系}
 
+类似于上述实验中考虑的颗粒介质厚度，即脉冲传播距离对脉冲归一化宽度的影响，我们也对在不同单轴应力 $P$ 下的归一化宽度 $W(P)$ 进行了计算与绘图，数据来自于单轴应力与声速关系的实验。但遗憾的是，如图~\ref{fig:normalized_width_versus_P} 所示，我们没有观察到明显的规律。
 
+\begin{figure}[!hbtp]
+  \centering
+  \includegraphics[height=7cm]{figures/2_W_norm&Strain.png}
+  \bicaption{单轴应力 $P$ 与归一化宽度 $W$ 的关系}{Relationship between uniaxial stress $P$ and normalized width $W$}
+  \label{fig:normalized_width_versus_P}
+\end{figure}
+
+目前对于该现象的解释是，颗粒介质中本身存在着如 Jassen Effect 等现象，即在诸如圆筒形容器中颗粒介质所受重力并非完全沿轴向传递，而是会有一部分力被颗粒介质中的结构分配到径向。这与通常的液压规律完全不同，因此早期人类的粮仓会因为设计不合理而被过量的径向应力破坏、坍塌\cite{sperlExperimentsCornPressure2006}。在我们的实验中，由于容器的几何因素，可能类似的效应使得颗粒介质对于脉冲信号的响应规律性受到影响，导致所观察到的 $W(P)$ 与 $P$ 之间的关系并不明显。
