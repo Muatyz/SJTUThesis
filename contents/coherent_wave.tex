@@ -15,7 +15,7 @@
   \item Tektronix TBS2204B 示波器。该示波器通过 BNC 接口对多达 $4$ 个独立模拟电压信号进行同步采集，可用于记录试探信号与在颗粒介质中传播后的响应信号。示波器的采样率最高可达 $1\unit{\giga\hertz}$，单次采样长度最高可达 $5\times 10^{6}$。通过 IPv4 网口可使用 TekScope 软件对 TBS2204B 进行数据读取和记录，并且进行简单程度的操控（开始/停止记录）等；
   \item ATA-101B Power Amplifier。可以设置输入与输出的线缆阻抗（目前声学常用线缆都是 $50\unit{\ohm}$），其主要功能是以最小步长 $2\unit{\decibel}$ 放大 AFG31021 产生的电压信号，从而使声学探头产生更高需求的声压振幅，通常适用于有限振幅波传播的非线性等实验中。可设定的最大放大效果为 $20\unit{\decibel}$，但是由于其固有的频域放大极限，如果初始输入的电压信号幅值已经较大，未必能完全做到这一点；
   \item 清诚声发射 G150 与 W800 （成对）声学探头。声学探头在相关领域中又被称为换能器（Transducer），即压电陶瓷既能够将射频线缆传输的模拟电压信号通过电-压效应转换为机械振动（声信号），又能够通过监测机械振动、通过压-电效应转换为模拟电压信号，从而进行进一步的信号处理与分析。G150 和 W800 分别是适用于 $60-400\unit{\kilo\Hz}$ 和 $50-800\unit{\kilo\hertz}$ 频域范围内工作的探头型号，应当根据实验需求选取合适的一对探头。两个型号的声学探头主体都是 $\varphi 19\unit{\milli\meter}\times 15\unit{\milli\meter}$ 的圆柱体，因此便于安装于同一颗粒容器中；
-  \item 单轴应力圆柱容器。通过 SOLIDWORKS 软件设计并采用亚克力板制作的容器（为了兼容未来可能的 X 射线扫描建模需求）。容器内径为 $D = 90\unit{\milli\meter}$, 最高支持厚度为 $13\unit{\centi\meter}$ 的颗粒介质进行实验。设置四轴活塞对容器内的颗粒介质施加单轴应力，活塞与容器底部中心均留有 $\varphi 19\unit{\milli\meter}$ 的孔洞用于安装声学探头。容器壁通过 $10\unit{\milli\meter}$ 的亚克力板弯曲为圆筒制作，因此可以承担实验需求范围的应力。探头和容器均未考虑防水/密封处理。
+  \item 单轴应力圆柱容器。通过 SOLIDWORKS 软件设计并采用亚克力板制作的容器（采用透明容器是为了兼容未来可能的 X 射线扫描建模需求）。容器内径为 $D = 90\unit{\milli\meter}$, 最高支持厚度为 $13\unit{\centi\meter}$ 的颗粒介质进行实验。设置四轴活塞对容器内的颗粒介质施加单轴应力，活塞与容器底部中心均留有 $\varphi 19\unit{\milli\meter}$ 的孔洞用于安装声学探头。容器壁通过 $10\unit{\milli\meter}$ 的亚克力板弯曲为圆筒制作，因此可以承担实验需求范围的应力。探头和容器均未考虑防水/密封处理。
 \end{itemize}
 
 %%% 这里放实验装置部件的示意图
@@ -155,8 +155,8 @@
 通过狄拉克函数 $\delta(\omega-\omega_{n})$ 提取角频率为 $\omega_{n}$ 信号分量的延迟时间的信息，再对其进行逆非幺正角频率傅里叶变换：
 
 \begin{align}
-  \mathcal{F}^{-1}\left\{\delta(\omega-\omega_{n})\mathcal{F}[C_{1,2}(\tau)]\right\} &= \int_{-\infty}^{+\infty}S_{1}^{*}(\omega)S_{2}(\omega)\delta(\omega_{n}){\ee}^{\ii\omega\tau}\mathrm{d}\omega \nonumber \\
-  &= S_{1}^{*}(\omega_{n})S_{2}(\omega_{n}){\ee}^{\ii\omega_{n}\tau}.
+  \mathcal{F}^{-1}\left\{\delta(\omega-\omega_{n})\mathcal{F}[C_{1,2}(\tau)]\right\} &= \frac{1}{2\uppi}\int_{-\infty}^{+\infty}S_{1}^{*}(\omega)S_{2}(\omega)\delta(\omega_{n}){\ee}^{\ii\omega\tau}\mathrm{d}\omega \nonumber \\
+  &= \frac{1}{2\uppi}S_{1}^{*}(\omega_{n})S_{2}(\omega_{n}){\ee}^{\ii\omega_{n}\tau}.
 \end{align}
 
 具体绘制时我们只需通过 $S_{1}^{*}(\omega_{n})S_{2}(\omega_{n}){\ee}^{\ii\omega_{n}\tau}$ 最大值归一化后的实部即可。其物理含义是，延迟时间为 $\tau$ 时，即该频率分量 $\omega_{n}$ 对应的相速度为 $V_{\varphi} = \Delta x/\tau$ 的可能性大小，所以得到的将是 $[-1,1]$ 之间的数值。通过设置离散频率分布 $\{\omega_{n}\}$, 即可查看在颗粒介质中可能的相速度分布。需要说明的是，频散能量图没有从根本上解决 $N(\omega)$ 的确定问题，但是为辅助飞行时间法测定声速提供了更直观的参考工具。
@@ -181,9 +181,37 @@
 
 \subsection{等效介质理论（EMT）}
 
-%%% 等效介质理论的推导
+假定声波波长 $\lambda\gg$ 颗粒直径 $d$，颗粒体系由相同颗粒组成，满足紧束缚条件，颗粒介质应变可采用仿射近似，则纵波声速 $V_{L}$ 与横波声速 $V_{T}$ 分别为
+
+\begin{align}
+  V_{L} &= \sqrt{\frac{(K+\frac{4}{3}G)}{\rho^{*}}},\\
+  V_{T} &= \sqrt{\frac{G}{\rho^{*}}},
+\end{align}
+
+其中 $K$ 与 $G$ 分别是颗粒介质的体弹性模量与剪切弹性模量，$\rho^{*}=\rho\phi$ 是颗粒固体的密度，$\rho$ 是颗粒材料的密度，$\phi$ 是颗粒的体积分数。在 EMT 中 模量如下给出：
+
+\begin{align}
+  K &= \frac{C_{n}}{12\uppi}\left(\phi Z\right)^{\frac{2}{3}}\left(\frac{6\uppi P}{C_{n}}\right)^{\frac{1}{3}},\\
+  G &= \frac{C_{n} + \frac{3}{2}C_{t}}{20\uppi}\left(\phi Z\right)^{\frac{2}{3}}\left(\frac{6\uppi P}{C_{n}}\right)^{\frac{1}{3}},
+\end{align}
+
+其中 $Z$ 是颗粒的平均接触数，$C_{n}$、$C_{t}$ 分别是描述颗粒在法向和切向与力相关的系数。Hertz 接触和 Mindlin 接触分别使用了这两个系数，即两个颗粒通过接触完成的相互作用为
+
+\begin{align}
+  f_{n} &= \frac{2}{3}C_{n}R^{\frac{1}{2}}w^{\frac{3}{2}},\\
+  f_{t} &= C_{t}(Rw)^{\frac{1}{2}}\Delta s,
+\end{align}
+
+其中 $w$ 是半径分别为 $R_{1}$、$R_{2}$ 的两个颗粒之间的重叠量，$R = \frac{2R_{1}R_{2}}{R_{1} + R_{2}}$ 为颗粒的等效半径。引入颗粒材料（下标 $g$）的剪切模量 $G_{g}$ 与泊松比 $\nu_{g}$，完成对力系数的表述：
+
+\begin{align}
+  C_{n} &= \frac{4G_{g}}{1-\nu_{g}},\\
+  C_{t} &= \frac{8G_{g}}{2-\nu_{g}}.
+\end{align}
 
 \subsection{实验验证}
+
+同样在单轴应力容器装置中，使用直径 $d=2\unit{\milli\meter}$ 的钢珠制备随机密堆积，并施加单轴应力 $P=$ \numlist{0.40;3.34;6.30;8.43;9.63;11.31;14.46}\unit{\kilo\pascal}。使用飞行时间法测定各应力下的声速 $V_{\text{T.O.F.}}(P)$，并观察声速与单轴应力的指数关系是否符合 EMT 的预期。
 
 %%% 展示声速与单轴应力的指数关系。
 %%% 可能是因为容器几何因素导致的 Yassen Effect，导致应力并不充分地施加到颗粒介质上。

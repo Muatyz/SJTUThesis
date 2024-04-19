@@ -4,13 +4,17 @@
 
 \section{超声波在颗粒介质中的扩散近似}
 
-Weaver R. L. 推导出了超声波在多晶体中的扩散行为方程\cite{diffusivity}:
+\subsection{理论推导}
+
+Weaver R. L. 推导出了超声波脉冲在多晶体中的扩散行为方程\cite{diffusivity}:
 
 \begin{equation}
   \frac{\partial I}{\partial t} - D\nabla^{2}I + \frac{I}{\tau_{\alpha}} = \delta(z)\delta(t)
 \end{equation}
 
-由于是圆柱对称, 则进入底部探头的透射通量为 $J(t)$
+其中 $D$ 是扩散系数，$\tau_{\alpha}$ 是描述强度在时域上衰减的特征时间，$z$ 是圆柱坐标系中的径向坐标。因为是脉冲超声波（脉冲宽度充分小，中心频率充分大），即视为时域和空间上的 Dirac 函数。
+
+具体在我们的圆筒形颗粒容器中，可以采用圆柱对称，又因为厚达 $10\unit{\milli\meter}$ 的亚克力板容器壁而假定其声阻抗足够大，在这种情形下声信号在容器壁全反射。则进入底部探头的透射通量\cite{PhysRevLett.93.154303}为
 
 \begin{equation}
   J(t) = \frac{\nu U_{0}}{2L}{\ee}^{-\frac{t}{\tau_{\alpha}}}\sum_{n=0}^{\infty}\frac{(-1)^{n}}{\delta_{n}}\cos{\left(\frac{n\uppi l^{*}}{L}\right)}{\ee}^{-\frac{D(n\uppi)^{2}t}{L^{2}}},\quad \delta_{n} = \begin{cases}
@@ -19,7 +23,12 @@ Weaver R. L. 推导出了超声波在多晶体中的扩散行为方程\cite{diff
   \end{cases}
 \end{equation}
 
-其中 $U_{0}$ 是声源能量, $D = \frac{1}{3}\nu_{e}l^{*}$ 为扩散系数, $\nu_{e}$ 为能量传输速度, $l^{*}$ 为平均自由程, $\tau_{\alpha}$ 为非弹性吸收时间.
+其中 $U_{0}$ 是声源能量, $D = \frac{1}{3}\nu_{e}l^{*}$ 为扩散系数, $\nu_{e}$ 为能量传输速度, $l^{*}$ 为平均自由程, $\tau_{\alpha}$ 正式名为非弹性吸收时间。在实验中，我们用飞行时间法测定的声速 $V_{\text{T.O.F.}}$ 来替代 $\nu_{e}$。
+
+
+\subsection{实验验证}
+
+
 
 \section{超声波在颗粒介质中的非线性}
 
