@@ -12,13 +12,15 @@
 
 \begin{itemize}
   \item Tektronix Arbitrary Function Generator AFG31021。该仪器可以按照实验需求产生如连续正弦波、某循环数正弦波列、单频脉冲等电压信号，用于激励声学探头产生对应机械振动。其支持写入自定义函数来对信号波形进行控制；
-  \item Tektronix TBS2204B 示波器。该示波器通过 BNC 接口对多达 $4$ 个独立模拟电压信号进行同步采集，可用于记录试探信号与在颗粒介质中传播后的响应信号。示波器的采样率最高可达 $1\unit{\giga\hertz}$，单次采样长度最高可达 $5\times 10^{6}$。通过 IPv4 网口可使用 TekScope 软件对 TBS2204B 进行数据读取和记录，并且进行简单程度的操控（开始/停止记录）等；
+  \item Tektronix TBS2204B 示波器。该示波器通过 BNC 接口对多达 $4$ 个独立模拟电压信号进行同步采集，可用于记录试探信号与在颗粒介质中传播后的响应信号。示波器的采样率最高可达 $1\unit{\giga\hertz}$，单次采样长度最高可达 $5\times 10^{6}$。通过 IPv4 网口可使用 TekScope 软件对 TBS2204B 进行数据读取和记录，并且进行简单程度的操控（开始/停止记录）等。而 KickStart 软件能对 AFG31021 与 TBS2204B 进行同步控制，并且能记录多次运行的信号输入与统一导出，极大地便利了对于声学信号的研究；
   \item ATA-101B Power Amplifier。可以设置输入与输出的线缆阻抗（目前声学常用线缆都是 $50\unit{\ohm}$），其主要功能是以最小步长 $2\unit{\decibel}$ 放大 AFG31021 产生的电压信号，从而使声学探头产生更高需求的声压振幅，通常适用于有限振幅波传播的非线性等实验中。可设定的最大放大效果为 $20\unit{\decibel}$，但是由于其固有的频域放大极限，如果初始输入的电压信号幅值已经较大，未必能完全做到这一点；
   \item 清诚声发射 G150 与 W800 （成对）声学探头。声学探头在相关领域中又被称为换能器（Transducer），即压电陶瓷既能够将射频线缆传输的模拟电压信号通过电-压效应转换为机械振动（声信号），又能够通过监测机械振动、通过压-电效应转换为模拟电压信号，从而进行进一步的信号处理与分析。G150 和 W800 分别是适用于 $60-400\unit{\kilo\Hz}$ 和 $50-800\unit{\kilo\hertz}$ 频域范围内工作的探头型号，应当根据实验需求选取合适的一对探头。两个型号的声学探头主体都是 $\varphi 19\unit{\milli\meter}\times 15\unit{\milli\meter}$ 的圆柱体，因此便于安装于同一颗粒容器中；
   \item 单轴应力圆柱容器。通过 SOLIDWORKS 软件设计并采用亚克力板制作的容器（采用透明容器是为了兼容未来可能的 X 射线扫描建模需求）。容器内径为 $D = 90\unit{\milli\meter}$, 最高支持厚度为 $13\unit{\centi\meter}$ 的颗粒介质进行实验。设置四轴活塞对容器内的颗粒介质施加单轴应力，活塞与容器底部中心均留有 $\varphi 19\unit{\milli\meter}$ 的孔洞用于安装声学探头。容器壁通过 $10\unit{\milli\meter}$ 的亚克力板弯曲为圆筒制作，因此可以承担实验需求范围的应力。探头和容器均未考虑防水/密封处理。
 \end{itemize}
 
 %%% 这里放实验装置部件的示意图
+
+%%% 放一个 101B 的频域放大极限的示意图
 
 %%% 找到一个用 tikz 画工作流示意图的方法
 
@@ -208,6 +210,146 @@
   C_{n} &= \frac{4G_{g}}{1-\nu_{g}},\\
   C_{t} &= \frac{8G_{g}}{2-\nu_{g}}.
 \end{align}
+
+现在我们从颗粒体系的应力-应变角度出发，通过假定颗粒介质具有各向同性，以及前文所提到的仿射近似条件下，求得颗粒介质模量\cite{WALTON1987213}。
+
+假定颗粒介质中两相邻接触的颗粒坐标分别为 $\mathbf{r}^{(m)}$、$\mathbf{r}^{(n)}$，且颗粒球体的半径为 $R$。那么从 $m$ 指向 $n$ 的位矢单位矢量为
+
+\begin{equation}
+  \mathbf{I}^{(nm)} = \frac{\mathbf{r}^{(n)} - \mathbf{r}^{(m)}}{2R}\label{eq:unit_vector}
+\end{equation}
+
+标记两颗粒的空间位移分别为 $\mathbf{u}^{(m)}$、$\mathbf{u}^{(n)}$，借助式~\eqref{eq:unit_vector} 可以提取出两颗粒相对位移在其接触面法向与切向的分量，而这正是 Hertz 接触与 Mindlin 接触中所需要的法向与切向形变信息。
+
+\begin{align}
+  w_{0} &= \frac{\mathbf{u}^{(m)} - \mathbf{u}^{(n)}}{2}\cdot \mathbf{I}^{(nm)},\\
+  \Delta s &= \frac{\mathbf{u}^{(m)} - \mathbf{u}^{(n)}}{2} - w_{0}\mathbf{I}^{(nm)} = \frac{\mathbf{u}^{(m)} - \mathbf{u}^{(n)}}{2} - \left[\frac{\mathbf{u}^{(m)} - \mathbf{u}^{(n)}}{2}\cdot \mathbf{I}^{(nm)}\right]\mathbf{I}^{(nm)}.
+\end{align}
+
+注意这里所取的上标，使得法向形变量指向颗粒体心处。代入形变量到两种接触力模型中，我们可以得到两颗粒之间的相互作用力：
+
+\begin{equation}
+  \begin{aligned}
+  \mathbf{F}^{(nm)} &= \mathbf{F}_{N}^{(nm)} + \mathbf{F}_{T}^{(nm)}\\
+  &= \frac{4R^{\frac{1}{2}}w_{0}^{\frac{3}{2}}}{3\uppi B}\mathbf{I}^{(nm)} + \frac{8(Rw_{0})^{\frac{1}{2}}}{3\pi(2B+C)}\left[\frac{\mathbf{u}^{(m)} - \mathbf{u}^{(n)}}{2} - w_{0}\mathbf{I}^{(nm)}\right]\\
+  &= \frac{(2R)^{\frac{1}{2}}}{3\uppi B(2B+C)}\left\{2B\left[\left(\mathbf{u}^{(n)} - \mathbf{u}^{(n)}\right)\cdot \mathbf{I}^{(nm)}\right]^{\frac{1}{2}}\left(\mathbf{u}^{(m)} - \mathbf{u}^{(n)}\right)\right.\\
+   &+ \left.C\left[\left(\mathbf{u}^{(m)} - \mathbf{u}^{(n)}\right)\cdot \mathbf{I}^{(nm)}\right]^{\frac{3}{2}}\mathbf{I}^{(nm)}\right\}
+  \end{aligned}\label{eq:contact_force}
+\end{equation}
+
+其中
+
+\begin{align}
+  B &= \frac{1}{4\uppi}\left(\frac{1}{\mu} + \frac{1}{\lambda + \mu}\right),\\
+  C &= \frac{1}{4\uppi}\left(\frac{1}{\mu} - \frac{1}{\lambda + \mu}\right),
+\end{align}
+
+而 $\lambda$ 和 $\mu$ 是颗粒材料的 Lamé 系数。假设颗粒的形变与样品的应变满足
+
+\begin{equation}
+  {u}_{i}^{(n)} = \mathbf{e}_{ij}{r}_{j}^{(n)}\label{eq:strain_displacement},
+\end{equation}
+
+其中 $\mathbf{e}_{ij}$ 是描述颗粒介质应变的张量，${r}_{j}^{(n)}$ 是颗粒 $n$ 在 $j$ 轴上的位矢分量，${u}_{i}^{(n)}$ 是颗粒 $n$ 在 $i$ 轴上的位移分量。这里使用类似于 Einstein 求和约定的写法而省略了原本应有的 $\sum_{j}^{x,y,z}$ 求和符号。于是代入式~\eqref{eq:unit_vector}、\eqref{eq:strain_displacement}至式~\eqref{eq:contact_force} 中，有
+
+\begin{equation}
+  F_{i}^{(nm)} = -\frac{4R^{2}}{3\uppi B(2B+C)}\left\{2B\left(-e_{i^{\prime}j^{\prime}}\mathbf{I}_{i^{\prime}}^{(nm)}\mathbf{I}_{j^{\prime}}^{(nm)}\right)^{\frac{1}{2}}e_{ij}\mathbf{I}_{j}^{(nm)} - C\left(-e_{i^{\prime}j^{\prime}}\mathbf{I}^{(nm)}_{i^{\prime}}\mathbf{I}_{j^{\prime}}^{(nm)}\right)^{\frac{3}{2}}\mathbf{I}_{i}^{(nm)}\right\}
+\end{equation}
+
+接下来我们描述颗粒介质中的应力-应变关系。颗粒介质的平均应力可以表示为颗粒间相互作用的矢量和，即
+
+\begin{equation}
+  \langle\sigma_{ij}\rangle = \frac{1}{V}\int\sigma_{ij}\mathrm{d}V = \frac{1}{V}\sum_{n}\int\sigma_{ij}^{(n)}\mathrm{d}V_{n}.
+\end{equation}
+
+其中 $V$ 是颗粒介质的体积，$\sigma_{ij}$ 表示在颗粒介质中的 Cauchy 应力，$\sigma_{ij}^{(n)}$ 和 $V_{n}$ 分别表示颗粒 $n$ 的 Cauchy 应力与体积。考虑体积微元 $\mathrm{d}V = \mathrm{d}r\mathrm{d}S$，即有
+
+\begin{equation}
+  \int\sigma_{ij}^{(n)}\mathrm{d}V_{n} = \frac{1}{2}\int\left(r_{i}^{\prime}t_{j}^{(n)} + r_{j}^{\prime}t_{i}^{(n)}\right)\mathrm{d}S_{n},
+\end{equation}
+
+其中 $\mathbf{r}^{\prime} = \mathbf{r} - \mathbf{r}^{(n)} $ 是颗粒 $n$ 体心指向颗粒间接触点的位矢，而 $\mathbf{t}^{(n)}$ 描述了颗粒 $n$ 的表面 $S_{n}$ 在 $\mathbf{r}$ 处的作用力强度。显然，由于颗粒本身是离散存在的，因此能与颗粒 $n$ 产生接触并且能真正产生作用力的颗粒 $m$ 也是有界的。所以将积分形式转换为求和形式，并使用 $\mathbf{r}^{\prime} = \left(\mathbf{r}^{(m)} - \mathbf{r}^{(n)}\right)/2$，得到
+
+\begin{equation}
+  \int\sigma_{ij}^{(n)}\mathrm{d}V_{n} = \frac{1}{2}\sum_{m}\left\{\frac{1}{2}\left(r_{i}^{(m)} - r_{i}^{(n)}\right)F_{j}^{(nm)} + \frac{1}{2}\left(r_{j}^{(m)} - x_{j}^{(n)}\right)F_{i}^{(nm)}\right\}\label{eq:cauchy_tensor}.
+\end{equation}
+
+代入~\eqref{eq:unit_vector} 于式~\eqref{eq:cauchy_tensor}，得到
+
+\begin{equation}
+  \langle\sigma_{ij}\rangle = \frac{R}{V}\sum_{n,m}\left(I_{i}^{(nm)}F_{j}^{(nm)} + I_{j}^{(nm)}F_{i}^{(nm)}\right)\label{eq:cauchy_tensor_2}.
+\end{equation}
+
+因为求和符号已经写作 $\sum_{m,n}$ 形式，在式~\eqref{eq:cauchy_tensor} 中的系数 $\frac{1}{2}$ 便不再使用。我们已经得出了描述力 $F_{i}^{(nm)}$ 的式~\eqref{eq:contact_force}，将其代入至~\eqref{eq:cauchy_tensor_2}，得到
+
+\begin{equation}
+  \begin{aligned}
+    \langle\sigma_{ij}\rangle &= \frac{8R^{3}}{3\uppi VB(2B+C)}\sum_{n,m}\left\{B\left(-e_{i^{\prime}j^{\prime}}I_{i^{\prime}}^{(nm)}I_{j^{\prime}}^{(nm)}\right)^{\frac{1}{2}}\left[e_{ik}I_{k}^{(nm)}I_{j}^{(nm)} + e_{jk}I_{k}^{(nm)}I_{i}^{(nm)}\right]\right.\\
+    &-\left. C\left(-e_{i^{\prime}j^{\prime}}I_{i^{\prime}}^{(nm)}I_{j^{\prime}}^{(nm)}\right)^{\frac{3}{2}}I_{i}^{(nm)}I_{j}^{(nm)}\right\}
+  \end{aligned}\label{eq:cauchy_tensor_3}.
+\end{equation}
+
+回顾前面 EMT 的求和假设：颗粒介质呈现几何学上统计性质的各向同性，各颗粒被均匀配位（接触点在球面上均匀分布），颗粒介质的体积足够大，且其中包含充分多的颗粒。所以式~\eqref{eq:cauchy_tensor_3} 可简化为
+
+\begin{equation}
+  \begin{aligned}
+  \langle\sigma_{ij}\rangle &= \frac{4R^{3}ZN}{3\uppi VB(2B+C)}\left\{B\left\langle(-e_{i^{\prime}j^{\prime}}I_{i^{\prime}}I_{j^{\prime}})^{\frac{1}{2}}(e_{ik}I_{k}I_{j} + e_{jk}I_{k}I_{i})\right\rangle\right.\\
+  &-\left.\left\langle(-e_{i^{\prime}j^{\prime}}I_{i^{\prime}}I_{j^{\prime}})^{\frac{3}{2}}I_{i}I_{j}\right\rangle\right\}.
+  \end{aligned}\label{eq:cauchy_tensor_4}
+\end{equation}
+
+其中 $Z$ 是各颗粒的平均配位数，$N$ 表示体系中的颗粒总数。通过体积分数
+
+\begin{equation}
+  \phi = \frac{N}{V}\frac{4}{3}\uppi R^3
+\end{equation}
+
+化简式~\eqref{eq:cauchy_tensor_4}，得到
+
+\begin{equation}
+  \begin{aligned}
+    \langle\sigma_{ij}\rangle &= \frac{\phi Z}{\uppi^{2}B(2B+C)}\left\{B\left\langle(-e_{i^{\prime}j^{\prime}}I_{i^{\prime}}I_{j^{\prime}})^{\frac{1}{2}}(e_{ik}I_{k}I_{j} + e_{jk}I_{k}I_{i})\right\rangle - C\left\langle(-e_{i^{\prime}j^{\prime}}I_{i^{\prime}}I_{j^{\prime}})^{\frac{3}{2}}I_{i}I_{j}\right\rangle\right\}.
+  \end{aligned}
+\end{equation}
+
+对颗粒介质采取等静压假设（isostatic），即应变在颗粒介质中是均匀的：
+
+\begin{equation}
+  e_{ij} = e\delta_{ij},
+\end{equation}
+
+所以有
+
+\begin{equation}
+  \langle\sigma_{ij}\rangle = -\frac{\phi Z(-e)^{\frac{3}{2}}}{\uppi^{2}B}\langle I_{i}I_{j}\rangle
+\end{equation}
+
+而对于相对坐标的单位矢量 $I$，有 $\langle I_{i}I_{j}\rangle = \frac{1}{3}\delta_{ij}$。约定 $\langle\sigma_{ij}\rangle = -p\delta_{ij}$，即
+
+\begin{equation}
+  p = \frac{\phi Z(-e)^{3/2}}{3\uppi^{2}B}.
+\end{equation}
+
+这里 $p$ 实际上就是颗粒介质所受的约束应力（confining pressure）。反解出
+
+\begin{equation}
+  e = -\left(\frac{3\uppi^{2}Bp}{\phi Z}\right)^{\frac{2}{3}}
+\end{equation}
+
+现在我们求解 EMT 下的模量。弹性模量通过下式给出定义：
+
+\begin{equation}
+  \langle\delta\sigma_{ij}\rangle = C_{ijkl}^{*}\langle\delta e_{kl}\rangle
+\end{equation}
+
+因此需要求出式~\eqref{eq:contact_force} 的微元，从而导出模量关系:
+
+\begin{equation}
+  \begin{aligned}
+  &\delta\mathbf{F}^{(nm)} \\
+  &= \frac{(2R)^{\frac{1}{2}}\left[\left(\mathbf{u}^{(m)} - \mathbf{u}^{(n)}\right)\cdot\mathbf{I}^{(nm)}\right]^{\frac{1}{2}}}{2\uppi B(2B+C)}\left\{2B\left(\delta\mathbf{u}^{(m)} - \delta\mathbf{u}^{(n)}\right) + C\left[\left(\delta\mathbf{u}^{(m)} - \delta\mathbf{u}^{(n)}\right)\cdot\mathbf{I}^{(nm)}\right]\mathbf{I}^{(nm)}\right\}.
+  \end{aligned}
+\end{equation}
 
 \subsection{实验验证}\label{sec:stress_velocity_relation}
 
