@@ -97,7 +97,7 @@
   \item 信号平滑。由于示波器的采样频率通常很高，而且存在着一定的热噪声对信号进行干扰，因此我们借助 Matlab 的 movmean() 函数对信号进行线性权重的平滑处理。我们通过平均窗口长度 $num_window$ 来控制平滑程度，该量既不能过小，使得热噪声未能被充分处理，也不能过大使得真正的响应信号也被模糊失真；
   \item 识别源信号（Src. = Source）的首峰时刻。作为源振幅信号，其信噪比明显很高，因此我们可以使用较大的噪声阈值，如源信号振幅的 $40\%$，通过 findpeaks() 函数识别源信号的首个峰值。源信号的峰值位置识别通常准确率很高。需要注意的是，即使在采集时已经在示波器上设定源振幅信号和响应信号的偏置值为 $0\unit{V}$，由于系统硬件本身的问题仍然会导致源信号和响应信号存在一定量的偏置值，而这会对后续识别信号的波前位置造成影响。
   \item 计算源信号的偏置值。取首峰幅值的 $1/80$ 作为其波前定义，通过 find() 函数找到其对应的时刻 $t_{O}$，即近似为源信号的发射时刻。取所记录的源信号中发射时刻前的信号均值作为源信号的偏置值，并将源信号减去该偏置值作为修正。由于在记录信号时已经使用了 $128$ 次平均采集，所以热噪声造成的幅值涨落已经被尽可能消除，因此计算所得到的偏置值是相对准确的。
-  \item 识别响应信号（Res. = Response）的首峰时刻。从该步骤开始，需要通过控制寻峰算法中的 findpeaks() 函数中的峰最小半高宽（MinPeakWidth）和噪声阈值（MinPeakProminence）避免错误识别经由平滑处理后依然存在的热噪声峰。
+  \item 识别响应信号（Res. = Response）的首峰时刻。从该步骤开始，需要通过控制寻峰算法中的 findpeaks() 函数中的峰最小半高宽（MinPeakWidth）和噪声阈值（MinPeakProminence），并且需要通过。
 \end{enumerate}
 
 图~\ref{fig:reference_point}是对典型的响应信号进行三种不同到达时间识别的实例。
@@ -145,14 +145,14 @@
 
 \subsubsection{测量相速度的原理推导}
 
-考虑单频连续正弦波作为激励声源，如果我们将颗粒介质中的声学传播简单考虑为单频平面波，即
+考虑单频连续正弦波作为声源激励，如果我们将颗粒介质中的声学传播简单考虑为单频平面波，即
 
 \begin{equation}
   s(x,t) = A_{0}{\ee}^{-\alpha x}{\ee}^{\ii(\omega x/V_{\varphi}-\omega t)},
   \label{eq:spherical_wave}
 \end{equation}
 
-其中 $A_{0}$ 是声源振幅，$\alpha$ 描述声信号在颗粒介质中随着传播距离 $x$ 的衰减系数，$V_{\varphi}$ 是信号角频率为 $\omega$ 时的相速度。假定在距离声源 $x_{1}$ 与 $x_{2}$ 处存在两个小接收探头，分别接收到声波信号 $S_{1}(t)$ 与 $S_{2}(t)$。则能求解相速度为
+其中 $A_{0}$ 是声源振幅，$\alpha$ 描述声信号在颗粒介质中随着传播距离 $x$ 的衰减系数，$V_{\varphi}$ 是信号角频率为 $\omega$ 时的相速度。假定在距离声源 $x_{1}$ 与 $x_{2}$ 处存在两个小接收探头（即忽略可能造成的反射），分别接收到声波信号 $S_{1}(t)$ 与 $S_{2}(t)$。则能求解相速度为
 
 \begin{equation}
   V_{\varphi} = \frac{x_{2}-x_{1}}{\Delta \varphi}\omega.
@@ -170,7 +170,7 @@
   C_{i,j}(\tau) = \int_{-\infty}^{+\infty}S_{i}(t)S_{j}(t+\tau)\mathrm{d}t.
 \end{equation}
 
-其中 $\tau$ 是描述信号延迟/传播时间的参数。显然该函数是一个时域函数，对其进行非幺正角频率傅里叶变换：
+其中 $\tau$ 是描述信号延迟/传播时间的参数，因此该函数是一个时域函数。对其进行非幺正角频率傅里叶变换：
 
 \begin{align}
   \mathcal{F}[C_{1,2}(\tau)] &= \int_{-\infty}^{+\infty}{\ee}^{-\ii\omega\tau}\int_{-\infty}^{+\infty}S_{1}(t)S_{2}(t+\tau)\mathrm{d}t\mathrm{d}\tau \nonumber \\
@@ -179,14 +179,14 @@
   &= S_{1}^{*}(\omega)S_{2}(\omega).
 \end{align}
 
-其中 $S_{1}^{*}(\omega)$ 和 $S_{2}(\omega)$ 分别是 $S_{1}(t)$ 和 $S_{2}(t)$ 的非幺正角频率傅里叶变换，$^{*}$ 表示取该复数量的共轭。接下来通过狄拉克函数 $\delta(\omega-\omega_{n})$ 提取角频率为 $\omega_{n}$ 信号分量的延迟时间 $\tau_{n}$ 的信息，再对其进行逆非幺正角频率傅里叶变换：
+其中 $S_{1}^{*}(\omega)$ 和 $S_{2}(\omega)$ 分别是 $S_{1}(t)$ 和 $S_{2}(t)$ 的非幺正角频率傅里叶变换计算而来的频谱，上标 $^{*}$ 表示取该复数量的共轭。接下来通过狄拉克函数 $\delta(\omega-\omega_{n})$ 提取角频率为 $\omega_{n}$ 信号分量的延迟时间 $\tau_{n}$ 的信息，再对其进行逆非幺正角频率傅里叶变换：
 
 \begin{align}
   \mathcal{F}^{-1}\left\{\delta(\omega-\omega_{n})\mathcal{F}[C_{1,2}(\tau)]\right\} &= \frac{1}{2\uppi}\int_{-\infty}^{+\infty}S_{1}^{*}(\omega)S_{2}(\omega)\delta(\omega_{n}){\ee}^{\ii\omega\tau}\mathrm{d}\omega \nonumber \\
   &= \frac{1}{2\uppi}S_{1}^{*}(\omega_{n})S_{2}(\omega_{n}){\ee}^{\ii\omega_{n}\tau}.
 \end{align}
 
-具体绘制时我们只需通过 $S_{1}^{*}(\omega_{n})S_{2}(\omega_{n}){\ee}^{\ii\omega_{n}\tau}/2\uppi$ 最大值归一化后的实部即可。其物理含义是，延迟时间为 $\tau$ 时，即该频率分量 $\omega_{n}$ 对应的相速度为 $V_{\varphi} = \Delta x/\tau$ 的可能性大小，所以得到的将是 $[-1,1]$ 之间的数值。通过设置离散频率分布 $\{\omega_{n}\}$, 即可查看在颗粒介质中可能的相速度分布。需要说明的是，频散能量图没有从根本上解决 $N(\omega)$ 的确定问题，但是为辅助飞行时间法测定声速提供了更直观的参考工具。
+具体绘制二维概率分布时，我们只需以 $S_{1}^{*}(\omega_{n})S_{2}(\omega_{n}){\ee}^{\ii\omega_{n}\tau}/2\uppi$ 的最大值进行归一化，并且取计算后的实部即可。该函数的物理含义是，延迟时间为 $\tau$ 时，即该频率分量 $\omega_{n}$ 对应的相速度为 $V_{\varphi} = \Delta x/\tau$ 的可能性大小（得到的将是 $[-1,1]$ 之间的数值，即越接近 $1$ 可能性越高）。通过设置离散频率分布 $\{\omega_{n}\}$, 即可查看在颗粒介质中可能的相速度分布。需要说明的是，频散能量图没有从根本上解决 $N(\omega)$ 的确定问题，但是为辅助飞行时间法测定声速提供了更直观的参考工具。
 
 \subsubsection{颗粒介质中相速度分布}
 
@@ -202,7 +202,7 @@
   \label{fig:dispersion_energy}
 \end{figure}
 
-图 \ref{fig:dispersion_energy} 展示了在单轴应力容器中，根据不同采集距离下的两道压缩波信号绘制的频散能量图。可以看到两道信号在发射信号的中心频率 $f_{c} = 30\text{ kHz}$ 处的相速度约为 $V_{\varphi} = 350\pm 10\unit{m/s}$。
+图 \ref{fig:dispersion_energy} 展示了在单轴应力容器中，根据不同采集距离 $x_{1}$、$x_{2}$ 下的两道压缩波信号绘制的频散能量图。可以看到两道信号在发射信号的中心频率 $f_{c} = 30\text{ kHz}$ 处的相速度约为 $V_{\varphi} = 350\pm 10\unit{m/s}$。
 
 \section{声速与单轴应力的指数关系}
 
@@ -211,8 +211,8 @@
 假定声波波长 $\lambda\gg$ 颗粒直径 $d$，颗粒体系由相同颗粒组成，满足紧束缚条件，颗粒介质应变可采用仿射近似，则纵波声速 $V_{L}$ 与横波声速 $V_{T}$ 分别为
 
 \begin{align}
-  V_{L} &= \sqrt{\frac{(K+\frac{4}{3}G)}{\rho^{*}}},\label{eq:emt_velocity_L}\\
-  V_{T} &= \sqrt{\frac{G}{\rho^{*}}}\label{eq:emt_velocity_T}.,
+  V_{L} &= \sqrt{\frac{(K+\frac{4}{3}G)}{\rho^{*}}},\label{eq:emt_velocity_L},\\
+  V_{T} &= \sqrt{\frac{G}{\rho^{*}}}.\label{eq:emt_velocity_T}
 \end{align}
 
 其中 $K$ 与 $G$ 分别是颗粒介质的体弹性模量与剪切弹性模量，$\rho^{*}=\rho\phi$ 是颗粒固体的密度，$\rho$ 是颗粒材料的密度，$\phi$ 是颗粒介质的体积分数。在 EMT 中两个模量通过以下式子给出：
@@ -475,40 +475,42 @@
 
 \subsection{归一化宽度的定义}
 
-在信号处理中，常见的对于峰宽度的定义通常是半高宽；事实上，我们在处理响应信号的到达时间时，使用的寻峰算法中的参数也的确包含了半高宽阈值用于排除噪音的干扰。但是这里我们引入的归一化宽度参数 $W$ 同时考虑了峰值与波前在时域中位置：
+在数字信号处理中，常见的对于峰宽度的定义是峰的半高宽，例如在光谱分析中借助峰的半高宽定义的展宽来研究 Dopler 展宽、Stark 展宽等机制；事实上，前文中我们在处理响应信号的到达时间时，用于控制寻峰算法的参数中也的确包含了半高宽阈值，以此排除响应信号中固有的热噪声干扰。而在本小节中，我们引入的归一化宽度参数 $W$ 同时考虑了峰值与波前在时域中位置：
 
 \begin{equation}
   W \equiv \frac{t_{1}-t_{0}}{t_{1}},
 \end{equation}
 
-其中 $t_{0}$ 与 $t_{1}$ 分别为波前与峰值的到达时间。我们在测定最佳信号参考点的时候应当意识到，脉冲的展宽实际上已经在一定程度上反映了“在颗粒介质中存在着较明显的色散关系”；而峰值到达时间定义的飞行时间速度，即在试探信号中心频率附近，在距离上更具有稳定性。因此，通过与中心频率（这里指所发射的试探信号的频率 $f_{c}$）关联的 $t_{1}$ 来对信号进行缩放操作是合理的。后文通过数据处理后得到的图~\ref{fig:reference_point} 以及对应讨论中进一步证明这一点。
+其中 $t_{0}$ 与 $t_{1}$ 分别为波前与峰值的到达时间。我们在测定最佳信号参考点的时候已经能意识到，各个参考点出现的分离现象，即脉冲在传播距离上的展宽已经在一定程度上反映了“在颗粒介质中存在着较明显的色散关系”这一事实；而首峰到达时间 $t_{1}$ 定义的飞行时间速度，在距离上更具有稳定性。因此，通过与中心频率（这里指所发射的试探信号的频率 $f_{c}$）关联的 $t_{1}$ 来对信号进行缩放操作是合理的。后文通过数据处理后得到的图~\ref{fig:reference_point} 以及对应讨论中进一步证明这一点。
 
 \subsection{归一化宽度与颗粒介质厚度的关系}
 
 \subsubsection{理论推导}
 
-我们先从最简单的一维弹簧链开始推导。在凝聚态物理课程中，我们已经学习了一维晶格的色散关系为
+为了理解归一化宽度的物理含义，我们先从最简单的一维弹簧链开始推导。在凝聚态物理课程中，我们已经学习了一维晶格的色散关系为
+
+%%% 找一下基泰尔的citation
 
 \begin{equation}
   \omega=\sqrt{\frac{4C}{M}}\left|\sin\left(\frac{ka}{2}\right)\right|,
 \end{equation}
 
-其中 $C$ 为弹簧的劲度系数，$M$ 为弹簧所连接质点的质量，$a$ 为平衡位置下的质点间距（晶格常数）。我们将其写为反函数形式：
+其中 $C$ 是弹簧的劲度系数，$M$ 是弹簧所连接质点的质量，$a$ 为平衡位置下的质点间距（晶格常数）。我们将其写为反函数形式：
 
 \begin{equation}
   k(\omega) = \frac{2}{a}\arcsin{\left(\sqrt{\frac{M}{4C}}\omega\right)}.\label{eq:1D_dispersion_relation}
 \end{equation}
 
-在这里，我们对式~\eqref{eq:1D_dispersion_relation} 应用长波极限 $ka\ll 1$, 从而求得波速度：
+为了求得此模型中的波传播速度 $V$，我们对式~\eqref{eq:1D_dispersion_relation} 应用长波极限，即 $ka\ll 1$：
 
 \begin{equation}
   V = \lim_{ka\ll 1}\frac{\omega}{k} = \sqrt{\frac{C}{M}}a.
 \end{equation}
 
-使用 $V$ 替换式~\eqref{eq:1D_dispersion_relation} 中的 $C$，$M$ 项，且假定长波极限下的声速 $V$ 充分大，使得我们足以通过麦克劳林级数将其展开至前两项：
+使用 $V$ 替换式~\eqref{eq:1D_dispersion_relation} 中的 $C$，$M$ 项，且假定长波极限下的声速 $V$ 充分大，使得我们足以通过 Maclaurin 级数将波矢项 $k(\omega)$ 展开至前两项：
 
 \begin{equation}
-  k = \frac{2}{a}\left[\frac{a\omega}{2V} + \frac{1}{6}\left(\frac{a\omega}{2V}\right)^{3} + o\left(\frac{1}{V^3}\right)\right]\approx\frac{\omega}{V} + \frac{2\omega^{3}a^{2}}{3V^{3}},
+  k = \frac{2}{a}\left[\frac{a\omega}{2V} + \frac{1}{6}\left(\frac{a\omega}{2V}\right)^{3} + o\left(\frac{1}{V^3}\right)\right]\approx\frac{\omega}{V} + \frac{2\omega^{3}a^{2}}{3V^{3}}+o(\omega^{3}),
 \end{equation}
 
 将其代入至波数项中，我们将看到
@@ -525,19 +527,19 @@
   \mathcal{F}[\text{Ai}(t)] = \text{exp}\left[\ii\cdot \frac{1}{3}\omega^3\right].
 \end{align}
 
-将波数项代入至 $a(x,-t)$ 中，并对其进行傅里叶变换：
+其中 $\text{Ai}(t)$ 是 Airy 函数。将波数项代入至 $a(x,-t)$ 中，并对其进行傅里叶变换：
 
 \begin{equation}
   \mathcal{F}[a(x,-t)] = \int_{-\infty}^{+\infty}A_{0}{\ee}^{\ii\omega t_{1}}{\ee}^{\ii(\omega/\omega_{1})^{3}}e^{\ii\omega t}e^{-\ii\omega t}\mathrm{d}t = A_{0}{\ee}^{\ii\omega t_{1}}{\ee}^{\ii(\omega/\omega_{1})^{3}}.
 \end{equation}
 
-所以，根据傅里叶变换的平移性质~\eqref{eq:translation_property}与尺度性质~\eqref{eq:scale_property}，我们得到源信号形式可近似为通过 $\omega_{1}$ 控制宽度的 Airy 函数：
+所以，根据傅里叶变换的平移性质~\eqref{eq:translation_property}与尺度放缩性质~\eqref{eq:scale_property}，我们得到经由颗粒介质传播的响应信号形式可近似为通过 $\omega_{1}$ 控制峰宽度的 Airy 函数：
 
 \begin{equation}
   s(x,t) = \omega_{1}\text{Ai}\left[\omega_{1}(t_{1}-t)\right].
 \end{equation}
 
-因此，在一维弹簧链中，脉冲波传播到距离 $L$ 处的归一化宽度为
+因此，在一维弹簧链中，脉冲波传播到距离 $L$ 处的归一化宽度 $W$ 为
 
 \begin{equation}
   W \approx \frac{\pi}{2\omega_{1}}\frac{1}{t_{1}}\propto L^{-2/3}.
@@ -552,8 +554,8 @@
 其中满足
 
 \begin{align}
-  V &= \bar{V} = \sqrt{\frac{\bar{K}}{\bar{\rho}}}\\
-  \gamma &= \int_{0}^{+\infty}\langle\nu_{K}(0)\nu_{K}(x)\rangle\mathrm{d}x = \sigma_{K}^{2}L_{c}
+  V &= \bar{V} = \sqrt{\frac{\bar{K}}{\bar{\rho}}},\\
+  \gamma &= \int_{0}^{+\infty}\langle\nu_{K}(0)\nu_{K}(x)\rangle\mathrm{d}x = \sigma_{K}^{2}L_{c}.
 \end{align}
 
 通过引入虚波矢 $k^{\prime\prime}$ 写出频域内的信号分布，并仿照上面一维弹簧链中的式~\eqref{eq:rescale_method} 进行缩放操作：
@@ -565,7 +567,7 @@
 因此得到归一化宽度：
 
 \begin{equation}
-W\sim \frac{1}{\omega_{1}t_{1}} = (\sigma_{K})^{\frac{2}{n}}\left(\frac{n-1}{n}\right)^{\frac{n-1}{n}}
+W\sim \frac{1}{\omega_{1}t_{1}} = (\sigma_{K})^{\frac{2}{n}}\left(\frac{L_{c}}{x}\right)^{\frac{n-1}{n}}
 \end{equation}
 
 在一维随机分层介质中有 $n=2$, 因此在 $x = L$ 处归一化宽度为
@@ -574,9 +576,11 @@ W\sim \frac{1}{\omega_{1}t_{1}} = (\sigma_{K})^{\frac{2}{n}}\left(\frac{n-1}{n}\
   W\propto L^{-\frac{1}{2}}.
 \end{equation}
 
+由此我们得到了同时考虑了色散关系与衰减项的归一化宽度与颗粒介质厚度之间的指数关系。
+
 \subsubsection{实验验证}
 
-我们控制试探信号为 $5$ 循环 $30\unit{\kilo\Hz}$ 连续正弦波列作为试探信号，使用颗粒为直径 $2\unit{\milli\meter}$ 的钢珠生成随机密堆积，施加的单轴应力为 $9\unit{\kilo\Pa}$；分别测定了颗粒介质厚度为 $\numlist{6;11;16;20;24;30}\unit{\milli\metre}$ 时的响应信号，并且每一厚度都各自单独重新制备 7 次随机密堆积以尽可能消除实验误差，并且数据进行系综平均，标准差作为误差棒。图~\ref{fig:reference_point} 展示了其中一组响应信号通过相干波峰 $A_{1}$ 归一化，且时间轴以波峰到达时间 $t_{1}$ 进行缩放后的图像：
+我们设定 $5$ 循环 $30\unit{\kilo\Hz}$、振幅为 $1\unit{VPP}$ 的连续正弦波列电压模拟信号作为试探信号的激励源，使用颗粒为直径 $2\unit{\milli\meter}$ 的钢珠生成随机密堆积，施加的单轴应力为 $9\unit{\kilo\Pa}$；每一厚度都各自单独重新制备 7 次随机密堆积以尽可能消除实验误差，分别测定了颗粒介质厚度为 $\numlist{6;11;16;20;24;30}\unit{\milli\metre}$ 时的响应信号，并且对各到达时间的数据进行系综平均，计算其标准差作为误差。图~\ref{fig:reference_point} 展示了其中一组响应信号的图像，其幅值通过相干首波峰值 $A_{1}$ 进行归一化处理，且时间轴以首峰到达时间 $t_{1}$ 进行重标定放缩：
 
 \begin{figure}[!htp]
   \centering
@@ -587,13 +591,13 @@ W\sim \frac{1}{\omega_{1}t_{1}} = (\sigma_{K})^{\frac{2}{n}}\left(\frac{n-1}{n}\
 
 可以发现，虽然采集信号时的颗粒介质厚度各异，但是通过幅值归一化与时间轴的缩放，仍能够观察到“响应信号可以提取出相干首波”的本质特征。当 $t/t_{1} > 1$，响应信号的宽度开始出现显著变化；而在前面的信号参考点选取的实验中，我们已经知道，$t_{1}$ 是一个性质较为良好的参考点，因此我们可以通过借助 $t_{1}$ 定义的归一化宽度 $W$ 来探究其与颗粒介质厚度，即信号传播距离 $L$ 之间的关系。
 
-图~\ref{fig:normalized_width_versus_L} 展示了上述实验中测得的归一化宽度 $W$ 与颗粒介质厚度 $L$ 之间的关系，其中为了观察幂律关系使用了双对数处理并对其数据点进行了线性拟合。不难看出，我们得出的结果约为 $W\propto L^{-0.448}$，与理论推导的 $W\propto L^{-1/2}$ 已经相当接近。
+图~\ref{fig:normalized_width_versus_L} 展示了上述实验中测得的归一化宽度 $W$ 与颗粒介质厚度 $L$ 之间的关系。为了观察两者之间是否存在指数关系，对图像使用了双对数处理，并对其数据点进行了线性拟合求得斜率。不难看出，我们得出的结果约为 $W\propto L^{-0.448}$，与理论推导的 $W\propto L^{-1/2}$ 已经相当接近。
 
 需要说明的是，这种偏差存在两种来源：
 
 \begin{enumerate}
-  \item 波前到达时间的选取并不是绝对的。既然我们是通过 $S(t_{0}) = A_{1}\cdot k$（$k\in(0,0.1]$）确定的 $t_{0}$，那么 $k$ 的具体数值会影响到 $t_{0}$ 的选取，从而影响到归一化宽度 $W$ 的测定；而在传播距离较大时，响应信号的信噪比会因为信号衰减而急剧降低，此时对全体传播距离上的响应信号划定一条通用可行的 $k$ 实际上是存在困难的，因此其具体数值需要通过经验来调整；
-  \item 理论推导中的 $n=2$ 是一维随机分层介质的情况。虽然我们已经将色散关系和衰减同时纳入考虑，并且实验模式中超声波的传播偏向于柱坐标中单个 $z$ 轴方向上，但是着一切仍不能改变“实际的颗粒介质仍然是三维体系”的事实，因此出现 $-0.448\sim-1/2$ 的偏差是在理解范围内的。
+  \item 波前到达时间的选取并不是绝对的。既然我们是通过 $S(t_{0}) = A_{1}\cdot k$（$k\in(0,0.1]$）确定的 $t_{0}$，那么 $k$ 的具体数值会影响到 $t_{0}$ 的选取，从而影响到归一化宽度 $W$ 的测定；而在传播距离较大时，响应信号的信噪比会因为颗粒介质吸收、耗散引起的衰减而急剧降低，若要对经由任意传播距离的响应信号划定一条共通可行的 $k$ 实际上是并不容易的。在真实实验以及后续的数据处理时，$k$ 的具体数值需要通过经验来调整，使得归一化宽度的测定并不严格；
+  \item 理论推导中的 $n=2$ 是一维随机分层介质的情况。虽然我们已经将色散关系和衰减同时纳入考虑，并且实验模式中超声波的传播偏向于柱坐标中单个 $z$ 轴方向上，但是这一切仍不能改变“实际的颗粒介质仍然是三维体系”的事实，因此出现 $-0.448\sim-1/2$ 的偏差仍然是在理解范围内的。
 \end{enumerate}
 
 \begin{figure}[!hbtp]
@@ -623,4 +627,4 @@ W\sim \frac{1}{\omega_{1}t_{1}} = (\sigma_{K})^{\frac{2}{n}}\left(\frac{n-1}{n}\
   \label{fig:normalized_width_versus_P}
 \end{figure}
 
-目前对于该现象的解释是，颗粒介质中本身存在着如 Jassen Effect 等现象，即在诸如圆筒形容器中颗粒介质所受重力并非完全沿轴向传递，而是会有一部分力被颗粒介质中的结构分配到径向。这与通常的液压规律完全不同，因此早期人类的粮仓会因为设计不合理而被过量的径向应力破坏、坍塌\cite{sperlExperimentsCornPressure2006}。在我们的实验中，由于容器的几何因素，可能类似的效应使得颗粒介质对于脉冲信号的响应规律性受到影响，导致所观察到的 $W(P)$ 与 $P$ 之间的关系并不明显。
+目前对于该现象的解释是，颗粒介质中本身存在着如 Jassen Effect 等现象，即在诸如圆筒形容器中颗粒介质所受重力并非完全沿轴向传递，而是会有一部分力被颗粒介质中的结构分配到径向。这与寻常的连续介质所产生的液压规律 $p=\rho gh$ 完全不同，因此早期人类的粮仓会因为设计不合理而被过量的径向应力破坏而坍塌\cite{sperlExperimentsCornPressure2006}。在我们的实验中，由于容器的几何因素，可能类似的效应使得颗粒介质对于脉冲信号的响应规律性受到影响，导致所观察到的 $W(P)$ 与 $P$ 之间的关系并不明显。
