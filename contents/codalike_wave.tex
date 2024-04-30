@@ -37,25 +37,43 @@ Weaver R. L. 推导出了超声波脉冲在多晶体中的扩散行为方程\cit
 
 \subsection{非线性波方程与各级谐波}
 
-已知含黏度 $\eta$ 的小振幅声波方程为
+在连续介质力学中，我们已经学习过描述声波传播的 Burgers 方程：
+
+\begin{align}
+  \frac{\partial p}{\partial x} - \frac{\delta}{2c_{0}^{3}}\frac{\partial^{2}p}{\partial t^{2}} = \frac{\beta p}{\rho_{0}c_{0}^{3}}\frac{\partial p}{\partial t},\label{eq:burgers_equation_1}\\
+  \delta = \frac{1}{\rho_{0}}\left[\frac{4}{3}\mu + \mu_{B} + \kappa\left(\frac{1}{c_{v}} - \frac{1}{c_{p}}\right)\right].
+\end{align}
+
+其中 $\mu$ 是介质的剪切黏度，$\mu_{B}$ 是介质的容变黏度，这两者共同构成了介质的黏性吸收；$\kappa$ 是介质的热导率，$c_{v}$ 是介质的定容热容，$c_{p}$ 是介质的定压热容，这两者构成了介质的热传导吸收。两者的线性叠加构成了 Stokes-Kirchhoff 衰减公式，用于描述声波在介质中传播时的经典吸收现象。$\beta$ 是介质的非线性系数，$\rho_{0}$ 和 $c_{0}$ 分别是介质在平衡态下的密度和声速。
+
+Mendousse 首个推导出专用于平面波声传播的偏微分方程。他设定具有黏度的理想气体，根据 Navior-Stockes 方程写出一维流动形式的 Lagrangian 量：
 
 \begin{equation}
-  \rho_{0}\frac{\partial^{2}\xi}{\partial t^{2}} - \rho_{0}c_{0}\frac{\partial^{2}\xi}{\partial x^{2}} - \eta\frac{\partial^{3}\xi}{\partial x^{2}\partial t} = 0.
+  \rho_{0}\frac{\partial^{2}\xi}{\partial t^{2}} - \frac{4}{3}\mu\frac{\partial }{\partial a}\left[\left(1 + \frac{\partial\xi}{\partial a}\right)\frac{\partial^{2}\xi}{\partial a\partial t}\right] + \frac{\partial P}{\partial a} = 0.\label{eq:mendousse_equation}
 \end{equation}
 
-其中 $\xi$ 是声位移，$\rho_{0}$ 与 $c_{0}$ 分别是介质在平衡态下的密度与声速。引入声速的非线性 $c = c_{0} + \beta\frac{\partial\xi}{\partial t}$，同时注意到信号速度
+其中，$\xi$ 是参考于物质位置 $a$ 的流体粒子位移量，即存在坐标关系为
 
 \begin{equation}
-  c_{0} = \left(\frac{\partial \xi}{\partial t}\right)/\left(\frac{\partial\xi}{\partial x}\right)
+  x = a + \xi(a,t).
 \end{equation}
 
-于是得到非线性 Burgers 波方程：
-
-%% 这里需要找到 Hamiton Blackstock 1999 的参考文献
-%% 以确认推导的过程基本正确
+Mendousse 假定黏性吸收中由体变黏度 $\mu_{B}$ 和热导率 $\kappa$ 引起的吸收远小于由剪切黏度 $\mu$ 所引起的从而只保留了后者，并且在黏性项中忽略了本应存在的系数 $1+\partial\xi/\partial a$。考虑到流体中局域的质量守恒规则，我们可以得到平衡态下的密度和流变密度之间的关系：
 
 \begin{equation}
-  \rho_{0}\frac{\partial^{2}\xi}{\partial t^{2}} - \eta\frac{\partial^{3}\xi}{\partial x^{2}\partial t} - \rho_{0}c_{0}^{2}\frac{\partial^{2}\xi}{\partial x^{2}} - 2\rho_{0}c_{0}^{2}\beta\left(\frac{\partial \xi}{\partial x}\right)\left(\frac{\partial^{2} \xi}{\partial x^{2}}\right) = 0
+  \rho_{0} = \left(1 + \frac{\partial\xi}{\partial a}\right)\rho,
+\end{equation}
+
+由于忽略了黏度相关的一个二阶项，总压力 $P$ 对 $\partial\xi/\partial a$ 的级数展开化为
+
+\begin{equation}
+  P = P_{0} - \rho_{0}c_{0}^{2}\left[\frac{\partial\xi}{\partial a} - \beta\left(\frac{\partial\xi}{\partial a}\right)^{2}\right],
+\end{equation}
+
+所以式~\eqref{eq:mendousse_equation} 化为下式：
+
+\begin{equation}
+  \rho_{0}\frac{\partial^{2}\xi}{\partial t^{2}} - \rho_{0}\delta\frac{\partial^{3}\xi}{\partial a^{2}\partial t} - \rho_{0}c_{0}^{2}\frac{\partial^{2}\xi}{\partial a^{2}} + 2\rho_{0}c_{0}^{2}\beta\frac{\partial\xi}{\partial a}\frac{\partial^{2}\xi}{\partial a^{2}} = 0,
 \end{equation}
 
 通过级数展开求解，依次得到基波、各级谐波的表达式：
@@ -72,15 +90,28 @@ Weaver R. L. 推导出了超声波脉冲在多晶体中的扩散行为方程\cit
 
 其中 $u_{\text{in}}$ 是声源振幅，$a$ 是声波传播距离，$\alpha$ 是声波的衰减系数，$k$ 是声波的波数，$\omega$ 是声波的频率。$u_{n\omega}$ 代表 $n$ 倍频的谐波振幅。
 
+颗粒介质具有强耗散性，我们可以将这种信号在颗粒介质中的衰减类比于声波在具有切变黏性 $\mu$ 的流体中传播时所受的黏性吸收作用，即使用等效黏度 $\eta$ 来对颗粒介质进行宏观的统计性描述。
+
 
 \subsection{相似性参数}
 
-引入相似性参数 $\Psi_{i,j}(\tau)$, 以描述信号 $S_{i}$ 与 $S_{j}$ 的相似程度\cite{PhysRevLett.90.174302}：
+引入交叉关联函数（cross-relation function）作为相似性参数 $\Psi_{i,j}(\tau)$, 以描述信号 $S_{i}$ 与 $S_{j}$ 的相似程度\cite{PhysRevLett.90.174302}：
 
 \begin{equation}
-  \Psi_{i,j}(\tau) = \frac{\int_{-\infty}^{+\infty}S_{i}(t)S_{j}(t+\tau)\mathrm{d}t}{\sqrt{\int_{-\infty}^{+\infty}S_{i}^{2}(t)\mathrm{d}t\int_{-\infty}^{+\infty}S_{j}^{2}(t)\mathrm{d}t}}.
+  \Psi_{i,j}(\tau) \equiv \frac{\int_{-\infty}^{+\infty}S_{i}(t)S_{j}(t+\tau)\mathrm{d}t}{\sqrt{\int_{-\infty}^{+\infty}S_{i}^{2}(t)\mathrm{d}t\int_{-\infty}^{+\infty}S_{j}^{2}(t)\mathrm{d}t}}.
 \end{equation}
 
-由于信号已被归一化，所以得到的将是 $[-1,1]$ 之间的数值。相似性参数越接近 $1$，则两个信号越相似，即颗粒介质对 $S_{i}$ 与 $S_{j}$ 的散射效果越接近，从而证明颗粒介质的力链结构变化越小。因为这种相似性参数对于颗粒介质内部的应力结构变化极为敏感，所以低振幅超声波被视为一种非侵入式的探针：在颗粒介质经历连续外部激励时，为了察觉其内部结构是否变化，可以观察时域上相邻的响应信号之间的相似性参数是否会出现骤降。
+其中 $\tau$ 描述的是采集各信号之间的延时。在真实的实验时，我们是通过某一采集频率 $f_{s}$ 对各信号进行采样的，即得到的信号形式会是一个时域上序列的离散值 $S_{i}(t_{n})$，所以实际计算时采用求和形式，即
 
-\subsection{声源振幅对颗粒介质可逆性的影响}
+\begin{equation}
+  \Psi_{i,j}(\tau)\equiv \frac{\sum_{n=1}^{N}S_{i}(t_{n})S_{j}(\tau+t_{n})}{\sqrt{\sum_{n=1}^{N}s_{i}^{2}(t_{n})}\sqrt{\sum_{n=1}^{N}s_{j}^{2}(t_{n})}}.
+\end{equation}
+
+该函数的定义与前文通过频散能量图求解相速度分布中所用的关联函数 $C_{i,j}$ 非常相似，区别仅在于本节通过各信号平方在时域上的积分进行归一化，因此最后求得的值域范围将是 $[-1,1]$。如果相似性参数 $\Gamma_{i,j}$ 越接近 $1$，则信号 $S_{i}$ 与 $S_{j}$ 越相似，颗粒介质对于第 $i$ 次和第 $j$ 次的源试探信号的散射效果越接近，从而证明颗粒介质的力链结构变化越小。由于这种相似性参数对于颗粒介质内部的应力结构变化极为敏感，所以低振幅超声波被视为一种非侵入式的探针：在颗粒介质经历连续外部激励时，为了察觉其内部结构是否变化，可以观察时域上相邻的响应信号之间的相似性参数是否会出现骤降。
+
+\subsection{声源振幅对颗粒介质结构的影响}
+
+受振动、剪切这类外部能量激励的颗粒介质，已经被证明其中存在着可类比于传统热力学中所存在的温度量，即等效温度 $\chi$。有一种评估方法来描述外部激励的强度，即通过重力加速度 $g$ 来对每次激励的加速度进行重标定，比如 $\Gamma>1$ 的连续强振动实验。而具体到我们所关心的声学实验中，通过声学探头激励的信号来对颗粒介质进行扰动，同样可以被视为一种外部激励，只是通过重力加速度进行归一化后的数值会非常小。在本节中，我们尝试使用不同的单轴应力、外部激励协议（protocol）、声源振幅等因素来探索颗粒介质如何在声学量级的激励下遍历可能存在的相空间。
+
+前文中我们已经详细讨论过等效介质理论如何利用颗粒介质所特有的平均接触数 $Z$ 和体积分数 $\phi$ 尝试描述其等效介质的弹性模量，声信号通过 Hertz-Mindlin 接触力得以在颗粒与颗粒间传递。我们考虑引入非线性关系：
+
