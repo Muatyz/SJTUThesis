@@ -149,13 +149,13 @@
 
 \begin{equation}
   s(x,t) = A_{0}{\ee}^{-\alpha x}{\ee}^{\ii(\omega x/V_{\varphi}-\omega t)},
-  \label{eq:spherical_wave}
+  \label{eq:plane_wave}
 \end{equation}
 
 其中 $A_{0}$ 是声源振幅，$\alpha$ 描述声信号在颗粒介质中随着传播距离 $x$ 的衰减系数，$V_{\varphi}$ 是信号角频率为 $\omega$ 时的相速度。假定在距离声源 $x_{1}$ 与 $x_{2}$ 处存在两个小接收探头（即忽略可能造成的反射），分别接收到声波信号 $S_{1}(t)$ 与 $S_{2}(t)$。则能求解相速度为
 
 \begin{equation}
-  V_{\varphi} = \frac{x_{2}-x_{1}}{\Delta \varphi}\omega.
+  V_{\varphi} = \frac{x_{2}-x_{1}}{\Delta \varphi}\omega.\label{eq:phase_velocity}
 \end{equation}
 
 我们很容易想到通过 FFT 算法求解两次信号的相位频谱 $\varphi_{i}(\omega)$, 但是显然
@@ -225,11 +225,11 @@
 其中 $Z$ 是颗粒的平均接触数，$C_{n}$、$C_{t}$ 分别是描述颗粒在法向和切向与力相关的系数。Hertz 接触模型和 Mindlin 接触模型分别使用了这两个系数，即两个颗粒通过接触完成的相互作用力为
 
 \begin{align}
-  f_{n} &= \frac{2}{3}C_{n}R^{\frac{1}{2}}w^{\frac{3}{2}},\\
-  f_{t} &= C_{t}(Rw)^{\frac{1}{2}}\Delta s,
+  f_{n} &= \frac{2}{3}C_{n}R^{\frac{1}{2}}w^{\frac{3}{2}},\label{eq:contact_force_norm}\\
+  f_{t} &= C_{t}(Rw)^{\frac{1}{2}}\Delta s\label{eq:contact_force_tan},
 \end{align}
 
-其中 $w$ 是半径分别为 $R_{1}$、$R_{2}$ 的两个颗粒之间的重叠量，$R = \frac{2R_{1}R_{2}}{R_{1} + R_{2}}$ 为颗粒的等效半径。引入颗粒组成材料（下标 $g$）的剪切模量 $G_{g}$ 与泊松比 $\nu_{g}$，完成对力系数的表述：
+其中 $w$ 是半径分别为 $R_{1}$、$R_{2}$ 的两个颗粒之间的重叠量，存在关系 $Rw = a^2$，$R = \frac{2R_{1}R_{2}}{R_{1} + R_{2}}$ 为颗粒的等效半径，$a$ 是两颗粒间接触圆面的半径。引入颗粒组成材料（下标 $g$）的剪切模量 $G_{g}$ 与泊松比 $\nu_{g}$，完成对力系数的表述：
 
 \begin{align}
   C_{n} &= \frac{4G_{g}}{1-\nu_{g}},\\

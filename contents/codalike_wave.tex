@@ -12,9 +12,9 @@ Weaver R. L. 推导出了超声波脉冲在多晶体中的扩散行为方程\cit
   \frac{\partial I}{\partial t} - D\nabla^{2}I + \frac{I}{\tau_{\alpha}} = \delta(z)\delta(t)
 \end{equation}
 
-其中 $D$ 是扩散系数，$\tau_{\alpha}$ 是描述强度在时域上衰减的特征时间，$z$ 是圆柱坐标系中的径向坐标。因为是脉冲超声波（脉冲宽度充分小，中心频率充分大），即视为时域和空间上的 Dirac 函数。
+其中 $D$ 是扩散系数，$\tau_{\alpha}$ 是描述强度在时域上衰减的特征时间，$z$ 是圆柱坐标系中的径向坐标。因为是脉冲超声波（脉冲宽度充分小，中心频率充分大），即视为时域和空间上的 Dirac 函数 $\delta{z}\delta(t)$。
 
-具体在我们的圆筒形颗粒容器中，可以采用圆柱对称，又因为厚达 $10\unit{\milli\meter}$ 的亚克力板容器壁而假定其声阻抗足够大，在这种情形下声信号在容器壁全反射。则进入底部探头的透射通量\cite{PhysRevLett.93.154303}为
+因为在实际的实验中，我们使用的颗粒容器是圆筒形，所以在求解强度方程时可以采用圆柱对称处理；又因为亚克力板容器壁厚达 10 \unit{\milli\meter} 而假定容器边界的声阻抗足够大，在这种情形下声信号在容器壁全反射。则进入底部探头的透射通量\cite{PhysRevLett.93.154303}为
 
 \begin{equation}
   J(t) = \frac{\nu U_{0}}{2L}{\ee}^{-\frac{t}{\tau_{\alpha}}}\sum_{n=0}^{\infty}\frac{(-1)^{n}}{\delta_{n}}\cos{\left(\frac{n\uppi l^{*}}{L}\right)}{\ee}^{-\frac{D(n\uppi)^{2}t}{L^{2}}},\quad \delta_{n} = \begin{cases}
@@ -73,25 +73,32 @@ Mendousse 假定黏性吸收中由体变黏度 $\mu_{B}$ 和热导率 $\kappa$ �
 所以式~\eqref{eq:mendousse_equation} 化为下式：
 
 \begin{equation}
-  \rho_{0}\frac{\partial^{2}\xi}{\partial t^{2}} - \rho_{0}\delta\frac{\partial^{3}\xi}{\partial a^{2}\partial t} - \rho_{0}c_{0}^{2}\frac{\partial^{2}\xi}{\partial a^{2}} + 2\rho_{0}c_{0}^{2}\beta\frac{\partial\xi}{\partial a}\frac{\partial^{2}\xi}{\partial a^{2}} = 0,
+  \rho_{0}\frac{\partial^{2}\xi}{\partial t^{2}} - \rho_{0}\delta\frac{\partial^{3}\xi}{\partial a^{2}\partial t} - \rho_{0}c_{0}^{2}\frac{\partial^{2}\xi}{\partial a^{2}} + 2\rho_{0}c_{0}^{2}\beta\frac{\partial\xi}{\partial a}\frac{\partial^{2}\xi}{\partial a^{2}} = 0,\label{eq:progressive_burgers_equation}
 \end{equation}
 
-通过级数展开求解，依次得到基波、各级谐波的表达式：
+对于角频率为 $\omega$ 的正弦波在诸如上述方程所控制下的传播，其产生的畸变与失真可以理解为产生高次谐波的过程。因此通过级数展开求解式~\eqref{eq:progressive_burgers_equation}，依次得到基波、各级谐波的表达式：
 
 \begin{equation}
   \begin{cases}
-    u_{1\omega}(a,t) \approx u_{\text{in}}e^{-a\alpha}\cos{(ka-\omega t)}\\
-    \\
-    u_{2\omega}(a,t) \approx \frac{u_{\text{in}}^{2}}{8}\left(\frac{\beta\omega^{2}}{\alpha c_{0}^{2}}\right)e^{-2\alpha a}\cos{[2(ka-\omega t)]}\\
-    \\
-    u_{3\omega}(a,t) \approx \frac{u_{\text{in}}^{3}}{48}\left(\frac{\beta\omega^{2}}{\alpha c_{0}^{2}}\right)^{2}e^{-3\alpha a}\cos{[3(ka-\omega t)]}
+    u_{1\omega}(a,t) &\approx u_{\text{in}}e^{-a\alpha}\cos{(ka-\omega t)}\\
+    u_{2\omega}(a,t) &\approx \frac{u_{\text{in}}^{2}}{8}\left(\frac{\beta\omega^{2}}{\alpha c_{0}^{2}}\right)e^{-2\alpha a}\cos{[2(ka-\omega t)]}\\
+    u_{3\omega}(a,t) &\approx \frac{u_{\text{in}}^{3}}{48}\left(\frac{\beta\omega^{2}}{\alpha c_{0}^{2}}\right)^{2}e^{-3\alpha a}\cos{[3(ka-\omega t)]}
     \end{cases}
 \end{equation}
 
-其中 $u_{\text{in}}$ 是声源振幅，$a$ 是声波传播距离，$\alpha$ 是声波的衰减系数，$k$ 是声波的波数，$\omega$ 是声波的频率。$u_{n\omega}$ 代表 $n$ 倍频的谐波振幅。
+其中 $u_{\text{in}}$ 是声源振幅，$a$ 是声波传播距离，$\alpha$ 是声波的衰减系数，$k$ 是声波的波数，$\omega$ 是声波的频率。$u_{n\omega}$ 代表 $n$ 倍频的谐波振幅（$n=1$ 即为基波）。我们很容易以一个简单的公式总结各谐波振幅与源振幅的关系：
 
-颗粒介质具有强耗散性，我们可以将这种信号在颗粒介质中的衰减类比于声波在具有切变黏性 $\mu$ 的流体中传播时所受的黏性吸收作用，即使用等效黏度 $\eta$ 来对颗粒介质进行宏观的统计性描述。
+\begin{equation}
+  u_{n\omega} \propto \left(u_{\text{in}}\right)^{n}.\label{eq:harmonic_linear}
+\end{equation}
 
+颗粒介质具有强耗散性，我们可以将这种信号在颗粒介质中的衰减类比于声波在具有切变黏性 $\mu$ 的流体中传播时所受的黏性吸收作用，即使用等效黏度 $\mu^{*}$ 来对颗粒介质进行宏观的统计性描述。如果式~\eqref{eq:harmonic_linear} 描述的线性关系随着声源振幅 $u_{\text{in}}$ 增大遭到破坏，即说明等效黏度已经因为泵浦作用发生变化。对于水和空气这类连续介质，在黏性力相较于弹性力很小时，存在描述衰减 $\alpha$ 与声波角频率 $\omega$ 的指数关系：
+
+\begin{equation}
+  \alpha = \alpha_{\mu} + \alpha_{h} = \frac{\omega^{2}}{2\rho_{0}c_{0}^{3}}\left[\frac{4}{3}\mu + \mu_{B} + \kappa\left(\frac{1}{c_{v}} - \frac{1}{c_{p}}\right)\right]\propto \omega^{2}
+\end{equation}
+
+其中 $\alpha_{\mu}$ 和 $\alpha_{h}$ 分别是描述黏性吸收和热传导吸收的衰减系数。在后文中我们将组织实验来验证通过接触力相联系的颗粒介质中，是否同样存在着类似的衰减系数 $\alpha^{*}$ 与信号角频率 $\omega$ 之间的指数关系。
 
 \subsection{相似性参数}
 
@@ -113,5 +120,73 @@ Mendousse 假定黏性吸收中由体变黏度 $\mu_{B}$ 和热导率 $\kappa$ �
 
 受振动、剪切这类外部能量激励的颗粒介质，已经被证明其中存在着可类比于传统热力学中所存在的温度量，即等效温度 $\chi$。有一种评估方法来描述外部激励的强度，即通过重力加速度 $g$ 来对每次激励的加速度进行重标定，比如 $\Gamma>1$ 的连续强振动实验。而具体到我们所关心的声学实验中，通过声学探头激励的信号来对颗粒介质进行扰动，同样可以被视为一种外部激励，只是通过重力加速度进行归一化后的数值会非常小。在本节中，我们尝试使用不同的单轴应力、外部激励协议（protocol）、声源振幅等因素来探索颗粒介质如何在声学量级的激励下遍历可能存在的相空间。
 
-前文中我们已经详细讨论过等效介质理论如何利用颗粒介质所特有的平均接触数 $Z$ 和体积分数 $\phi$ 尝试描述其等效介质的弹性模量，声信号通过 Hertz-Mindlin 接触力得以在颗粒与颗粒间传递。我们考虑引入非线性关系：
 
+\subsubsection{颗粒介质中存在的非线性}
+
+前文中我们已经详细讨论过等效介质理论如何利用颗粒介质所特有的平均接触数 $Z$ 和体积分数 $\phi$ 尝试描述其等效介质的弹性模量，声信号通过如式~\eqref{eq:contact_force_norm}、\eqref{eq:contact_force_tan} 所描述的 Hertz-Mindlin 接触力得以在颗粒与颗粒间传递。我们也可以将其写作类比于 Hooke 定律描述弹簧的形式：
+
+\begin{align}
+  f_{n} &= \left[\frac{2}{3}C_{n}(Rw)^{\frac{1}{2}}\right]w = \frac{2}{3}D_{n}w,\\
+  f_{t} &= \left[C_{t}(Rw)^{\frac{1}{2}}\right]\Delta s = D_{t}\Delta s,
+\end{align}
+
+通过提取出类似于刚度系数的 $D_{n}$ 和 $D_{t}$，我们可以导出两种模式波的声速与刚度系数的关系\cite{doi.org/10.1029/GL010i011p01073}：
+
+\begin{align}
+  V_{L} &= \sqrt{\frac{3Z}{20\pi R\rho}\left[D_{n} + \frac{2}{3}D_{t}\right]},\\
+  V_{T} &= \sqrt{\frac{ Z}{20\pi R\rho}\left[D_{n} + \frac{3}{2}D_{t}\right]}.
+\end{align}
+
+现在我们考虑颗粒法向接触力中的非线性，即有
+
+\begin{equation}
+  f_{n} \approx D_{n}u_{n}\left(1 + \beta u_{n} + \delta u_{n}^{2} + \cdots\right)
+\end{equation}
+
+其中，$\beta = -\frac{1}{4u_{0}}$、$\delta = -\frac{1}{24u_{0}^{2}}$ 分别是描述接触力非线性的二阶与三阶项系数，$u_{0}$ 代表了颗粒间的平衡静态压缩量。对于一个周期内的大幅值振动，法向刚度可以被近似为
+
+\begin{equation}
+  D_{n}^{*} \approx D_{n}(1 + \delta u_{n}^{2}),
+\end{equation}
+
+其中的奇数次项由于是对一个周期内的计算而被消去，仅留下三阶项 $\delta$。因此颗粒介质中的声速将会伴随着外部大振幅声波的激励而出现降低的现象，即暗示着其等效模量的软化（elastic weakening）\cite{PhysRevE.84.020301}：
+
+\begin{equation}
+  \frac{\Delta V_{L}}{V_{L}} \sim \frac{\Delta D_{n}}{D_{n}}\sim \delta u_{n}^{2}.
+\end{equation}
+
+在颗粒介质中还存在着滞后性（hysteresis）的奇异性质，在多种外部激励方式下均有表现。对受循环剪切的颗粒介质进行测量，会发现其剪切应力、沿剪切面法向传播的剪切波声速、体积分数都会在应变周期内出现滞回线\cite{PhysRevE.85.051302,PhysRevLett.126.048002}。
+
+\begin{figure}[!hbtp]
+  \centering
+	\begin{minipage}[!hbtp]{0.48\columnwidth}
+		\centering
+    \bisubcaptionbox{Yi Xing 的颗粒介质循环剪切装置示意图。}{Schematic diagram of Yi Xing's granular media cyclically shearing device.}
+		[7cm]{\includegraphics[height=3.5cm]{3_hloop_cycleshear_1.png}}
+		\\
+    \bisubcaptionbox{(a) 中颗粒介质的剪切应变 $\gamma$ 和体积分数 $\phi$、剪切应力 $F$ 的关系。}{Relationship between shear strain $\gamma$ and volume fraction $\phi$, and shear stress $F$ in granular media in (a).}
+    [7cm]{\includegraphics[height=3.5cm]{3_hloop_cycleshear_2.png}}
+	\end{minipage}
+	\begin{minipage}[!hbtp]{0.48\columnwidth}
+		\centering
+    \bisubcaptionbox{Xiaoping Jia 循环剪切实验中归一化剪切应力 $T$、剪切波(S)声速与剪切位移的演化关系。}{Evolution of normalized shear stress $T$, shear wave (S) velocity with shear displacement in Xiaoping Jia's cyclic shear experiment.}
+    [7cm]{\includegraphics[height=7.5cm]{3_hloop_shearband.png}}
+	\end{minipage}
+	\bicaption{Yi Xing 与 Xiaoping Jia 在各自的循环剪切装置中都观察到了颗粒介质出现的滞回现象}{Hysteresis loops in granular media observed by Yi Xing and Xiaoping Jia in their respective cyclic shear apparatus.}
+\end{figure}
+
+对于颗粒间的接触力同样存在着滞回现象。
+
+%%% 滞回相关阐述
+
+\subsubsection{实验验证}
+
+如果使用式~\eqref{eq:plane_wave} 来近似声信号在颗粒介质中的传播，我们可以使用类似于推导式~\eqref{eq:phase_velocity} 的方法得出衰减系数 $\alpha$ 的表达式：
+
+\begin{equation}
+  \alpha = \frac{1}{x_{2}-x_{1}}\ln{\left(\frac{S_{1}}{S_{2}}\right)}
+\end{equation}
+
+其中 $S_{1}$ 和 $S_{2}$ 分别是在 $x_{1}$ 和 $x_{2}$ 所采集信号在时域上的最大值（即去除含时系数）。但是在前面求解相速度的实验与讨论中我们已经知道，试图使用仅仅两道信号就对颗粒介质做出完整表述是几乎不可能的，需要进行系综平均以去除偶然性。因此在真正实验中，我们将使用类似于时差法测量声速的方法来测量衰减系数，即拟合声信号振幅 $A$ 和传播距离/颗粒介质厚度 $L$ 的双对数斜率关系。
+
+我们分别在应力为 9 \unit{\kilo\pascal} 和 \unit{\kilo\pascal} 的条件下，使用两种不同的激励协议对颗粒介质进行声学激励。
