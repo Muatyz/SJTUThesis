@@ -116,6 +116,29 @@ Mendousse 假定黏性吸收中由体变黏度 $\mu_{B}$ 和热导率 $\kappa$ �
 
 该函数的定义与前文通过频散能量图求解相速度分布中所用的关联函数 $C_{i,j}$ 非常相似，区别仅在于本节通过各信号平方在时域上的积分进行归一化，因此最后求得的值域范围将是 $[-1,1]$。如果相似性参数 $\Gamma_{i,j}$ 越接近 $1$，则信号 $S_{i}$ 与 $S_{j}$ 越相似，颗粒介质对于第 $i$ 次和第 $j$ 次的源试探信号的散射效果越接近，从而证明颗粒介质的力链结构变化越小。由于这种相似性参数对于颗粒介质内部的应力结构变化极为敏感，所以低振幅超声波被视为一种非侵入式的探针：在颗粒介质经历连续外部激励时，为了察觉其内部结构是否变化，可以观察时域上相邻的响应信号之间的相似性参数是否会出现骤降。
 
+在部分研究受环形剪切的颗粒介质中的滞滑实验中，曾提到过不同类型的滞滑事件产生的声发射信号在频域上的分布相似\cite{doi:10.1073/pnas.2305134120}。只要我们意识到两时域信号相互做内积的结果量纲为能量，我们很容易通过能量守恒的观点将相似性参数的定义延拓到频域上。
+
+首先我们证明 Parseval 定理：
+
+\begin{equation}
+  \begin{aligned}
+    \int_{-\infty}^{+\infty}S_{i}(t)\bar{S}_{j}(t)\mathrm{d}t &= \int_{-\infty}^{+\infty}\left[\frac{1}{2\uppi}\int_{-\infty}^{+\infty}S_{i}(\omega){\ee}^{\ii \omega t}\mathrm{d}\omega\right]\left[\frac{1}{2\uppi}\int_{-\infty}^{+\infty}\bar{S}_{j}(\omega^{\prime}){\ee}^{-\ii \omega^{\prime}t}\mathrm{d}\omega^{\prime}\right]\mathrm{d}t\\
+    &= \frac{1}{2\uppi}\int_{-\infty}^{+\infty}S_{i}(\omega)\frac{1}{2\uppi}\int_{-\infty}^{+\infty}\bar{S}_{j}(\omega^{\prime})\cdot 2\pi\delta(\omega-\omega^{\prime})\mathrm{d}\omega^{\prime}\mathrm{d}\omega\\
+    &= \frac{1}{2\uppi}\int_{-\infty}^{+\infty}S_{i}(\omega)\bar{S}_{j}(\omega)\mathrm{d}\omega
+  \end{aligned}
+\end{equation}
+
+其中 $\bar{S}_{j}$ 是时域信号 $S_{j}(t)$ 的共轭，而我们的探头所接收的是无相位的强度信息，因此假定两者相同。所以时域定义的相似性参数存在关系
+
+\begin{equation}
+  \begin{aligned}
+    \Gamma_{i,j}^{t} &\equiv \frac{\int_{-\infty}^{+\infty}S_{i}(t)S_{j}(t)\mathrm{d}t}{\sqrt{\int_{-\infty}^{+\infty}S_{i}^{2}(t)\mathrm{d}t\int_{-\infty}^{+\infty}S_{j}^{2}(t)\mathrm{d}t}}\\
+    &= \frac{\int_{-\infty}^{+\infty}S_{i}(t)\bar{S}_{j}(t)\mathrm{d}t}{\sqrt{\frac{1}{2\uppi}\int_{-\infty}^{+\infty}|S_{i}(\omega)|^{2}\mathrm{d}\omega}\sqrt{\frac{1}{2\uppi}\int_{-\infty}^{+\infty}|S_{j}(\omega)|^{2}\mathrm{d}\omega}}\\
+    &= \frac{\frac{1}{2\uppi}\int_{-\infty}^{+\infty}S_{i}(\omega)\bar{S}_{j}(\omega)\mathrm{d}\omega}{\sqrt{\frac{1}{2\uppi}\int_{-\infty}^{+\infty}|S_{i}(\omega)|^{2}\mathrm{d}\omega}\sqrt{\frac{1}{2\uppi}\int_{-\infty}^{+\infty}|S_{j}(\omega)|^{2}\mathrm{d}\omega}}\\
+    &= \Gamma_{i,j}^{\omega}.
+  \end{aligned}
+\end{equation}
+
 \subsection{声源振幅对颗粒介质结构的影响}
 
 受振动、剪切这类外部能量激励的颗粒介质，已经被证明其中存在着可类比于传统热力学中所存在的温度量，即等效温度 $\chi$。有一种评估方法来描述外部激励的强度，即通过重力加速度 $g$ 来对每次激励的加速度进行重标定，比如 $\Gamma>1$ 的连续强振动实验。而具体到我们所关心的声学实验中，通过声学探头激励的信号来对颗粒介质进行扰动，同样可以被视为一种外部激励，只是通过重力加速度进行归一化后的数值会非常小。在本节中，我们尝试使用不同的单轴应力、外部激励协议（protocol）、声源振幅等因素来探索颗粒介质如何在声学量级的激励下遍历可能存在的相空间。
@@ -175,9 +198,36 @@ Mendousse 假定黏性吸收中由体变黏度 $\mu_{B}$ 和热导率 $\kappa$ �
 	\bicaption{Yi Xing 与 Xiaoping Jia 在各自的循环剪切装置中都观察到了颗粒介质出现的滞回现象}{Hysteresis loops in granular media observed by Yi Xing and Xiaoping Jia in their respective cyclic shear apparatus.}
 \end{figure}
 
-对于颗粒间的接触力同样存在着滞回现象。
+对于颗粒间的接触力同样存在着滞回现象。我们将切向振幅视为弹性响应（Elastic，E）和耗散响应（Hysteretic，H）的线性叠加，即
 
-%%% 滞回相关阐述
+\begin{equation}
+  u_{t}(f_{t}) = u_{t}^{E}(f_{t}) + su_{t}^{H}(f_{t}),\quad s = \begin{cases}
+    1, & f_{t} \text{ increases},\\
+    -1, & f_{t} \text{ decreases}.
+  \end{cases}
+\end{equation}
+
+其中 $s$ 是一个与应力过程有关的符号函数。在切向应力最大幅值 $f_{t}^{*}$ 远小于颗粒间的静摩擦阈值 $\mu f_{0}$ 时，通过 Mindlin 接触可以推导出两种响应振幅的近似表达式：
+
+\begin{align}
+  u_{t}^{E}(f_{t}) &\approx \frac{2}{3}u_{0}\left(1 + \frac{f_{t}^{*}}{6\mu f_{0}}\right)\left(\frac{f_{t}}{\mu f_{0}}\right),\label{eq:elastic_amplitude}\\
+  u_{t}^{H}(f_{t}) &\approx \frac{1}{18}u_{0}\left[\left(\frac{f_{t}}{\mu f_{0}}\right)^{2} - \left(\frac{f_{t}^{*}}{\mu f_{0}}\right)^{2}\right].
+\end{align}
+
+对于式~\eqref{eq:elastic_amplitude} 进行反求导，即可得到切向接触的刚度系数：
+
+\begin{equation}
+  D_{t}^{*} = \frac{\mathrm{d}f_{t}}{\mathrm{d}u_{t}^{E}} \approx D_{t}\left(1 - \frac{f_{t}^{*}}{6\mu f_{0}}\right)
+\end{equation}
+
+因此可以推导出声速的相对变化量表达式为
+
+\begin{align}
+  \frac{\Delta V}{V}\sim \frac{\Delta D_{t}}{D_{t}} &\approx -\frac{f_{t}^{*}}{6\mu f_{0}} \sim -ku_{t}^{*},\\
+  k &= \frac{2G_{g}a}{3(2-\nu_{g})\mu f_{0}}
+\end{align}
+
+由此我们推导出了两种可能的弹性软化机制。
 
 \subsubsection{实验验证}
 
@@ -187,6 +237,6 @@ Mendousse 假定黏性吸收中由体变黏度 $\mu_{B}$ 和热导率 $\kappa$ �
   \alpha = \frac{1}{x_{2}-x_{1}}\ln{\left(\frac{S_{1}}{S_{2}}\right)}
 \end{equation}
 
-其中 $S_{1}$ 和 $S_{2}$ 分别是在 $x_{1}$ 和 $x_{2}$ 所采集信号在时域上的最大值（即去除含时系数）。但是在前面求解相速度的实验与讨论中我们已经知道，试图使用仅仅两道信号就对颗粒介质做出完整表述是几乎不可能的，需要进行系综平均以去除偶然性。因此在真正实验中，我们将使用类似于时差法测量声速的方法来测量衰减系数，即拟合声信号振幅 $A$ 和传播距离/颗粒介质厚度 $L$ 的双对数斜率关系。
+其中 $S_{1}$ 和 $S_{2}$ 分别是在 $x_{1}$ 和 $x_{2}$ 所采集信号在时域上的最大值（即去除含时系数）。但是在前面求解相速度的实验与讨论中我们已经知道，试图使用仅仅两道信号就对颗粒介质做出完整表述是几乎不可能的，需要进行系综平均以去除偶然性。因此在真正实验中，我们将使用类似于时差法测量声速的方法来测量衰减系数，即拟合声信号振幅的对数 $A$ 和传播距离/颗粒介质厚度 $L$ 的线性关系，其中斜率为 $-\alpha = \mathrm{d}[\ln{A}]/\mathrm{d}[L]$。
 
-我们分别在应力为 9 \unit{\kilo\pascal} 和 \unit{\kilo\pascal} 的条件下，使用两种不同的激励协议对颗粒介质进行声学激励。
+我们分别在应力为 9 \unit{\kilo\pascal} 和 \unit{\kilo\pascal} 的条件下，分别使用间歇激励和连续激励协议来对颗粒介质发射声信号，同时计算声速变化量、相似性参数与激励过程之间的关系。
