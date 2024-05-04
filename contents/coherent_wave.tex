@@ -10,7 +10,18 @@
 
 \subsection{装置搭建}
 
-目前部署的声学激励与探测系统硬件、软件陈列如图~\ref{fig:apparatus} 所示：
+奈奎斯特-香农采样定理（Nyquist–Shannon sampling theorem）指出，对信号进行采样时，采样频率必须大于该信号最高频率的两倍，才能够重构出原始信号；如果要求不出现幅值失真，则采样频率还需要更高。图~\ref{fig:sample_theorem} 简单展示了采样频率与信号频率之间的关系。不难观察到，在采集频率较低时，会出现信号混叠现象；采集频率越高，越能逼近真实信号曲线。
+
+\begin{figure}[!htp]
+  \centering
+  \includegraphics[height=10cm]{figures/2_sample_theorem.png}
+  \bicaption{奈奎斯特-香农采样定理示意图。原始信号 f=10 \unit{\hertz}，采样频率分别为 \numlist{6;22;30;70} \unit{\hertz} 时的离散采样信号与重建信号。}{Schematic diagram of the Nyquist-Shannon sampling theorem. The original signal f=10 \unit{\hertz}, the discretely sampled signal and the reconstructed signal when the sampling frequency is \numlist[
+    list-final-separator = { and }
+  ]{6;22;30;70} \unit{\hertz}, respectively.}
+  \label{fig:sample_theorem}
+\end{figure}
+
+常用的声学线缆是阻抗 50 \unit{\ohm} 射频同轴线缆，传输带宽可达 \numrange{1}{20} \unit{\mega\hertz}，确保了在对声信号进行采样时不会失真。目前在实验室中已完成部署并投入使用的声学激励与探测系统硬件、软件陈列如图~\ref{fig:apparatus} 所示：
 
 \begin{figure}[!htp]
   \centering
@@ -19,10 +30,10 @@
   \label{fig:apparatus}
 \end{figure}
 
-下面我们具体说明各部件的主要功能:
+下面我们按照图中标注序号具体说明各部件的主要功能:
 
 \begin{enumerate}
-  \item Tektronix Arbitrary Function Generator AFG31021。该仪器可以按照实验需求产生如连续正弦波、设定循环数与触发时间间隔的正弦波列、单频脉冲等电压信号，用于激励声学探头产生对应机械振动。其支持写入自定义函数来对信号波形进行控制；
+  \item Tektronix Arbitrary Function Generator AFG31021。该仪器可以按照实验需求产生如控制频率的连续正弦波、设定循环数与触发时间间隔的正弦波列、单频脉冲等模拟电压信号，用于激励声学探头产生对应的机械振动。其支持写入自定义函数来对信号波形进行控制；
   \item Tektronix TBS2204B 示波器。该示波器通过 BNC 接口对可多达 $4$ 个独立模拟电压信号进行同步采集，可用于同时记录试探信号源以及在颗粒介质中传播后的响应信号。该示波器可以调控探头衰减系数（$1\times$ 到 $10\times$ 不等），具体实验时需要对两者进行配平；该示波器的采样率最高可达 $1\unit{\giga\hertz}/\unit{Ch}$；单次采样长度最高可达 $5\times 10^{6}$，因此在进行快速傅里叶变换（Fast Fourier Transform，FFT）时，确保我们所关心频域区间内的分辨精度足够高。特别的是，示波器具有高精度采集和平均采集等多种采样模式，前者可用于记录瞬时事件信号，而后者则是通过 \numrange{16}{512} 次采集信号的线性平均极大地减少了热噪声的影响，从而得到相对平滑的信号曲线。通过 IPv4 网口可使用 TekScope 软件对 TBS2204B 进行数据读取和记录，并且进行简单程度的操控（开始/停止记录）等。而功能更强大的 KickStart 软件能对 AFG31021 与 TBS2204B 进行同步控制，能记录多次运行所输入的信号并且在实验结束时以固定命名格式统一导出，从而极大地便利了对于声学信号的研究；
   \item ATA-101B Power Amplifier。可以设置输入与输出的线缆阻抗（输入端可选取 50 \unit{\ohm}/1 \unit{\mega\ohm}，输出端可选取 50 \unit{\ohm}/1.5 \unit{\ohm}。目前声学常用线缆都是 50 \unit{\ohm}），其主要功能是以最小步长 2 \unit{\decibel} 放大 AFG31021 产生的电压信号，从而满足使声学探头产生声压振幅的需求，通常适用于有限振幅波的非线性传播等实验中。可设定的最大放大效果为 20 \unit{\decibel}，但是由于如图~\ref{fig:amp_freq_curve} 所示的其固有的频域放大极限，若初始输入的电压信号本身幅值已经较高，仍然强行设定超出频域放大曲线的增益值会导致放大器输出信号的畸变与失真。因此在设计含 ATA-101B 的实验时，需要综合考虑信号放大器本身的性能上限；
   \item 清诚声发射 G150 与 W800 （成对）声学探头。声学探头在部分研究领域中又被称为换能器（Transducer），意指作为探头核心元件的压电陶瓷既能够将射频线缆传输的模拟电压信号通过电-压效应转换为机械振动的声信号，又能够感应机械振动的幅值强度、通过压-电效应将声信号转换为模拟电压信号，使其能被进一步展开信号处理与分析。G150 和 W800 分别是适用于 60-400 \unit{\kilo\Hz} 和 50-800 \unit{\kilo\hertz} 频域范围内工作的探头型号，谐振频率分别为 150 \unit{\kilo\hertz} 和 600 \unit{\kilo\hertz}。在具体的实验情境中，应当根据实际需求选取合适的一对探头。两个型号的声学探头主体都是 $\varphi$ 19 \unit{\milli\meter} $\times$ 15 \unit{\milli\meter} 的圆柱体，侧面通过 M5 射频线进行信号交换，柱面与底面由 SUS-304 不锈钢材外壳包裹，增强声学探头的屏蔽抗干扰作用；接触面为陶瓷材料，从而接收与激发压缩波；由于这两种型号探头的尺寸相同，因此便于安装于同一颗粒容器中；
@@ -43,7 +54,6 @@
   \label{fig:amp_freq_curve}
 \end{figure}
 
-%%% 找到一个用 tikz 画工作流示意图的方法
 
 需要特别说明的是，一般情况下作用于接收器表面的声压 $p(t)$ 都并不等于入射波的声压 $p_{i}(t)$，这是由探头硬质陶瓷圆面本身存在的声阻抗 $\widetilde{Z}_{S}(\omega)$ 所导致的:
 
@@ -92,7 +102,7 @@
 
 观察可知，G150 在 \numrange{60}{400}\unit{\kilo\hertz} 频域内的响应系数较高，在某些频率下甚至非常接近 $1$, 而超出其工作频域的响应系数迅速跌落；而 W800 虽然在我们所关心的频域，即 \numrange{0}{1000}\unit{\kilo\hertz} 内响应系数均不高，但是胜在响应曲线相对平稳。因此在实验时，如果信号集中于超声频域内的较低成分（$\leq 400\unit{\kilo\hertz}$），那么选择 G150 将是更合理的；在关心较广的频域下的声学参数（比如衰减、相速度等）时，W800 的性能相对优异。为了弥补 W800 本身响应系数较低的缺陷，未来可以考虑使用 Physics of Acoustic Company 的 2/4/6 Type 等型号的供电前置放大器来对响应信号进行增强，从而增加信噪比、便于实验后续的信号提取与分析。
 
-我们后续实验便可以借助式~\eqref{eq:response_correct} 来对实验中采集的响应信号进行修正。需要说明的是，声阻抗系数本身是复数，即探头本身对于信号会产生相位上的影响，但是如何准确测定这种相位差并且进行有效插值是一个较为困难的问题。因此在实际实验时，对于时间/相位相关的实验我们并不使用上述的修正方法，而是直接使用原始信号分析。
+我们后续实验便可以借助式~\eqref{eq:response_correct} 来对实验中采集的响应信号进行修正。需要说明的是，声阻抗系数本身是复数，即探头本身对于信号会产生相位上的影响，但是如何准确测定这种相位差并且进行有效插值是一个较为困难的问题。我们在测定声阻抗系数的时候采用了稳态假设，而在实际实验的时候可能会由于弛豫时间的尺度较大而使得响应过程中伴随着过阻尼受迫振动的成分，因此在对实验所得的数据进行处理时，对于时间/相位相关的实验我们并不使用上述的修正方法，而是直接使用原始信号分析。
 
 \subsection{飞行时间法测定颗粒介质中的声速}
 
@@ -113,12 +123,14 @@
 
 \subsubsection{信号最佳参考点选取}
 
-我们在实验中使用 Tektronix 示波器对源信号与响应信号进行了同步采集，因此容易确定具体的时间起点。下面我们简单介绍有关于如何识别信号得到各定义下的到达时间的算法。
-
 首先我们需要测量探头本身通过压电效应进行信号转换所需要的固有耗时，这里我们采用的是 face-to-face time 的测量方法，即测量两个探头的陶瓷探测圆面直接紧密接触所时，声波传播所需要的耗时。
 
+%%% face-to-face time 测量
+
+我们在实验中使用 Tektronix 示波器对源信号与响应信号进行了同步采集，因此容易确定具体的时间起点。下面我们简单介绍有关于如何识别信号得到各定义下的到达时间的算法。
+
 \begin{enumerate}
-  \item 信号平滑。由于示波器的采样频率通常很高，而且存在着一定的热噪声对信号进行干扰，因此我们借助 Matlab 的 movmean() 函数对信号进行线性权重的平滑处理。我们通过平均窗口长度 num\_window 来控制平滑程度，该量既不能过小，使得热噪声未能被充分处理，也不能过大使得真正的响应信号也被模糊失真；
+  \item 信号平滑。由于示波器的采样频率通常很高，而且存在着一定的热噪声对信号进行干扰，因此我们借助 Matlab 的 movmean() 函数对信号进行线性权重的平滑处理。我们通过平均窗口长度 num\_window 来控制平滑程度；该参量既不能过小，使得热噪声未能被充分处理而被错误引入到响应信号中，也不能过大使得真正的响应信号也被模糊失真，使得时间顺序上更靠后的峰被错误识别为首峰；
   \item 识别源信号（Src. = Source）的首峰时刻。作为源振幅信号，其信噪比明显很高，因此我们可以使用较大的噪声阈值，如源信号振幅的 $40\%$，通过 findpeaks() 函数识别源信号的首个峰值。源信号的峰值位置识别通常准确率很高。需要注意的是，即使在采集时已经在示波器上设定源振幅信号和响应信号的偏置值为 $0\unit{V}$，由于系统硬件本身的问题仍然会导致源信号和响应信号存在一定量的偏置值，而这会对后续识别信号的波前位置造成影响。
   \item 计算源信号的偏置值。取首峰幅值的 $1/80$ 作为其波前定义，通过 find() 函数找到其对应的时刻 $t_{O}$ 作为时间原点，即近似为源信号的发射时刻。取所记录的源信号中发射时刻前的信号均值作为源信号的偏置值，并将源信号减去该偏置值作为修正。由于在记录信号时已经使用了 $128$ 次平均采集，所以热噪声造成的幅值涨落已经被尽可能消除，因此计算所得到的偏置值是相对准确的。
   \item 识别响应信号（Res. = Response）的首峰时刻。从该步骤开始，需要通过控制寻峰算法中的 findpeaks() 函数中的峰最小半高宽（MinPeakWidth）和噪声阈值（MinPeakProminence），并且需要通过所识别的源信号波前时刻筛去响应信号中识别出的位置在其之前的干扰峰信号。
@@ -126,13 +138,19 @@
   \item 识别响应信号的首次过零时刻。在偏置修正完成后，寻找响应信号首峰时刻后的第一个过零点即可。波前与首次过零识别的准确性和响应信号的首峰识别准确性高度相关，如果首峰的信噪比足够高，便能确保以上步骤识别准确。
 \end{enumerate}
 
-图~\ref{fig:reference_point}是对典型的响应信号进行三种不同到达时间识别的实例。
+图~\ref{fig:reference_point} 是对典型的响应信号进行三种不同到达时间识别的实例。
 
-
-\begin{figure}[!htp]
+\begin{figure}[!hbtp]
   \centering
-  \includegraphics[height=8cm]{2_reference_point.png}
-  \bicaption{同步采集源信号与响应信号，以及波前到达时刻，波峰到达时刻与首次过零时刻}{Synchronized acquisition of source and response signals, as well as wavefront arrival, peak arrival and first zero crossing moments}
+  \bisubcaptionbox{调参寻峰算法对信号识别效果（整体）}%
+                  {Effectiveness of the tuning parameter peak-finding algorithm in recognizing signals (overall)}%
+                  [7cm]{\includegraphics[height=5.4cm]{2_findpeaks_1.png}}
+  \hspace{1cm}
+  \bisubcaptionbox{调参寻峰算法对信号识别效果（局部）}%
+                  {Effectiveness of the tuning parameter peak-finding algorithm in recognizing signals (local)}%
+                  [7cm]{\includegraphics[height=5.4cm]{2_findpeaks_2.png}}
+  \bicaption{同步采集源信号（Src.）与响应信号（Res.），以及波前到达时刻（Wavefront，WF），波峰到达时刻与首次过零时刻（1st 0 crossing）。}
+            {Synchronized acquisition of source(Src.) and response(Res.) signals, as well as wavefront(WF) arrival, peak arrival and first zero crossing moments(1st 0 crossing).}
   \label{fig:reference_point}
 \end{figure}
 
@@ -148,7 +166,7 @@
                   {Sound velocity $V_{\text{T.O.F.}}$ measured by Time of Flight method with three reference points}%
                   [6cm]{\includegraphics[height=6cm]{2_tof_velocity_and_fitted_velocity.png}}
   \bicaption{$5$ 循环 $30$ 千赫兹正弦波列作为试探信号，颗粒介质为直径 $2$ 毫米钢珠的随机密堆积，单轴应力 $9$ 千帕下的声速测量}
-            {Velocity of sound measurements at $9\unit{\kilo\Pa}$ uniaxial stress with $5$-cycle of a $30\unit{\kilo\Hz}$ sine wave train as a test signal and a randomized stack of $2\unit{\milli\meter}$ diameter steel beads as the granular medium}
+            {Velocity of sound measurements at 9 \unit{\kilo\Pa} uniaxial stress with 5-cycle of a 30 \unit{\kilo\Hz} sine wave train as a test signal and a randomized stack of 2 \unit{\milli\meter} diameter steel beads as the granular medium}
   \label{fig:sound_velocity_measurement}
 \end{figure}
 
@@ -208,16 +226,16 @@
 
 \begin{figure}[!hbtp]
   \centering
-  \bisubcaptionbox{在 $x_1=1.1\unit{cm}$ 与 $x_{2}=2.0\unit{cm}$ 处采集的响应信号}{Reponse signal captured at $x_1=1.1\unit{cm}$ and $x_{2}=2.0\unit{cm}$}%
+  \bisubcaptionbox{在 $x_1$=1.1 \unit{cm} 与 $x_{2}$=2.0 \unit{cm} 处采集的响应信号}{Reponse signal captured at $x_1$=1.1 \unit{cm} and $x_{2}$=2.0 \unit{cm}}%
                 [7cm]{\includegraphics[height=6cm]{figures/2_wave_train.png}}
   \hspace{1cm}
-  \bisubcaptionbox{$0-60\unit{kHz}$ 的相速度频域分布热图}{Phase velocity frequency distribution heat map at $0-60\unit{kHz}$}%
+  \bisubcaptionbox{0-60 \unit{kHz} 的相速度频域分布热图}{Phase velocity frequency distribution heat map at 0-60 \unit{kHz}}%
                 [7cm]{\includegraphics[height=6cm]{figures/2_cwt_v_phi.png}}
   \bicaption{根据异地响应信号计算频散能量图}{Dispersion energy map calculated from separated response signals}
   \label{fig:dispersion_energy}
 \end{figure}
 
-图 \ref{fig:dispersion_energy} 展示了在单轴应力容器中，根据不同采集距离 $x_{1}$、$x_{2}$ 下的两道压缩波信号绘制的频散能量图。可以看到两道信号在发射信号的中心频率 $f_{c} = 30\text{ kHz}$ 处的相速度约为 $V_{\varphi} = 350\pm 10\unit{m/s}$。
+图 \ref{fig:dispersion_energy} 展示了在单轴应力容器中，根据不同采集距离 $x_{1}$、$x_{2}$ 下的两道压缩波信号绘制的频散能量图。可以看到两道信号在发射信号的中心频率 $f_{c}$ = 30 \unit{\kilo\hertz} 处的相速度约为 $V_{\varphi}$ = 350 $\pm$ 10 \unit{\meter}/\unit{\second}。
 
 \section{声速与单轴应力的指数关系}
 
@@ -558,7 +576,7 @@
   W \approx \frac{\pi}{2\omega_{1}}\frac{1}{t_{1}}\propto L^{-2/3}.
 \end{equation}
 
-考虑一维球链时，使用 $a=2R$ 替换即可得到对应的公式\cite{PhysRevE.91.022205}。接下来我们进一步考虑颗粒介质中衰减项 $\alpha$ 的影响。引入弹性模量的涨落 $\nu_{K} = \Delta K^{-1}/\bar{K}^{-1}$ 与对应的关联长度 $L_{c}$，我们可以得到一维随机层理论对于衰减项的描述：
+考虑一维球链时，使用 $a=2R$ 替换即可得到对应的公式\cite{PhysRevE.91.022205}。接下来我们进一步考虑颗粒介质中衰减项 $\alpha$ 的影响。引入体弹性模量的涨落 $\nu_{K} = \Delta K^{-1}/\bar{K}^{-1}$ 与对应的关联长度 $L_{c}$，我们可以得到一维随机层理论对于衰减项的描述\cite{fouqueWavePropagationTime2007}：
 
 \begin{equation}
   \alpha(\omega) = k^{\prime\prime}(\omega) = [\sigma_{K}^{2}L_{c}^{n-1}]\left(\frac{\omega}{V}\right)^{n}.
@@ -641,3 +659,7 @@ W\sim \frac{1}{\omega_{1}t_{1}} = (\sigma_{K})^{\frac{2}{n}}\left(\frac{L_{c}}{x
 \end{figure}
 
 目前对于该现象的解释是，颗粒介质中本身存在着如 Jassen Effect 等现象，即在诸如圆筒形容器中颗粒介质所受重力并非完全沿轴向传递，而是会有一部分力被颗粒介质中的结构分配到径向。这与寻常的连续介质所产生的液压规律 $p=\rho gh$ 完全不同，因此早期人类的粮仓会因为设计不合理而被过量的径向应力破坏而坍塌\cite{sperlExperimentsCornPressure2006}。在我们的实验中，由于容器的几何因素，可能类似的效应使得颗粒介质对于脉冲信号的响应规律性受到影响，导致所观察到的 $W(P)$ 与 $P$ 之间的关系并不明显。
+
+\section{本章小结}
+
+本章由三个部分组成，首先我们介绍了如何使用飞行时间法和频散能量图法测量颗粒介质中的声速，对三种不同参考点的声速进行了比较，并且初步观察到了首峰展宽的现象。接下来我们测量了颗粒介质中的声速 $V_{\text{T.O.F.}}$ 与单轴应力 $P$ 的关系，并且尝试使用等效介质理论来对其指数关系进行理解，以及做出了理论与实际之间存在偏差的可能解释。最后我们测量了颗粒介质中用于描述首峰宽度的归一化宽度 $W$ 与颗粒介质厚度 $L$ 的指数关系，并且使用了一维随机层理论导出的衰减对所得的指数进行了解释。我们还尝试观察单轴应力 $P$ 和归一化宽度 $W$ 之间的关系，但是尚没有得到明确的规律。

@@ -6,25 +6,32 @@
 
 \subsection{理论推导}
 
-Weaver R. L. 推导出了超声波脉冲在多晶体中的扩散行为方程\cite{diffusivity}:
+波在强散射介质中的传播是一个古老的问题。Weaver R. L. 根据 RTE 推导出了超声波脉冲在多晶体中的扩散行为方程\cite{diffusivity}:
 
 \begin{equation}
   \frac{\partial I}{\partial t} - D\nabla^{2}I + \frac{I}{\tau_{\alpha}} = \delta(z)\delta(t)
 \end{equation}
 
-其中 $D$ 是扩散系数，$\tau_{\alpha}$ 是描述强度在时域上衰减的特征时间，$z$ 是圆柱坐标系中的径向坐标。因为是脉冲超声波（脉冲宽度充分小，中心频率充分大），即视为时域和空间上的 Dirac 函数 $\delta{z}\delta(t)$。
+其中 $D$ 是扩散系数，$\tau_{\alpha}$ 是描述信号强度在时域上衰减行为的特征时间，$z$ 是圆柱坐标系中的轴向坐标。因为是超声波脉冲（中心频率充分大、脉冲宽度充分小），即视为时域和空间上的 Dirac 函数 $\delta{z}\delta(t)$。
 
-因为在实际的实验中，我们使用的颗粒容器是圆筒形，所以在求解强度方程时可以采用圆柱对称处理；又因为亚克力板容器壁厚达 10 \unit{\milli\meter} 而假定容器边界的声阻抗足够大，在这种情形下声信号在容器壁全反射。则进入底部探头的透射通量\cite{PhysRevLett.93.154303}为
+因为在实际的实验中，我们使用的颗粒容器是圆筒形，所以在求解强度方程时可以采用圆柱对称处理；又因为亚克力板容器壁厚达 10 \unit{\milli\meter} 而假定容器边界的声阻抗足够大，在这种情形下声信号在容器壁全反射。在以上条件下，得出的进入底部探头的透射通量\cite{PhysRevLett.93.154303}为
 
 \begin{equation}
-  J(t) = \frac{\nu U_{0}}{2L}{\ee}^{-\frac{t}{\tau_{\alpha}}}\sum_{n=0}^{\infty}\frac{(-1)^{n}}{\delta_{n}}\cos{\left(\frac{n\uppi l^{*}}{L}\right)}{\ee}^{-\frac{D(n\uppi)^{2}t}{L^{2}}},\quad \delta_{n} = \begin{cases}
+  J(t) = \frac{\nu_{e} U_{0}}{2L}{\ee}^{-\frac{t}{\tau_{\alpha}}}\sum_{n=0}^{\infty}\frac{(-1)^{n}}{\delta_{n}}\cos{\left(\frac{n\uppi l^{*}}{L}\right)}{\ee}^{-\frac{D(n\uppi)^{2}t}{L^{2}}},\quad \delta_{n} = \begin{cases}
     2, & n = 0, \\
     1, & \text{otherwise}.
   \end{cases}
 \end{equation}
 
-其中 $U_{0}$ 是声源能量, $D = \frac{1}{3}\nu_{e}l^{*}$ 为扩散系数, $\nu_{e}$ 为能量传输速度, $l^{*}$ 为平均自由程, $\tau_{\alpha}$ 正式名为非弹性吸收时间。在实验中，我们用飞行时间法测定的声速 $V_{\text{T.O.F.}}$ 来替代 $\nu_{e}$。
+其中 $U_{0}$ 是声源能量, $D = \frac{1}{3}\nu_{e}l^{*}$ 为扩散系数, $\nu_{e}$ 为能量传输速度, $l^{*}$ 为平均自由程, $\tau_{\alpha}$ 正式名为非弹性吸收时间。在实验中，我们用飞行时间法测定的声速 $V_{\text{T.O.F.}}$ 来替代 $\nu_{e}$。质量因子 $Q = 2\pi f\tau_{\alpha}$ 也被引入用于描述颗粒介质的耗散性，其中 $f$ 是发射信号的中心频率。Jia 提出了在颗粒表面相对平滑时，存在关系\cite{PhysRevLett.101.138001}
 
+\begin{equation}
+  Q^{-1} = \left[\frac{4G_{g}}{9\uppi^2(2-\nu_{g})R}\left(\frac{3\uppi}{4K_{g}}\right)^{\frac{1}{3}}\right]\mu^{-1}P_{0}^{-\frac{2}{3}}u_{t}
+\end{equation}
+
+其中 $\nu_{g}$、$K_{g}$、$G_{g}$ 是颗粒组成材料的泊松比、体弹性模量和剪切模量，$R$ 是颗粒半径，$\mu$ 用于描述颗粒间的摩擦系数，$P_{0}$ 是颗粒介质所受的应力大小，$u_{t}$ 是描述 Mindlin 接触的切向振幅。在受到润滑作用的时候，还存在 $Q^{-1} = Q_{\text{fric}}^{-1} + Q_{\text{vis}}^{-1}$ 的修正关系，在这里由于在实验中未涉及而不再额外讨论。
+
+对于摩擦系数 $\mu$ 的理解，需要将其和后文中的式~\eqref{eq:friction} 中的摩擦系数配合理解。经验丰富的工人观察沙堆的半径或者高度即可估算沙堆的体积，原理就是因为沙堆是通过类似于点源法/有限面元法的方式制备的，其斜坡角度/休止角（repose angle）通常固定；这里的角度通常都是\numrange{0}{45} \unit{\degree} 范围内的，对应于其正切值的摩擦系数范围是 \numrange{0}{1}）。这与上式中的有时大于 1 的 $\mu$ 显然并不相同。
 
 \subsection{实验验证}
 
@@ -46,7 +53,7 @@ Weaver R. L. 推导出了超声波脉冲在多晶体中的扩散行为方程\cit
 
 其中 $\mu$ 是介质的剪切黏度，$\mu_{B}$ 是介质的容变黏度，这两者共同构成了介质的黏性吸收；$\kappa$ 是介质的热导率，$c_{v}$ 是介质的定容热容，$c_{p}$ 是介质的定压热容，这两者构成了介质的热传导吸收。两者的线性叠加构成了 Stokes-Kirchhoff 衰减公式，用于描述声波在介质中传播时的经典吸收现象。$\beta$ 是介质的非线性系数，$\rho_{0}$ 和 $c_{0}$ 分别是介质在平衡态下的密度和声速。
 
-Mendousse 首个推导出专用于平面波声传播的偏微分方程。他设定具有黏度的理想气体，根据 Navior-Stockes 方程写出一维流动形式的 Lagrangian 量：
+Mendousse 首个推导出专用于平面波声传播的偏微分方程。他设定具有黏度的理想气体，根据 Navior-Stockes 方程写出一维流动形式的 Lagrangian 量\cite{hamilton_nonlinear_1998}：
 
 \begin{equation}
   \rho_{0}\frac{\partial^{2}\xi}{\partial t^{2}} - \frac{4}{3}\mu\frac{\partial }{\partial a}\left[\left(1 + \frac{\partial\xi}{\partial a}\right)\frac{\partial^{2}\xi}{\partial a\partial t}\right] + \frac{\partial P}{\partial a} = 0.\label{eq:mendousse_equation}
@@ -116,9 +123,9 @@ Mendousse 假定黏性吸收中由体变黏度 $\mu_{B}$ 和热导率 $\kappa$ �
 
 该函数的定义与前文通过频散能量图求解相速度分布中所用的关联函数 $C_{i,j}$ 非常相似，区别仅在于本节通过各信号平方在时域上的积分进行归一化，因此最后求得的值域范围将是 $[-1,1]$。如果相似性参数 $\Gamma_{i,j}$ 越接近 $1$，则信号 $S_{i}$ 与 $S_{j}$ 越相似，颗粒介质对于第 $i$ 次和第 $j$ 次的源试探信号的散射效果越接近，从而证明颗粒介质的力链结构变化越小。由于这种相似性参数对于颗粒介质内部的应力结构变化极为敏感，所以低振幅超声波被视为一种非侵入式的探针：在颗粒介质经历连续外部激励时，为了察觉其内部结构是否变化，可以观察时域上相邻的响应信号之间的相似性参数是否会出现骤降。
 
-在部分研究受环形剪切的颗粒介质中的滞滑实验中，曾提到过不同类型的滞滑事件产生的声发射信号在频域上的分布相似\cite{doi:10.1073/pnas.2305134120}。只要我们意识到两时域信号相互做内积的结果量纲为能量，我们很容易通过能量守恒的观点将相似性参数的定义延拓到频域上。
+在部分研究受环形剪切的颗粒介质中的滞滑实验中，曾提到过不同类型的滞滑事件产生的声发射信号在频域上的强度分布相似\cite{doi:10.1073/pnas.2305134120}。只要我们意识到两时域信号相互做内积的结果量纲为能量，我们很容易通过能量守恒的观点将相似性参数的定义延拓到频域上。
 
-首先我们证明 Parseval 定理：
+首先我们重新证明也被称为能量定理的 Parseval 定理：
 
 \begin{equation}
   \begin{aligned}
@@ -139,9 +146,11 @@ Mendousse 假定黏性吸收中由体变黏度 $\mu_{B}$ 和热导率 $\kappa$ �
   \end{aligned}
 \end{equation}
 
+由此我们证明了时域和频域上定义的相似性参数的等价性，即 $\Gamma_{i,j}^{t}=\Gamma_{i,j}^{\omega}$。因此在后续的实验中，如果我们观察到声发射信号的频域分布曲线存在相似性，就可以使用上式来对其进行理解。
+
 \subsection{声源振幅对颗粒介质结构的影响}
 
-受振动、剪切这类外部能量激励的颗粒介质，已经被证明其中存在着可类比于传统热力学中所存在的温度量，即等效温度 $\chi$。有一种评估方法来描述外部激励的强度，即通过重力加速度 $g$ 来对每次激励的加速度进行重标定，比如 $\Gamma>1$ 的连续强振动实验。而具体到我们所关心的声学实验中，通过声学探头激励的信号来对颗粒介质进行扰动，同样可以被视为一种外部激励，只是通过重力加速度进行归一化后的数值会非常小。在本节中，我们尝试使用不同的单轴应力、外部激励协议（protocol）、声源振幅等因素来探索颗粒介质如何在声学量级的激励下遍历可能存在的相空间。
+受振动、剪切这类外部能量激励的颗粒介质，已经被证明其中存在着可类比于传统热力学中所存在的温度量，即等效温度 $\chi$。有一种评估方法来描述外部激励的强度，即通过重力加速度 $g$ 来对每次激励的加速度进行重标定，比如图~\ref{fig:apparatus_of_granular} 中所示的 $\Gamma>1$ 的连续强振动实验。而具体到我们所关心的声学实验中，通过声学探头激励的信号来对颗粒介质进行扰动，同样可以被视为一种外部激励，只是通过重力加速度进行归一化后的数值会非常小。在本节中，我们尝试使用不同的单轴应力、外部激励协议（protocol）、声源振幅等因素来探索颗粒介质如何在声学量级的激励下遍历可能存在的相空间。
 
 
 \subsubsection{颗粒介质中存在的非线性}
@@ -160,7 +169,7 @@ Mendousse 假定黏性吸收中由体变黏度 $\mu_{B}$ 和热导率 $\kappa$ �
   V_{T} &= \sqrt{\frac{ Z}{20\pi R\rho}\left[D_{n} + \frac{3}{2}D_{t}\right]}.
 \end{align}
 
-现在我们考虑颗粒法向接触力中的非线性，即有
+现在我们考虑颗粒法向接触力 $f_{n}$ 中的非线性，即使用类似于微扰法的方式对 $f_{n}(u_{n})$ 进行展开：
 
 \begin{equation}
   f_{n} \approx D_{n}u_{n}\left(1 + \beta u_{n} + \delta u_{n}^{2} + \cdots\right)
@@ -172,13 +181,13 @@ Mendousse 假定黏性吸收中由体变黏度 $\mu_{B}$ 和热导率 $\kappa$ �
   D_{n}^{*} \approx D_{n}(1 + \delta u_{n}^{2}),
 \end{equation}
 
-其中的奇数次项由于是对一个周期内的计算而被消去，仅留下三阶项 $\delta$。因此颗粒介质中的声速将会伴随着外部大振幅声波的激励而出现降低的现象，即暗示着其等效模量的软化（elastic weakening）\cite{PhysRevE.84.020301}：
+其中的奇数次项由于是对一个周期内的计算而被消去，仅留下三阶项 $\delta$，更高阶的小量被忽略。因此颗粒介质中的声速将会伴随着外部大振幅声波的激励而出现降低的现象，即暗示着其等效模量的软化（elastic weakening）\cite{PhysRevE.84.020301}：
 
 \begin{equation}
   \frac{\Delta V_{L}}{V_{L}} \sim \frac{\Delta D_{n}}{D_{n}}\sim \delta u_{n}^{2}.
 \end{equation}
 
-在颗粒介质中还存在着滞后性（hysteresis）的奇异性质，在多种外部激励方式下均有表现。对受循环剪切的颗粒介质进行测量，会发现其剪切应力、沿剪切面法向传播的剪切波声速、体积分数都会在应变周期内出现滞回线\cite{PhysRevE.85.051302,PhysRevLett.126.048002}。
+在颗粒介质中还存在着滞后性（hysteresis）的奇异性质，在多种不同的外部激励方式下均有所表现。对受循环剪切的颗粒介质进行测量，会发现其剪切应力、沿剪切面法向传播的剪切波声速、体积分数都会在应变周期内出现滞回线\cite{PhysRevE.85.051302,PhysRevLett.126.048002}，图~\ref{fig:hysteresis_loops} 摘取自 Jia 和 Yi Xing 的实验图像。
 
 \begin{figure}[!hbtp]
   \centering
@@ -195,10 +204,10 @@ Mendousse 假定黏性吸收中由体变黏度 $\mu_{B}$ 和热导率 $\kappa$ �
     \bisubcaptionbox{Xiaoping Jia 循环剪切实验中归一化剪切应力 $T$、剪切波(S)声速与剪切位移的演化关系。}{Evolution of normalized shear stress $T$, shear wave (S) velocity with shear displacement in Xiaoping Jia's cyclic shear experiment.}
     [7cm]{\includegraphics[height=7.5cm]{3_hloop_shearband.png}}
 	\end{minipage}
-	\bicaption{Yi Xing 与 Xiaoping Jia 在各自的循环剪切装置中都观察到了颗粒介质出现的滞回现象}{Hysteresis loops in granular media observed by Yi Xing and Xiaoping Jia in their respective cyclic shear apparatus.}
+	\bicaption{Yi Xing 与 Xiaoping Jia 在各自的循环剪切装置中都观察到了颗粒介质出现的滞回现象}{Hysteresis loops in granular media observed by Yi Xing and Xiaoping Jia in their respective cyclic shear apparatus.}\label{fig:hysteresis_loops}
 \end{figure}
 
-对于颗粒间的接触力同样存在着滞回现象。我们将切向振幅视为弹性响应（Elastic，E）和耗散响应（Hysteretic，H）的线性叠加，即
+对于颗粒间的接触力同样存在着滞回现象。我们将切向振幅视为弹性响应分量（Elastic，E）和耗散响应分量（Hysteretic，H）的线性叠加，即
 
 \begin{equation}
   u_{t}(f_{t}) = u_{t}^{E}(f_{t}) + su_{t}^{H}(f_{t}),\quad s = \begin{cases}
@@ -224,10 +233,10 @@ Mendousse 假定黏性吸收中由体变黏度 $\mu_{B}$ 和热导率 $\kappa$ �
 
 \begin{align}
   \frac{\Delta V}{V}\sim \frac{\Delta D_{t}}{D_{t}} &\approx -\frac{f_{t}^{*}}{6\mu f_{0}} \sim -ku_{t}^{*},\\
-  k &= \frac{2G_{g}a}{3(2-\nu_{g})\mu f_{0}}
+  k &= \frac{2G_{g}a}{3(2-\nu_{g})\mu f_{0}}\label{eq:friction}
 \end{align}
 
-由此我们推导出了两种可能的弹性软化机制。
+其中 $G_{g}$、$\nu_{g}$ 是颗粒材料的剪切模量和泊松比。由此我们得出了两种可能的弹性软化机制。
 
 \subsubsection{实验验证}
 
