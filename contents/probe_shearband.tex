@@ -24,7 +24,7 @@ Shear Transformation Zone（STZ）认为，像颗粒固体这类非晶体材料�
   \Lambda = \frac{n_{-} + n_{+}}{n_{\infty}},\quad\Delta = \frac{n_{-} - n_{+}}{n_{\infty}}.
 \end{align}
 
-其中 $n_{\infty}$ 是 $(n_{-} + n_{+})$ 在稳定平衡态下的值。对于 $Lambda$ 和 $\Delta$，其行为被描述为
+其中 $n_{\infty}$ 是 $(n_{-} + n_{+})$ 在稳定平衡态下的值。对于 $\Lambda$ 和 $\Delta$，其行为被描述为
 
 \begin{align}
   \dot{\Delta} &= \frac{1}{\varepsilon_{0}}\left(\dot{\varepsilon}_{\text{pl}} - \gamma|\sigma\dot{\varepsilon}_{\text{pl}}|\Delta\right),\\
@@ -48,15 +48,15 @@ Shear Transformation Zone（STZ）认为，像颗粒固体这类非晶体材料�
 
 \begin{enumerate}
     \item 骏河步进电机。通过连杆与剪切盒的活塞部分固定连接，从而推动其进行对颗粒介质的剪切。电机通过 D214-2-2ek 信号线连接至控制器，控制器通过 USB 信道连接至计算机。计算机通过 DSCONTROL-WIN 软件来对电机进行控制，可以控制电机的运动方式为连续/步进，电机旋转方向和速度等参数。
-    \item IMADA 力学传感系统。由 Sensor 和 Data Logger 两部分组成，Sensor 通过信号线将感受的力大小传递至 Data Logger；后者通过 USB 信道将数据实时传递至计算机，通过 Force Recorder 软件读取数据，力学传感器的最高采集频率为 2000 \unit{\hertz}。在所需数据记录完毕后，即可通过 .csv 格式导出以供数据分析。
-    \item 剪切盒。未剪切时内部为 $18\times 10\times 12$ $\unit{\centi\meter}^{3}$ 的立方体，受电机控制的横截面积为 $10\times 6$ $\unit{\centi\meter}^{2}$ 的活塞带动固连的底板进行推动，而所推动的活塞截面的高度小于颗粒介质的高度而对颗粒介质有剪切作用。由于剪切盒的活塞在运动方向上存在长度上限，为了避免颗粒漏出剪切盒的剪切应变也存在上限。剪切盒的封顶板可以拆下而替换为施加应力的活塞板，从而检测不同堆积方式的颗粒介质的力学响应机制。
+    \item IMADA 力学传感系统。由 Sensor 和 Data Logger 两部分组成，Sensor 通过信号线将感受的力大小传递至 Data Logger；后者通过 USB 信道将数据实时传递至计算机，通过 Force Recorder 软件读取数据，力学传感器的最高采集频率为 2000 \unit{\hertz}，力的分辨率则是 0.1 \unit{\newton}。在所需数据记录完毕后，即可通过 .csv 格式导出以供数据分析。
+    \item 剪切盒。材质和单轴应力容器所使用的材质一样，是由亚克力板制作的，原本用于 X 光辐照探测剪切带。在未剪切时，其内部容积为 $18\times 10\times 12$ $\unit{\centi\meter}^{3}$ 的立方体，受电机控制的横截面积为 $10\times 6$ $\unit{\centi\meter}^{2}$ 的活塞带动固连的底板进行推动，而所推动的活塞截面的高度小于颗粒介质的高度而对颗粒介质有剪切作用。由于剪切盒的活塞在运动方向上存在长度上限，为了避免颗粒漏出剪切盒的剪切应变也存在上限。剪切盒的封顶板可以拆下而替换为施加应力的活塞板，从而检测不同堆积方式的颗粒介质的力学响应机制。
 \end{enumerate}
 
 \section{应力-应变曲线}
 
 \subsection{RCP 与 RLP 的剪切响应差异}
 
-我们使用同一剪切装置，在未施加应力与施加应力 P = 3.97 \unit{\kilo\pascal} 下分别测定 6 \unit{\milli\meter} ABS 球所组成的颗粒介质的应力-应变曲线。为了充分展现颗粒介质的滞滑特性，我们在实验时设定的剪切速率极低；在 DSCONTROL-WIN 软件上设定的剪切速率为 20 \unit{pps}，对应于现实世界的剪切速度约为 $60\sim 70$ \unit{\micro\meter}/\unit{\second}。图~\ref{fig:fig:shearstress} 展示了以上两种堆积在相同剪切速率下的剪切应力-应变曲线，其中定义域分别为剪切位移和时间。
+我们使用同一剪切装置，在未施加应力与施加应力 P = 3.97 \unit{\kilo\pascal} 下分别测定 6 \unit{\milli\meter} ABS 球所组成的颗粒介质的应力-应变曲线。为了充分展现颗粒介质的滞滑特性，我们在实验时设定的剪切速率极低；在 DSCONTROL-WIN 软件上设定的剪切速率为 20 \unit{pps}，对应于现实世界的剪切速度约为 $60\sim 70$ \unit{\micro\meter}/\unit{\second}。图~\ref{fig:shearstress} 展示了以上两种堆积在相同剪切速率下的剪切应力-应变曲线，其中定义域分别为剪切位移和时间。
 
 \begin{figure}[htbp]
 	\centering
@@ -66,7 +66,7 @@ Shear Transformation Zone（STZ）认为，像颗粒固体这类非晶体材料�
   \bisubcaptionbox{随机密集堆积的剪切应力时域曲线}%
                   {Shear stress in time domain for random close packing}%
                   [15cm]{\includegraphics[width=1\linewidth]{4_shearstress_time.png}}
-  \bicaption{RLP 与 RCP 在剪切速率为 20 pps 下的力学响应曲线}{Mechanical Response Curves of RLP and RCP at Shear Rate of 20 pps}\label{fig:shearstress}
+  \bicaption{RLP 与 RCP 在剪切速率为 20 pps 下的力学响应曲线}{Mechanical response curves of RLP and RCP at shear rate of 20 pps}\label{fig:shearstress}
 \end{figure}
 
 \subsection{蠕变与滞滑}
@@ -74,8 +74,11 @@ Shear Transformation Zone（STZ）认为，像颗粒固体这类非晶体材料�
 在 RCP 中得到的应力曲线更接近于传统的固体材料，即分为弹性区、屈服区（yielding state）和临界区（critical state）。
 
 \begin{itemize}
-  \item 弹性区。在剪切位移较小时，大部分颗粒位置几乎不变，而只是存在着微小的挤压和摩擦，这种接近线性的应力-应变关系和弹性行为相似；
-  \item 屈服区。当剪切位移增大到一定程度时，即颗粒间的相互摩擦开始接近静摩擦阈值，颗粒开始产生相对滑动、重排，并且这种过程是不可逆的。应力的最高点即为颗粒介质的屈服强度。从放大图像观察可知，这种过程伴随着频繁的力链断裂和重构，即滞滑现象。
+  \item 弹性区。在剪切位移较小时，大部分颗粒位置几乎不变，而只是存在着较小程度的挤压和摩擦，这种接近线性的应力-应变关系和弹性行为相似，即产生蠕变现象；
+  \item 屈服区。当剪切位移增大到一定程度时，即颗粒间的相互摩擦开始接近静摩擦阈值，颗粒开始产生相对滑动、重排，并且这种过程是不可逆的。应力的最高点即为颗粒介质的屈服强度。从放大图像观察可知，出现了剪切应力的反复积累提升、骤降的现象，这种过程伴随着频繁的力链断裂和重构，即滞滑。
+  \item 临界区。在剪切位移进一步增大时，此时颗粒介质展现出可被类比于固-液相变的性质，即颗粒介质在外部剪切的激励下出现了流动的现象。
 \end{itemize}
+
+我们可以按照应力降（Shear Stress Drop，SSD）的大小来对滞滑事件进行粗分类。类比于环形剪切相关实验中的方法，我们按照应力降的幅值将滞滑事件分为三类：微滞滑（micro-，$\text{SSD}<0.2$ \unit{\newton}）、小滞滑（minor-，0.2 \unit{\newton}$<\text{SSD}<0.4$ \unit{\newton}）和主滞滑（major-，在地震学也被称作 failure，$\text{SSD}>0.4$ \unit{\newton}）。
 
 \section{本章小结}
