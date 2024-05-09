@@ -123,9 +123,14 @@
 
 \subsubsection{信号最佳参考点选取}
 
-首先我们需要测量探头本身通过压电效应进行信号转换所需要的固有耗时，这里我们采用的是 face-to-face time 的测量方法，即测量两个探头的陶瓷探测圆面直接紧密接触所时，声波传播所需要的耗时。
+首先我们需要测量探头本身通过压电效应进行信号转换所需要的固有耗时，这里我们采用的是 face-to-face time 的测量方法，即测量两个探头的陶瓷探测圆面直接紧密接触所时，声波传播所需要的耗时。图~\ref{fig:face-to-face_time} 展示了测得的固有时间为 $t_{G} = $ 1.54 \unit{\micro\second}，后续使用飞行时间法时我们也将令到达时间减去该固有时间作为修正。
 
-%%% face-to-face time 测量
+\begin{figure}[!htp]
+  \centering
+  \includegraphics[height=8cm]{2_face-to-face-time.png}
+  \bicaption{声学探头进行压电转换的固有耗时}{Inherent elapsed time for piezoelectric conversion of acoustic transducers}
+  \label{fig:face-to-face_time}
+\end{figure}
 
 我们在实验中使用 Tektronix 示波器对源信号与响应信号进行了同步采集，因此容易确定具体的时间起点。下面我们简单介绍有关于如何识别信号得到各定义下的到达时间的算法。
 
@@ -269,7 +274,7 @@
   C_{t} &= \frac{8G_{g}}{2-\nu_{g}}.
 \end{align}
 
-现在我们从颗粒体系的应力-应变角度出发，通过假定颗粒介质具有各向同性，以及前文所提到的仿射近似条件下，求得颗粒介质模量\cite{WALTON1987213}。假定颗粒介质中两相邻接触的颗粒坐标分别为 $\mathbf{r}^{(m)}$、$\mathbf{r}^{(n)}$，且颗粒球体的半径为 $R$。那么从颗粒 $m$ 指向颗粒 $n$ 的相对坐标位矢的单位矢量为
+现在我们从颗粒体系的应力-应变角度出发，通过假定颗粒介质具有各向同性，以及前文所提到的仿射近似条件下，求得颗粒介质模量\cite{WALTON1987213,zhouzhigang}。假定颗粒介质中两相邻接触的颗粒坐标分别为 $\mathbf{r}^{(m)}$、$\mathbf{r}^{(n)}$，且颗粒球体的半径为 $R$。那么从颗粒 $m$ 指向颗粒 $n$ 的相对坐标位矢的单位矢量为
 
 \begin{equation}
   \mathbf{I}^{(nm)} = \frac{\mathbf{r}^{(n)} - \mathbf{r}^{(m)}}{2R}\label{eq:unit_vector}
@@ -296,11 +301,11 @@
 其中
 
 \begin{align}
-  B &= \frac{1}{4\uppi}\left(\frac{1}{\mu} + \frac{1}{\lambda + \mu}\right),\\
-  C &= \frac{1}{4\uppi}\left(\frac{1}{\mu} - \frac{1}{\lambda + \mu}\right),
+  B &= \frac{1}{4\uppi}\left(\frac{1}{\mu_{L}} + \frac{1}{\lambda_{L} + \mu_{L}}\right),\\
+  C &= \frac{1}{4\uppi}\left(\frac{1}{\mu_{L}} - \frac{1}{\lambda_{L} + \mu_{L}}\right),
 \end{align}
 
-而 $\lambda$ 和 $\mu$ 是颗粒材料的 Lamé 系数。假设颗粒的形变与样品的应变满足
+而 $\lambda_{L}$ 和 $\mu_{L}$ 是颗粒材料的 Lamé 系数。假设颗粒的形变与样品的应变满足
 
 \begin{equation}
   {u}_{i}^{(n)} = \mathbf{e}_{ij}{r}_{j}^{(n)}\label{eq:strain_displacement},
@@ -439,24 +444,24 @@
   \langle I_{i}I_{j}I_{k}I_{l}\rangle &= \frac{1}{15}\left(\delta_{ij}\delta_{kl} + \delta_{ik}\delta_{jl} + \delta_{il}\delta_{jk}\right).
 \end{align}
 
-由此我们尝试导出使用等效 Lamé 系数 $\lambda^{*}$、$\mu^{*}$ 描述的 $C_{ijkl}^{*}$：
+由此我们尝试导出使用等效 Lamé 系数 $\lambda_{L}^{*}$、$\mu_{L}^{*}$ 描述的 $C_{ijkl}^{*}$：
 
 \begin{equation}
-  C_{ijkl}^{*} = \lambda^{*}\delta_{ij}\delta_{kl} + \mu^{*}(\delta_{ik}\delta_{jl} + \delta_{il}\delta_{jk}),
+  C_{ijkl}^{*} = \lambda_{L}^{*}\delta_{ij}\delta_{kl} + \mu_{L}^{*}(\delta_{ik}\delta_{jl} + \delta_{il}\delta_{jk}),
 \end{equation}
 
 其中
 
 \begin{align}
-  \lambda^{*} &= \frac{\phi ZC(-e)^{\frac{1}{2}}}{10\uppi^{2}B(2B+C)} = \frac{C}{10(2B+C)}\left(\frac{3\phi^{2}Z^{2}p}{\uppi^{4}B^{2}}\right)^{\frac{1}{3}},\\
-  \mu^{*} &= \frac{\phi Z(5B+C)(-e)^{\frac{1}{2}}}{10\uppi^{2}B(2B+C)} =\frac{(5B+C)}{10(2B+C)}\left(\frac{3\phi^{2}Z^{2}p}{\uppi^{4}B^{2}}\right)^{\frac{1}{3}}.
+  \lambda_{L}^{*} &= \frac{\phi ZC(-e)^{\frac{1}{2}}}{10\uppi^{2}B(2B+C)} = \frac{C}{10(2B+C)}\left(\frac{3\phi^{2}Z^{2}p}{\uppi^{4}B^{2}}\right)^{\frac{1}{3}},\\
+  \mu_{L}^{*} &= \frac{\phi Z(5B+C)(-e)^{\frac{1}{2}}}{10\uppi^{2}B(2B+C)} =\frac{(5B+C)}{10(2B+C)}\left(\frac{3\phi^{2}Z^{2}p}{\uppi^{4}B^{2}}\right)^{\frac{1}{3}}.
 \end{align}
 
 而等效弹性模量 $K^{*}$、$G^{*}$ 为
 
 \begin{align}
-  K^{*} &= \lambda^{*} + \frac{2}{3}\mu^{*}\propto p^{\frac{1}{3}},\\
-  G^{*} &= \mu^{*} \propto p^{\frac{1}{3}}.
+  K^{*} &= \lambda_{L}^{*} + \frac{2}{3}\mu_{L}^{*}\propto p^{\frac{1}{3}},\\
+  G^{*} &= \mu_{L}^{*} \propto p^{\frac{1}{3}}.
 \end{align}
 
 根据式~\eqref{eq:emt_velocity_L}、\eqref{eq:emt_velocity_T}，我们导出了声速 $V$ 与应力 $p$ 的指数关系：

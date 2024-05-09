@@ -26,12 +26,12 @@
 其中 $U_{0}$ 是声源能量, $D = \frac{1}{3}\nu_{e}l^{*}$ 为扩散系数, $\nu_{e}$ 为能量传输速度, $l^{*}$ 为平均自由程, $\tau_{\alpha}$ 正式名为非弹性吸收时间。在实验中，我们用飞行时间法测定的声速 $V_{\text{T.O.F.}}$ 来替代 $\nu_{e}$。质量因子 $Q = 2\pi f\tau_{\alpha}$ 也被引入用于描述颗粒介质的耗散性，其中 $f$ 是发射信号的中心频率。Jia 提出了在颗粒表面相对平滑时，存在关系\cite{PhysRevLett.101.138001}
 
 \begin{equation}
-  Q^{-1} = \left[\frac{4G_{g}}{9\uppi^2(2-\nu_{g})R}\left(\frac{3\uppi}{4K_{g}}\right)^{\frac{1}{3}}\right]\mu^{-1}P_{0}^{-\frac{2}{3}}u_{t}
+  Q^{-1} = \left[\frac{4G_{g}}{9\uppi^2(2-\nu_{g})R}\left(\frac{3\uppi}{4K_{g}}\right)^{\frac{1}{3}}\right]\mu_{f}^{-1}P_{0}^{-\frac{2}{3}}u_{t}
 \end{equation}
 
-其中 $\nu_{g}$、$K_{g}$、$G_{g}$ 是颗粒组成材料的泊松比、体弹性模量和剪切模量，$R$ 是颗粒半径，$\mu$ 用于描述颗粒间的摩擦系数，$P_{0}$ 是颗粒介质所受的应力大小，$u_{t}$ 是描述 Mindlin 接触模型下的切向振幅。在受到含黏度流体润滑作用时，还存在 $Q^{-1} = Q_{\text{fric}}^{-1} + Q_{\text{vis}}^{-1}$ 的修正关系，由于在实验中未涉及所以在这里不再额外讨论。
+其中 $\nu_{g}$、$K_{g}$、$G_{g}$ 是颗粒组成材料的泊松比、体弹性模量和剪切模量，$R$ 是颗粒半径，$\mu_{f}$ 用于描述颗粒间的摩擦系数，$P_{0}$ 是颗粒介质所受的应力大小，$u_{t}$ 是描述 Mindlin 接触模型下的切向振幅。在受到含黏度流体润滑作用时，还存在 $Q^{-1} = Q_{\text{fric}}^{-1} + Q_{\text{vis}}^{-1}$ 的修正关系，由于在实验中未涉及所以在这里不再额外讨论。
 
-对于摩擦系数 $\mu$ 的理解，需要将其和后文中的式~\eqref{eq:friction} 中的摩擦系数配合理解。经验丰富的工人观察沙堆的半径或者高度即可估算沙堆的体积，原理就是因为沙堆是通过类似于点源法/有限面元法的方式制备的，其斜坡角度/休止角（repose angle）通常固定；这里的角度通常都是\numrange{0}{45} \unit{\degree} 范围内的，对应于其正切值的摩擦系数范围是 \numrange{0}{1}）。这与上式中的有时大于 1 的 $\mu$ 显然并不相同。
+对于摩擦系数 $\mu_{f}$ 的理解，需要将其和后文中的式~\eqref{eq:friction} 中的摩擦系数配合理解。经验丰富的工人观察沙堆的半径或者高度即可估算沙堆的体积，原理就是因为沙堆是通过类似于点源法/有限面元法的方式制备的，其斜坡角度/休止角（repose angle）通常固定；这里的角度通常都是\numrange{0}{45} \unit{\degree} 范围内的，对应于其正切值的摩擦系数范围是 \numrange{0}{1}）。这与上式中的有时大于 1 的 $\mu_{f}$ 显然并不相同。
 
 \subsection{实验验证}
 
@@ -83,7 +83,7 @@
   \delta = \frac{1}{\rho_{0}}\left[\frac{4}{3}\mu + \mu_{B} + \kappa\left(\frac{1}{c_{v}} - \frac{1}{c_{p}}\right)\right].
 \end{align}
 
-其中 $\mu$ 是介质的剪切黏度，$\mu_{B}$ 是介质的容变黏度，这两者共同构成了介质的黏性吸收；$\kappa$ 是介质的热导率，$c_{v}$ 是介质的定容热容，$c_{p}$ 是介质的定压热容，这两者构成了介质的热传导吸收。两者的线性叠加构成了 Stokes-Kirchhoff 衰减公式，用于描述声波在介质中传播时的经典吸收现象。$\beta$ 是介质的非线性系数，$\rho_{0}$ 和 $c_{0}$ 分别是介质在平衡态下的密度和声速。
+其中 $\mu$ 是介质的切变黏度，$\mu_{B}$ 是介质的容变黏度，这两者共同构成了介质的黏性吸收；$\kappa$ 是介质的热导率，$c_{v}$ 是介质的定容热容，$c_{p}$ 是介质的定压热容，这两者构成了介质的热传导吸收。两者的线性叠加构成了 Stokes-Kirchhoff 衰减公式，用于描述声波在介质中传播时的经典吸收现象。$\beta$ 是介质的非线性系数，$\rho_{0}$ 和 $c_{0}$ 分别是介质在平衡态下的密度和声速。
 
 Mendousse 首个推导出专用于平面波声传播的偏微分方程。他设定具有黏度的理想气体，根据 Navior-Stockes 方程写出一维流动形式的 Lagrangian 量\cite{hamilton_nonlinear_1998}：
 
@@ -171,14 +171,14 @@ Mendousse 假定黏性吸收中由体变黏度 $\mu_{B}$ 和热导率 $\kappa$ �
 
 \begin{equation}
   \begin{aligned}
-    \Gamma_{i,j}^{t} &\equiv \frac{\int_{-\infty}^{+\infty}S_{i}(t)S_{j}(t)\mathrm{d}t}{\sqrt{\int_{-\infty}^{+\infty}S_{i}^{2}(t)\mathrm{d}t\int_{-\infty}^{+\infty}S_{j}^{2}(t)\mathrm{d}t}}\\
+    \Psi_{i,j}^{t} &\equiv \frac{\int_{-\infty}^{+\infty}S_{i}(t)S_{j}(t)\mathrm{d}t}{\sqrt{\int_{-\infty}^{+\infty}S_{i}^{2}(t)\mathrm{d}t\int_{-\infty}^{+\infty}S_{j}^{2}(t)\mathrm{d}t}}\\
     &= \frac{\int_{-\infty}^{+\infty}S_{i}(t)\bar{S}_{j}(t)\mathrm{d}t}{\sqrt{\frac{1}{2\uppi}\int_{-\infty}^{+\infty}|S_{i}(\omega)|^{2}\mathrm{d}\omega}\sqrt{\frac{1}{2\uppi}\int_{-\infty}^{+\infty}|S_{j}(\omega)|^{2}\mathrm{d}\omega}}\\
     &= \frac{\frac{1}{2\uppi}\int_{-\infty}^{+\infty}S_{i}(\omega)\bar{S}_{j}(\omega)\mathrm{d}\omega}{\sqrt{\frac{1}{2\uppi}\int_{-\infty}^{+\infty}|S_{i}(\omega)|^{2}\mathrm{d}\omega}\sqrt{\frac{1}{2\uppi}\int_{-\infty}^{+\infty}|S_{j}(\omega)|^{2}\mathrm{d}\omega}}\\
-    &= \Gamma_{i,j}^{\omega}.
+    &= \Psi_{i,j}^{\omega}.
   \end{aligned}
 \end{equation}
 
-由此我们证明了时域和频域上定义的相似性参数的等价性，即 $\Gamma_{i,j}^{t}=\Gamma_{i,j}^{\omega}$。因此在后续的实验中，如果我们观察到声发射信号的频域分布曲线存在相似性，就可以使用上式来对其进行理解。
+由此我们证明了时域和频域上定义的相似性参数的等价性，即 $\Psi_{i,j}^{t}=\Psi_{i,j}^{\omega}$。因此在后续的实验中，如果我们观察到声发射信号的频域分布曲线存在相似性，就可以使用上式来对其进行理解。
 
 \subsection{声源振幅对颗粒介质结构的影响}
 
@@ -204,10 +204,10 @@ Mendousse 假定黏性吸收中由体变黏度 $\mu_{B}$ 和热导率 $\kappa$ �
 现在我们考虑颗粒法向接触力 $f_{n}$ 中的非线性，即使用类似于微扰法的方式对 $f_{n}(u_{n})$ 进行展开：
 
 \begin{equation}
-  f_{n} \approx D_{n}u_{n}\left(1 + \beta u_{n} + \delta u_{n}^{2} + \cdots\right)
+  f_{n} \approx D_{n}u_{n}\left(1 + \beta_{\text{Hertz}} u_{n} + \delta_{\text{Hertz}} u_{n}^{2} + \cdots\right)
 \end{equation}
 
-其中，$\beta = -\frac{1}{4u_{0}}$、$\delta = -\frac{1}{24u_{0}^{2}}$ 分别是描述接触力非线性的二阶与三阶项系数，$u_{0}$ 代表了颗粒间的平衡静态压缩量。对于一个周期内的大幅值振动，法向刚度可以被近似为
+其中，$\beta_{\text{Hertz}} = -\frac{1}{4u_{0}}$、$\delta_{\text{Hertz}} = -\frac{1}{24u_{0}^{2}}$ 分别是描述接触力非线性的二阶与三阶项系数，$u_{0}$ 代表了颗粒间的平衡静态压缩量。对于一个周期内的大幅值振动，法向刚度可以被近似为
 
 \begin{equation}
   D_{n}^{*} \approx D_{n}(1 + \delta u_{n}^{2}),
@@ -248,24 +248,24 @@ Mendousse 假定黏性吸收中由体变黏度 $\mu_{B}$ 和热导率 $\kappa$ �
   \end{cases}
 \end{equation}
 
-其中 $s$ 是一个与应力过程有关的符号函数。在切向应力最大幅值 $f_{t}^{*}$ 远小于颗粒间的静摩擦阈值 $\mu f_{0}$ 时，通过 Mindlin 接触可以推导出两种响应振幅的近似表达式：
+其中 $s$ 是一个与应力过程有关的符号函数。在切向应力最大幅值 $f_{t}^{*}$ 远小于颗粒间的静摩擦阈值 $\mu_{f} f_{0}$ 时，通过 Mindlin 接触可以推导出两种响应振幅的近似表达式：
 
 \begin{align}
-  u_{t}^{E}(f_{t}) &\approx \frac{2}{3}u_{0}\left(1 + \frac{f_{t}^{*}}{6\mu f_{0}}\right)\left(\frac{f_{t}}{\mu f_{0}}\right),\label{eq:elastic_amplitude}\\
-  u_{t}^{H}(f_{t}) &\approx \frac{1}{18}u_{0}\left[\left(\frac{f_{t}}{\mu f_{0}}\right)^{2} - \left(\frac{f_{t}^{*}}{\mu f_{0}}\right)^{2}\right].
+  u_{t}^{E}(f_{t}) &\approx \frac{2}{3}u_{0}\left(1 + \frac{f_{t}^{*}}{6\mu_{f} f_{0}}\right)\left(\frac{f_{t}}{\mu_{f} f_{0}}\right),\label{eq:elastic_amplitude}\\
+  u_{t}^{H}(f_{t}) &\approx \frac{1}{18}u_{0}\left[\left(\frac{f_{t}}{\mu_{f} f_{0}}\right)^{2} - \left(\frac{f_{t}^{*}}{\mu_{f} f_{0}}\right)^{2}\right].
 \end{align}
 
 对于式~\eqref{eq:elastic_amplitude} 进行反求导，即可得到切向接触的刚度系数：
 
 \begin{equation}
-  D_{t}^{*} = \frac{\mathrm{d}f_{t}}{\mathrm{d}u_{t}^{E}} \approx D_{t}\left(1 - \frac{f_{t}^{*}}{6\mu f_{0}}\right)
+  D_{t}^{*} = \frac{\mathrm{d}f_{t}}{\mathrm{d}u_{t}^{E}} \approx D_{t}\left(1 - \frac{f_{t}^{*}}{6\mu_{f} f_{0}}\right)
 \end{equation}
 
 因此可以推导出声速的相对变化量表达式为
 
 \begin{align}
-  \frac{\Delta V}{V}\sim \frac{\Delta D_{t}}{D_{t}} &\approx -\frac{f_{t}^{*}}{6\mu f_{0}} \sim -ku_{t}^{*},\\
-  k &= \frac{2G_{g}a}{3(2-\nu_{g})\mu f_{0}}\label{eq:friction}
+  \frac{\Delta V}{V}\sim \frac{\Delta D_{t}}{D_{t}} &\approx -\frac{f_{t}^{*}}{6\mu_{f} f_{0}} \sim -ku_{t}^{*},\\
+  k &= \frac{2G_{g}a}{3(2-\nu_{g})\mu_{f} f_{0}}\label{eq:friction}
 \end{align}
 
 其中 $G_{g}$、$\nu_{g}$ 是颗粒材料的剪切模量和泊松比。由此我们得出了两种可能的弹性软化机制。
