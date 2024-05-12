@@ -79,7 +79,7 @@ Shear Transformation Zone（STZ）认为，像颗粒固体这类非晶体材料�
   \item 临界区。在剪切位移进一步增大时，此时颗粒介质展现出可被类比于固-液相变的性质，即颗粒介质在外部剪切的激励下出现了流动的现象。
 \end{itemize}
 
-我们可以按照应力降（Shear Stress Drop，SSD）的大小来对滞滑事件进行粗分类。类比于环形剪切相关实验中的方法，我们按照应力降的幅值将滞滑事件分为三类：微滞滑（micro-，$\text{SSD}<0.2$ \unit{\newton}）、小滞滑（minor-，0.2 \unit{\newton}$<\text{SSD}<0.4$ \unit{\newton}）和主滞滑（major-，在地震学也被称作 failure，$\text{SSD}>0.4$ \unit{\newton}）。我们统计了微滞滑事件的数量以及其在最近主滞滑事件前的时间间隔，从而得到了通过微滞滑事件计数来预测可能的滞滑失效事件的事件。我们对微滞滑的发生数量进行了对数处理后绘制了图像~\ref{fig:preceding_interval}。
+我们可以按照应力降（Shear Stress Drop，SSD）的大小来对滞滑事件进行粗分类。类比于环形剪切相关实验中的方法，我们按照应力降的幅值将滞滑事件分为三类：微滞滑（micro-，$\text{SSD}<0.2$ \unit{\newton}）、小滞滑（minor-，0.2 \unit{\newton}$<\text{SSD}<0.4$ \unit{\newton}）和主滞滑（major-，在地震学也被称作 failure，$\text{SSD}>0.4$ \unit{\newton}）。我们统计了微滞滑事件的数量以及其在最近主滞滑事件前的时间间隔，从而得到了通过微滞滑事件计数来预测可能的滞滑失效事件的事件。我们对微滞滑的发生数量进行了对数处理后绘制了图像~\ref{fig:preceding_interval}。其解读方式是，在发生了一次主滞滑事件后，对微滞滑进行计数，若已经发生了 $N$ 次，则下一次主滞滑可能发生的时间间隔为 $T(log{(N)})$ \unit{s}。
 
 \begin{figure}[!htp]
   \centering
@@ -88,7 +88,7 @@ Shear Transformation Zone（STZ）认为，像颗粒固体这类非晶体材料�
   \label{fig:preceding_interval}
 \end{figure}
 
-可以观察到其大致从原点引出了一条直线，而在原点附近出现了拐点，推测是因为力学传感器本身会出现一定的分辨率程度的波动（即 0.1 \unit{\newton}），使得微滞滑的计数偏多。在未来引入多通道采集卡，从而通过声学手段辅助分析剪切过程中的滞滑事件，将有助于得到更理想的图像结果。
+可以观察到其大致从原点引出了一条直线，而在原点附近出现了拐点，推测是因为力学传感器本身会出现一定的分辨率程度的波动（$\sim$ 0.1 \unit{\newton}），使得微滞滑的计数偏多。在未来引入多通道采集卡，从而通过声学手段辅助分析剪切过程中的滞滑事件，将有助于得到更理想的图像结果。
 
 \section{本章小结}
 
