@@ -50,22 +50,22 @@
 
 \begin{figure}[htb]
   \centering
-  \bisubcaptionbox{原始响应信号}%
-                  {Original response signal}%
+  \subcaptionbox{原始响应信号}%
+                  %{Original response signal}%
                   [7cm]{\includegraphics[width=1\linewidth]{4_diffu_1.png}}
   \hfill
-  \bisubcaptionbox{功率时域信号}%
-                  {Power time-domain signals}%
+  \subcaptionbox{功率时域信号}%
+                  %{Power time-domain signals}%
                   [7cm]{\includegraphics[width=1\linewidth]{4_diffu_2.png}}
   \\
-  \bisubcaptionbox{以 10 为底的功率对数时域信号}%
-                  {Power logarithmic time-domain signal with base 10}%
+  \subcaptionbox{以 10 为底的功率对数时域信号}%
+                  %{Power logarithmic time-domain signal with base 10}%
                   [7cm]{\includegraphics[width=1\linewidth]{4_diffu_3.png}}
   \hfill
-  \bisubcaptionbox{功率对数包络线及其拟合曲线\label{fig:diffusion_approximation_4}}%
-                  {Envelope of logarithmic power and its fitted curve}%
+  \subcaptionbox{功率对数包络线及其拟合曲线\label{fig:diffusion_approximation_4}}%
+                  %{Envelope of logarithmic power and its fitted curve}%
                   [7cm]{\includegraphics[width=1\linewidth]{4_diffu_4.png}}
-  \bicaption{扩散行为近似实验中的信号处理。}{Signal processing in diffusion behavior approximation experiments.}\label{fig:diffusion_approximation}
+  \caption{扩散行为近似实验中的信号处理。\label{fig:diffusion_approximation}}%{Signal processing in diffusion behavior approximation experiments.}
   \end{figure}
 
   在本次实验中，我们计算得到了能量传输速度 $\nu_{e}$ = 399.27 \unit{\meter}/\unit{\second}，修正后的声源能量为 $1.3113\times 10^{-10.5}$ \unit{J}，非弹性吸收时间为 $\tau_{\alpha}\approx 0.179$ \unit{\milli\second}，平均自由程为 $l^{*}\approx 1.6$ \unit{\milli\meter}。由此我们可以得出扩散系数为 $D\approx 0.21$ $\unit{\meter}^{2}/\unit{\second}$，质量因子为 $Q\approx 76.507$。
@@ -256,21 +256,26 @@ Mendousse 假定黏性吸收中由体变黏度 $\mu_{B}$ 和热导率 $\kappa$ �
   \centering
 	\begin{minipage}[!hbtp]{0.48\columnwidth}
 		\centering
-    \bisubcaptionbox{实验中激励源振幅序列\label{fig:nonlinearity_1}}{Sequence of excitation source amplitudes in the experiment.}
+    \subcaptionbox{实验中激励源振幅序列\label{fig:nonlinearity_1}}
+    %{Sequence of excitation source amplitudes in the experiment.}
 		[7cm]{\includegraphics[height=5.2cm]{3_nonlinearity_protocol.png}}
 		\\
-    \bisubcaptionbox{声速相对变化值 $\Delta c/c$ 和相似性参数 $\Psi_{i,i+1}$ 变化\label{fig:nonlinearity_2}}{Relative change in sound speed $\Delta c/c$ and change in similarity parameter $\Psi_{i,i+1}$.}
+    \subcaptionbox{声速相对变化值 $\Delta c/c$ 和相似性参数 $\Psi_{i,i+1}$ 变化\label{fig:nonlinearity_2}}
+    %{Relative change in sound speed $\Delta c/c$ and change in similarity parameter $\Psi_{i,i+1}$.}
     [7cm]{\includegraphics[height=5.2cm]{3_nonlinearity_vsound_psi.png}}
 	\end{minipage}
 	\begin{minipage}[!hbtp]{0.48\columnwidth}
 		\centering
-    \bisubcaptionbox{响应信号基波分量与激励源振幅线性关系的破坏\label{fig:nonlinearity_3}}{Failure of linear relationship between response signal fundamental component and excitation source amplitude.}
+    \subcaptionbox{响应信号基波分量与激励源振幅线性关系的破坏\label{fig:nonlinearity_3}}
+    %{Failure of linear relationship between response signal fundamental component and excitation source amplitude.}
 		[7cm]{\includegraphics[height=5.2cm]{3_nonlinearity_1w.png}}
 		\\
-    \bisubcaptionbox{响应信号一次谐波分量与激励源振幅平方线性关系的破坏\label{fig:nonlinearity_4}}{Failure of linear relationship between response signal first harmonic component and the square of excitation source amplitude.}
+    \subcaptionbox{响应信号一次谐波分量与激励源振幅平方线性关系的破坏\label{fig:nonlinearity_4}}
+    %{Failure of linear relationship between response signal first harmonic component and the square of excitation source amplitude.}
     [7cm]{\includegraphics[height=5.2cm]{3_nonlinearity_2w.png}}
 	\end{minipage}
-	\bicaption{在单轴应力 P = 38.6 \unit{\kilo\pascal}、采用连续激励协议下，超声响应信号的声速、相似性参数、谐波线性分析}{Sound velocity, similarity parameters, and harmonic linearity analysis of ultrasonic response signals under uniaxial stress P = 38.6 \unit{\kilo\pascal}, applying a continuous excitation protocol}\label{fig:nonlinearity}
+	\caption{在单轴应力 P = 38.6 \unit{\kilo\pascal}、采用连续激励协议下，超声响应信号的声速、相似性参数、谐波线性分析\label{fig:nonlinearity}}
+  %{Sound velocity, similarity parameters, and harmonic linearity analysis of ultrasonic response signals under uniaxial stress P = 38.6 \unit{\kilo\pascal}, applying a continuous excitation protocol}
 \end{figure}
 
 在这里需要说明的是，在计算相似性参数时，如何确定有效信号的起始点和时域上的长度是一个需要考虑的问题。有一种在采集频率较低的情况下的方法为窗移法，即在首个信号截取某一起点和某一长度作为有效信号，随后将窗口移动间隔作为自变量（实际上就是相似性参数中的 $\tau$），计算各延时下的相似性参数，最后取其中得到最大值的一组作为下一次计算的起点和长度，最后得到所有信号与相邻信号的相似性参数。然而，这种方法在采集频率较高时不仅计算耗时较长，而且由于计算次数较长（一般和采样长度同量级，我们的实验中采样长度一般都是 $200\times 10^{3}$）与计算精度的问题最后会使得相似性参数几乎全部为 1，这显然是无法提供有效的分析数据的。因此在实际计算中，我们只确定共同的起始点和长度，而有效信号前的一段热噪声造成的影响是可以接受的。

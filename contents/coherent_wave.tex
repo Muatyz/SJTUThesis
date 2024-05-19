@@ -15,9 +15,10 @@
 \begin{figure}[!htp]
   \centering
   \includegraphics[height=10cm]{figures/2_sample_theorem.png}
-  \bicaption{奈奎斯特-香农采样定理示意图。原始信号 f=10 \unit{\hertz}，采样频率分别为 \numlist{6;22;30;70} \unit{\hertz} 时的离散采样信号与重建信号。}{Schematic diagram of the Nyquist-Shannon sampling theorem. The original signal f=10 \unit{\hertz}, the discretely sampled signal and the reconstructed signal when the sampling frequency is \numlist[
-    list-final-separator = { and }
-  ]{6;22;30;70} \unit{\hertz}, respectively.}
+  % \bicaption{奈奎斯特-香农采样定理示意图。原始信号 f=10 \unit{\hertz}，采样频率分别为 \numlist{6;22;30;70} \unit{\hertz} 时的离散采样信号与重建信号。}{Schematic diagram of the Nyquist-Shannon sampling theorem. The original signal f=10 \unit{\hertz}, the discretely sampled signal and the reconstructed signal when the sampling frequency is \numlist[
+  %   list-final-separator = { and }
+  % ]{6;22;30;70} \unit{\hertz}, respectively.}
+  \caption{奈奎斯特-香农采样定理示意图。原始信号 f=10 \unit{\hertz}，采样频率分别为 \numlist{6;22;30;70} \unit{\hertz} 时的离散采样信号与重建信号。}
   \label{fig:sample_theorem}
 \end{figure}
 
@@ -26,7 +27,8 @@
 \begin{figure}[!htp]
   \centering
   \includegraphics[height=8.5cm]{figures/2_apparatus.pdf}
-  \bicaption{声学激励与探测系统示意图。S 代表声源探头（Source），R 代表接收探头（Receiver）}{Schematic diagram of the acoustic excitation and detection system. S represents the Source transducer, and R represents the Receiver transducer}
+  %\bicaption{声学激励与探测系统示意图。S 代表声源探头（Source），R 代表接收探头（Receiver）}{Schematic diagram of the acoustic excitation and detection system. S represents the Source transducer, and R represents the Receiver transducer}
+  \caption{声学激励与探测系统示意图。S 代表声源探头（Source），R 代表接收探头（Receiver）}
   \label{fig:apparatus}
 \end{figure}
 
@@ -42,15 +44,18 @@
 
 \begin{figure}[!hbtp]
   \centering
-  \bisubcaptionbox{ATA-101B 输出信号的最大振幅在频域上的分布。}%
-                  {Profile of maximum amplitude of ATA-101B output signal in frequency domain.}%
+  % \bisubcaptionbox{ATA-101B 输出信号的最大振幅在频域上的分布。}%
+  %                 {Profile of maximum amplitude of ATA-101B output signal in frequency domain.}%
+  \subcaptionbox{ATA-101B 输出信号的最大振幅在频域上的分布。}%
                   [6cm]{\includegraphics[height=3.8cm]{2_ata101b_1.png}}
   \hspace{1cm}
-  \bisubcaptionbox{ATA-101B 输出信号的最小振幅在频域上的分布。}%
-                  {ATA-101B Distribution of minimum amplitude of output signal in frequency domain.}%
+  % \bisubcaptionbox{ATA-101B 输出信号的最小振幅在频域上的分布。}%
+  %                 {ATA-101B Distribution of minimum amplitude of output signal in frequency domain.}%
+  \subcaptionbox{ATA-101B 输出信号的最小振幅在频域上的分布。}%
                   [6cm]{\includegraphics[height=3.8cm]{2_ata101b_2.png}}
-  \bicaption{功率放大器 ATA-101B 的幅频特性曲线。}
-            {Amplitude-Frequency characteristics of power amplifier ATA-101B.}
+  %\bicaption{功率放大器 ATA-101B 的幅频特性曲线。}
+  %          {Amplitude-Frequency characteristics of power amplifier ATA-101B.}
+  \caption{功率放大器 ATA-101B 的幅频特性曲线。}
   \label{fig:amp_freq_curve}
 \end{figure}
 
@@ -96,7 +101,7 @@
 \begin{figure}[!htp]
   \centering
   \includegraphics[height=8cm]{2_response_factor.eps}
-  \bicaption{G150 与 W800 两种声学探头响应系数 $\widetilde{K}(\omega)$}{Response factor $\widetilde{K}(\omega)$ of G150 and W800 acoustic sensors}
+  \caption{G150 与 W800 两种声学探头响应系数 $\widetilde{K}(\omega)$}%{Response factor $\widetilde{K}(\omega)$ of G150 and W800 acoustic sensors}
   \label{fig:response_factor}
 \end{figure}
 
@@ -117,7 +122,7 @@
 \begin{figure}[!htp]
   \centering
   \includegraphics[height=8cm]{2_reference_referpoint.png}
-  \bicaption{Ellák Somfai 等人测量的三种定义的到达时间与传播距离的关系，插图为不同到达时间定义的示意图}{Relationship between three defined arrival times and propagation distances measured by Ellák Somfai et al. The inset shows a schematic of different arrival time definitions}
+  \caption{Ellák Somfai 等人测量的三种定义的到达时间与传播距离的关系，插图为不同到达时间定义的示意图}%{Relationship between three defined arrival times and propagation distances measured by Ellák Somfai et al. The inset shows a schematic of different arrival time definitions}
   \label{fig:ref_reference_point}
 \end{figure}
 
@@ -128,7 +133,7 @@
 \begin{figure}[!htp]
   \centering
   \includegraphics[height=8cm]{2_face-to-face-time.png}
-  \bicaption{声学探头进行压电转换的固有耗时}{Inherent elapsed time for piezoelectric conversion of acoustic transducers}
+  \caption{声学探头进行压电转换的固有耗时}%{Inherent elapsed time for piezoelectric conversion of acoustic transducers}
   \label{fig:face-to-face_time}
 \end{figure}
 
@@ -147,15 +152,15 @@
 
 \begin{figure}[!hbtp]
   \centering
-  \bisubcaptionbox{调参寻峰算法对信号识别效果（整体）}%
-                  {Effectiveness of the tuning parameter peak-finding algorithm in recognizing signals (overall)}%
+  \subcaptionbox{调参寻峰算法对信号识别效果（整体）}%
+                  %{Effectiveness of the tuning parameter peak-finding algorithm in recognizing signals (overall)}%
                   [7cm]{\includegraphics[height=5.4cm]{2_findpeaks_1.png}}
   \hspace{1cm}
-  \bisubcaptionbox{调参寻峰算法对信号识别效果（局部）}%
-                  {Effectiveness of the tuning parameter peak-finding algorithm in recognizing signals (local)}%
+  \subcaptionbox{调参寻峰算法对信号识别效果（局部）}%
+                  %{Effectiveness of the tuning parameter peak-finding algorithm in recognizing signals (local)}%
                   [7cm]{\includegraphics[height=5.4cm]{2_findpeaks_2.png}}
-  \bicaption{同步采集源信号（Src.）与响应信号（Res.），以及波前到达时刻（Wavefront，WF），波峰到达时刻与首次过零时刻（1st 0 crossing）。}
-            {Synchronized acquisition of source(Src.) and response(Res.) signals, as well as wavefront(WF) arrival, peak arrival and first zero crossing moments(1st 0 crossing).}
+  \caption{同步采集源信号（Src.）与响应信号（Res.），以及波前到达时刻（Wavefront，WF），波峰到达时刻与首次过零时刻（1st 0 crossing）。}
+            %{Synchronized acquisition of source(Src.) and response(Res.) signals, as well as wavefront(WF) arrival, peak arrival and first zero crossing moments(1st 0 crossing).}
   \label{fig:reference_point}
 \end{figure}
 
@@ -163,15 +168,15 @@
 
 \begin{figure}[!hbtp]
   \centering
-  \bisubcaptionbox{以三种参考点通过时差法求得的声速 $V_{L}$}%
-                  {Sound velocity $V_{L}$ measured by time difference method with three reference points}%
+  \subcaptionbox{以三种参考点通过时差法求得的声速 $V_{L}$}%
+                  %{Sound velocity $V_{L}$ measured by time difference method with three reference points}%
                   [6cm]{\includegraphics[height=6cm]{2_fitted_velocity.png}}
   \hspace{1cm}
-  \bisubcaptionbox{以三种参考点通过飞行时间法求得的声速 $V_{\text{T.O.F.}}$}%
-                  {Sound velocity $V_{\text{T.O.F.}}$ measured by Time of Flight method with three reference points}%
+  \subcaptionbox{以三种参考点通过飞行时间法求得的声速 $V_{\text{T.O.F.}}$}%
+                  %{Sound velocity $V_{\text{T.O.F.}}$ measured by Time of Flight method with three reference points}%
                   [6cm]{\includegraphics[height=6cm]{2_tof_velocity_and_fitted_velocity.png}}
-  \bicaption{$5$ 循环 $30$ 千赫兹正弦波列作为试探信号，颗粒介质为直径 $2$ 毫米钢珠的随机密堆积，单轴应力 $9$ 千帕下的声速测量}
-            {Velocity of sound measurements at 9 \unit{\kilo\Pa} uniaxial stress with 5-cycle of a 30 \unit{\kilo\Hz} sine wave train as a test signal and a randomized stack of 2 \unit{\milli\meter} diameter steel beads as the granular medium}
+  \caption{$5$ 循环 $30$ 千赫兹正弦波列作为试探信号，颗粒介质为直径 $2$ 毫米钢珠的随机密堆积，单轴应力 $9$ 千帕下的声速测量}
+            %{Velocity of sound measurements at 9 \unit{\kilo\Pa} uniaxial stress with 5-cycle of a 30 \unit{\kilo\Hz} sine wave train as a test signal and a randomized stack of 2 \unit{\milli\meter} diameter steel beads as the granular medium}
   \label{fig:sound_velocity_measurement}
 \end{figure}
 
@@ -231,12 +236,12 @@
 
 \begin{figure}[!hbtp]
   \centering
-  \bisubcaptionbox{在 $x_1$=1.1 \unit{cm} 与 $x_{2}$=2.0 \unit{cm} 处采集的响应信号}{Reponse signal captured at $x_1$=1.1 \unit{cm} and $x_{2}$=2.0 \unit{cm}}%
+  \subcaptionbox{在 $x_1$=1.1 \unit{cm} 与 $x_{2}$=2.0 \unit{cm} 处采集的响应信号}%{Reponse signal captured at $x_1$=1.1 \unit{cm} and $x_{2}$=2.0 \unit{cm}}%
                 [7cm]{\includegraphics[height=6cm]{figures/2_wave_train.png}}
   \hspace{1cm}
-  \bisubcaptionbox{0-60 \unit{kHz} 的相速度频域分布热图}{Phase velocity frequency distribution heat map at 0-60 \unit{kHz}}%
+  \subcaptionbox{0-60 \unit{kHz} 的相速度频域分布热图}%{Phase velocity frequency distribution heat map at 0-60 \unit{kHz}}%
                 [7cm]{\includegraphics[height=6cm]{figures/2_cwt_v_phi.png}}
-  \bicaption{根据异地响应信号计算频散能量图}{Dispersion energy map calculated from separated response signals}
+  \caption{根据异地响应信号计算频散能量图}%{Dispersion energy map calculated from separated response signals}
   \label{fig:dispersion_energy}
 \end{figure}
 
@@ -317,7 +322,9 @@
   F_{i}^{(nm)} = -\frac{4R^{2}}{3\uppi B(2B+C)}\left\{2B\left(-e_{i^{\prime}j^{\prime}}\mathbf{I}_{i^{\prime}}^{(nm)}\mathbf{I}_{j^{\prime}}^{(nm)}\right)^{\frac{1}{2}}e_{ij}\mathbf{I}_{j}^{(nm)} - C\left(-e_{i^{\prime}j^{\prime}}\mathbf{I}^{(nm)}_{i^{\prime}}\mathbf{I}_{j^{\prime}}^{(nm)}\right)^{\frac{3}{2}}\mathbf{I}_{i}^{(nm)}\right\}.
 \end{equation}
 
-接下来我们尝试描述颗粒介质中的应力-应变关系。颗粒介质的平均应力可以表示为颗粒间相互作用的矢量和平均，即
+%接下来我们尝试描述颗粒介质中的应力-应变关系。颗粒介质的平均应力可以表示为颗粒间相互作用的矢量和平均，即
+
+接下来我们可以尝试通过颗粒介质中统计性的应力与应变的关系来导出对应的等效模量，具体是计算颗粒所受的接触力矢量平均来替代颗粒介质中的平均应力，即
 
 \begin{equation}
   \langle\sigma_{ij}\rangle = \frac{1}{V}\int\sigma_{ij}\mathrm{d}V = \frac{1}{V}\sum_{n}\int\sigma_{ij}^{(n)}\mathrm{d}V_{n}.
@@ -479,17 +486,17 @@
 
 \begin{figure}[!hbtp]
   \centering
-  \bisubcaptionbox{双线性轴下的应力 $P$ 与声速 $V_{\text{T.O.F.}}$ 的关系}%
-                  {Stress $P$ versus sound velocity $V_{\text{T.O.F.}}$ in bilinear axis}%
+  \subcaptionbox{双线性轴下的应力 $P$ 与声速 $V_{\text{T.O.F.}}$ 的关系}%
+                  %{Stress $P$ versus sound velocity $V_{\text{T.O.F.}}$ in bilinear axis}%
                   [6.4cm]{\includegraphics[height=7cm]{figures/2_strain_vs_velocity_20mm_1.png}}
   \hspace{1cm}
-  \bisubcaptionbox{双对数处理后的应力 $P$ 与声速 $V_{\text{T.O.F.}}$ 的关系及其线性拟合}%
-                  {Relationship between stress $P$ and sound velocity $V_{\text{T.O.F.}}$ after double logarithmic  and its linear fit}%
+  \subcaptionbox{双对数处理后的应力 $P$ 与声速 $V_{\text{T.O.F.}}$ 的关系及其线性拟合}%
+                  %{Relationship between stress $P$ and sound velocity $V_{\text{T.O.F.}}$ after double logarithmic  and its linear fit}%
                   [6.4cm]{\includegraphics[height=7cm]{figures/2_strain_vs_velocity_20mm_2.png}}
-  \bicaption{声速 $V_{\text{T.O.F.}}$ 与单轴应力 $P$ 的幂律关系。$P =$ \numlist{0.40;3.34;6.30;8.43;9.63;11.31;14.46}\unit{\kilo\pascal}，颗粒介质为厚度 $L =19$\unit{\milli\meter} 的直径 $2$\unit{\milli\meter} 钢珠随机密堆积}
-                  {Power-law relationship between the sound velocity $V_{\text{T.O.F.}}$ and the uniaxial stress $P$. $P =$ \numlist[
-                    list-final-separator = { and }
-                  ]{0.40;3.34;6.30;8.43;9.63;11.31;14.46}\unit{\kilo\pascal}, where the granular medium is a random close packing with steel beads of diameter $2\unit{\milli\meter}$ and thickness $L = 19$\unit{\milli\meter}}
+  \caption{声速 $V_{\text{T.O.F.}}$ 与单轴应力 $P$ 的幂律关系。$P =$ \numlist{0.40;3.34;6.30;8.43;9.63;11.31;14.46}\unit{\kilo\pascal}，颗粒介质为厚度 $L =19$\unit{\milli\meter} 的直径 $2$\unit{\milli\meter} 钢珠随机密堆积}
+                  % {Power-law relationship between the sound velocity $V_{\text{T.O.F.}}$ and the uniaxial stress $P$. $P =$ \numlist[
+                  %   list-final-separator = { and }
+                  % ]{0.40;3.34;6.30;8.43;9.63;11.31;14.46}\unit{\kilo\pascal}, where the granular medium is a random close packing with steel beads of diameter $2\unit{\milli\meter}$ and thickness $L = 19$\unit{\milli\meter}}
   \label{fig:normalized_width_versus_P}
 \end{figure}
 
@@ -621,7 +628,7 @@ W\sim \frac{1}{\omega_{1}t_{1}} = (\sigma_{K})^{\frac{2}{n}}\left(\frac{L_{c}}{x
 \begin{figure}[!htp]
   \centering
   \includegraphics[height=6cm]{2_Rescaled_Magnitude_differing_in_Distance.png}
-  \bicaption{通过相干波峰 $A_{1}$ 归一化，且时间轴以波峰到达时间 $t_{1}$ 进行缩放后的不同颗粒样品厚度下测得的响应信号}{Response signal captured at different granular sample thicknesses, normalized with coherent wave peak $A_{1}$ and time axis rescaled with peak arrival time $t_{1}$}
+  \caption{通过相干波峰 $A_{1}$ 归一化，且时间轴以波峰到达时间 $t_{1}$ 进行缩放后的不同颗粒样品厚度下测得的响应信号}%{Response signal captured at different granular sample thicknesses, normalized with coherent wave peak $A_{1}$ and time axis rescaled with peak arrival time $t_{1}$}
   \label{fig:reference_point}
 \end{figure}
 
@@ -638,17 +645,17 @@ W\sim \frac{1}{\omega_{1}t_{1}} = (\sigma_{K})^{\frac{2}{n}}\left(\frac{L_{c}}{x
 
 \begin{figure}[!hbtp]
   \centering
-  \bisubcaptionbox{相干首波峰宽度 $t_{1} - t_{0}$}%
-                  {Coherent wave peak width $t_{1} - t_{0}$}%
+  \subcaptionbox{相干首波峰宽度 $t_{1} - t_{0}$}%
+                  %{Coherent wave peak width $t_{1} - t_{0}$}%
                   [6.4cm]{\includegraphics[height=7cm]{figures/2_t1-t0_L.png}}
   \hspace{1cm}
-  \bisubcaptionbox{相干首波归一化宽度 $W$}%
-                  {Coherent first wave normalized width $W$}%
+  \subcaptionbox{相干首波归一化宽度 $W$}%
+                  %{Coherent first wave normalized width $W$}%
                   [6.4cm]{\includegraphics[height=7cm]{figures/2_W_L.png}}
-  \bicaption{颗粒介质厚度为 \numlist{6;11;16;20;24;30} \unit{\milli\metre} 时的响应信号首峰宽度 $t_{1} - t_{0}$ 与归一化宽度 $W$}
-                  {First peak width $t_{1} - t_{0}$ and normalized width $W$ of response signal at granular medium thickness of \numlist[
-                    list-final-separator = { and }
-                  ]{6;11;16;20;24;30} \unit{\milli\metre}}
+  \caption{颗粒介质厚度为 \numlist{6;11;16;20;24;30} \unit{\milli\metre} 时的响应信号首峰宽度 $t_{1} - t_{0}$ 与归一化宽度 $W$}
+                  % {First peak width $t_{1} - t_{0}$ and normalized width $W$ of response signal at granular medium thickness of \numlist[
+                  %   list-final-separator = { and }
+                  % ]{6;11;16;20;24;30} \unit{\milli\metre}}
   \label{fig:normalized_width_versus_L}
 \end{figure}
 
@@ -659,7 +666,7 @@ W\sim \frac{1}{\omega_{1}t_{1}} = (\sigma_{K})^{\frac{2}{n}}\left(\frac{L_{c}}{x
 \begin{figure}[!hbtp]
   \centering
   \includegraphics[height=7cm]{figures/2_W_norm&Strain.png}
-  \bicaption{单轴应力 $P$ 与归一化宽度 $W$ 的关系}{Relationship between uniaxial stress $P$ and normalized width $W$}
+  \caption{单轴应力 $P$ 与归一化宽度 $W$ 的关系}%{Relationship between uniaxial stress $P$ and normalized width $W$}
   \label{fig:normalized_width_versus_P}
 \end{figure}
 
