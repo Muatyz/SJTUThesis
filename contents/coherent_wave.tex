@@ -63,7 +63,7 @@
 需要特别说明的是，一般情况下作用于接收器表面的声压 $p(t)$ 都并不等于入射波的声压 $p_{i}(t)$，这是由探头硬质陶瓷圆面本身存在的声阻抗 $\widetilde{Z}_{S}(\omega)$ 所导致的:
 
 \begin{equation}
-  p(t) = \left(1 + \frac{\widetilde{Z}_{S}(\omega)}{\rho_{0}c_{0}S}\right) =\widetilde{K}(\omega)p_{i}(t).
+  p(t) = \left(1 + \frac{\widetilde{Z}_{S}(\omega)}{\rho_{0}c_{0}S}\right)p_{i}(t) =\widetilde{K}(\omega)p_{i}(t).
 \end{equation}
 
 其中 $\rho_{0}$ 与 $c_{0}$ 是介质处于平衡态时的密度和声速，$S$ 是圆面探测器的面积。接收声压 $p(t)$ 通过非幺正角频率傅里叶变换得到的信号频谱为
@@ -254,7 +254,7 @@
 假定声波波长 $\lambda\gg$ 颗粒直径 $d$，颗粒体系由相同颗粒组成，满足紧束缚条件，颗粒介质应变可采用仿射近似，则纵波声速 $V_{L}$ 与横波声速 $V_{T}$ 分别为
 
 \begin{align}
-  V_{L} &= \sqrt{\frac{(K+\frac{4}{3}G)}{\rho^{*}}},\label{eq:emt_velocity_L},\\
+  V_{L} &= \sqrt{\frac{(K+\frac{4}{3}G)}{\rho^{*}}},\label{eq:emt_velocity_L}\\
   V_{T} &= \sqrt{\frac{G}{\rho^{*}}}.\label{eq:emt_velocity_T}
 \end{align}
 
